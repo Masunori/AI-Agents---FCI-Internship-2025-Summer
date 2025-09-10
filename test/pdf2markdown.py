@@ -84,17 +84,16 @@ def convert_pymupdf_to_pixel_coords(bbox, pixmap, page):
 
 def get_class_label(class_tensor):
     CLASS_LABELS = {
-        0: "text",
-        1: "title", 
-        2: "list",
-        3: "table",
-        4: "figure",
-        5: "header",
-        6: "footer",
-        7: "reference",
-        8: "equation",
-        9: "caption",
-        10: "footnote"
+        0: 'title', 
+        1: 'plain text',
+        2: 'abandon', 
+        3: 'figure', 
+        4: 'figure_caption', 
+        5: 'table', 
+        6: 'table_caption', 
+        7: 'table_footnote', 
+        8: 'isolate_formula', 
+        9: 'formula_caption'
     }
     class_idx = int(class_tensor.item()) if hasattr(class_tensor, "item") else int(class_tensor)
     return CLASS_LABELS.get(class_idx, f"Unknown class {class_idx}")
@@ -160,6 +159,34 @@ def get_closest_bbox(text_bbox, dla_bboxes, pixmap, page):
             iou_max = iou
             text_bbox_class = detection_class
     return iou_max, text_bbox_class
+def write_markdown(text, text_label):
+    '''
+    Given a text with the corresponding label (such as title, plaintext, ...), return its markdown format
+    
+    For example if a text is "title", then we should return "# text"
+
+    The label dictionary is:
+    {
+        0: 'title', 
+        1: 'plain text',
+        2: 'abandon', 
+        3: 'figure', 
+        4: 'figure_caption', 
+        5: 'table', 
+        6: 'table_caption', 
+        7: 'table_footnote', 
+        8: 'isolate_formula', 
+        9: 'formula_caption'
+    }
+    '''
+    if text_label == "title":
+        return "# " + text
+    elif text_label == "plain text":
+        return text
+    else:
+        print("Currently this function can only handle title and plain text")
+        return text
+
 if __name__ == "__main__":
     filepath = hf_hub_download(repo_id="juliozhao/DocLayout-YOLO-DocStructBench", filename="doclayout_yolo_docstructbench_imgsz1024.pt")
     model = YOLOv10(filepath)
@@ -180,7 +207,10 @@ if __name__ == "__main__":
             text_bbox = block["bbox"]
             iou, detection_class = get_closest_bbox(text_bbox, dla_bboxes, pixmap, page)
             print(f"{detection_class}: {text}\n", iou)
-
+            with open("res.md", "w") as f:
+                content_to_write = write_markdown(text, detection_class)
+                f.write(content_to_write)
+                f.write("<br>\n") #line breaks
         # dla result contains those attributes: cls (class), conf (confidence), xyxy (location)
         
         
