@@ -1,0 +1,367 @@
+[
+    {
+        "title": "ButterflyQuant: Ultra-low-bit LLM Quantization through Learnable\n  Orthogonal Butterfly Transforms",
+        "authors": [
+            "Bingxin Xu",
+            "Zhen Dong",
+            "Oussama Elachqar",
+            "Yuzhang Shang"
+        ],
+        "summary": "Large language models require massive memory footprints, severely limiting\ndeployment on consumer hardware. Quantization reduces memory through lower\nnumerical precision, but extreme 2-bit quantization suffers from catastrophic\nperformance loss due to outliers in activations. Rotation-based methods such as\nQuIP and QuaRot apply orthogonal transforms to eliminate outliers before\nquantization, using computational invariance: $\\mathbf{y} = \\mathbf{Wx} =\n(\\mathbf{WQ}^T)(\\mathbf{Qx})$ for orthogonal $\\mathbf{Q}$. However, these\nmethods use fixed transforms--Hadamard matrices achieving optimal worst-case\ncoherence $\\mu = 1/\\sqrt{n}$--that cannot adapt to specific weight\ndistributions. We identify that different transformer layers exhibit distinct\noutlier patterns, motivating layer-adaptive rotations rather than\none-size-fits-all approaches. We propose ButterflyQuant, which replaces\nHadamard rotations with learnable butterfly transforms parameterized by\ncontinuous Givens rotation angles. Unlike Hadamard's discrete $\\{+1, -1\\}$\nentries that are non-differentiable and prohibit gradient-based learning,\nbutterfly transforms' continuous parameterization enables smooth optimization\nwhile guaranteeing orthogonality by construction. This orthogonal constraint\nensures theoretical guarantees in outlier suppression while achieving $O(n \\log\nn)$ computational complexity with only $\\frac{n \\log n}{2}$ learnable\nparameters. We further introduce a uniformity regularization on\npost-transformation activations to promote smoother distributions amenable to\nquantization. Learning requires only 128 calibration samples and converges in\nminutes on a single GPU--a negligible one-time cost. On LLaMA-2-7B with 2-bit\nquantization, ButterflyQuant achieves 15.4 perplexity versus 22.1 for QuaRot.",
+        "published": "2025-09-11T17:59:51Z",
+        "updated": "2025-09-11T17:59:51Z",
+        "pdf_url": "http://arxiv.org/pdf/2509.09679v1",
+        "arxiv_url": "http://arxiv.org/abs/2509.09679v1",
+        "used": false
+    },
+    {
+        "title": "The Illusion of Diminishing Returns: Measuring Long Horizon Execution in\n  LLMs",
+        "authors": [
+            "Akshit Sinha",
+            "Arvindh Arun",
+            "Shashwat Goel",
+            "Steffen Staab",
+            "Jonas Geiping"
+        ],
+        "summary": "Does continued scaling of large language models (LLMs) yield diminishing\nreturns? Real-world value often stems from the length of task an agent can\ncomplete. We start this work by observing the simple but counterintuitive fact\nthat marginal gains in single-step accuracy can compound into exponential\nimprovements in the length of a task a model can successfully complete. Then,\nwe argue that failures of LLMs when simple tasks are made longer arise from\nmistakes in execution, rather than an inability to reason. We propose isolating\nexecution capability, by explicitly providing the knowledge and plan needed to\nsolve a long-horizon task. We find that larger models can correctly execute\nsignificantly more turns even when small models have 100\\% single-turn\naccuracy. We observe that the per-step accuracy of models degrades as the\nnumber of steps increases. This is not just due to long-context limitations --\ncuriously, we observe a self-conditioning effect -- models become more likely\nto make mistakes when the context contains their errors from prior turns.\nSelf-conditioning does not reduce by just scaling the model size. In contrast,\nrecent thinking models do not self-condition, and can also execute much longer\ntasks in a single turn. We conclude by benchmarking frontier thinking models on\nthe length of task they can execute in a single turn. Overall, by focusing on\nthe ability to execute, we hope to reconcile debates on how LLMs can solve\ncomplex reasoning problems yet fail at simple tasks when made longer, and\nhighlight the massive benefits of scaling model size and sequential test-time\ncompute for long-horizon tasks.",
+        "published": "2025-09-11T17:59:34Z",
+        "updated": "2025-09-11T17:59:34Z",
+        "pdf_url": "http://arxiv.org/pdf/2509.09677v1",
+        "arxiv_url": "http://arxiv.org/abs/2509.09677v1",
+        "used": false
+    },
+    {
+        "title": "SimpleVLA-RL: Scaling VLA Training via Reinforcement Learning",
+        "authors": [
+            "Haozhan Li",
+            "Yuxin Zuo",
+            "Jiale Yu",
+            "Yuhao Zhang",
+            "Zhaohui Yang",
+            "Kaiyan Zhang",
+            "Xuekai Zhu",
+            "Yuchen Zhang",
+            "Tianxing Chen",
+            "Ganqu Cui",
+            "Dehui Wang",
+            "Dingxiang Luo",
+            "Yuchen Fan",
+            "Youbang Sun",
+            "Jia Zeng",
+            "Jiangmiao Pang",
+            "Shanghang Zhang",
+            "Yu Wang",
+            "Yao Mu",
+            "Bowen Zhou",
+            "Ning Ding"
+        ],
+        "summary": "Vision-Language-Action (VLA) models have recently emerged as a powerful\nparadigm for robotic manipulation. Despite substantial progress enabled by\nlarge-scale pretraining and supervised fine-tuning (SFT), these models face two\nfundamental challenges: (i) the scarcity and high cost of large-scale\nhuman-operated robotic trajectories required for SFT scaling, and (ii) limited\ngeneralization to tasks involving distribution shift. Recent breakthroughs in\nLarge Reasoning Models (LRMs) demonstrate that reinforcement learning (RL) can\ndramatically enhance step-by-step reasoning capabilities, raising a natural\nquestion: Can RL similarly improve the long-horizon step-by-step action\nplanning of VLA? In this work, we introduce SimpleVLA-RL, an efficient RL\nframework tailored for VLA models. Building upon veRL, we introduce\nVLA-specific trajectory sampling, scalable parallelization, multi-environment\nrendering, and optimized loss computation. When applied to OpenVLA-OFT,\nSimpleVLA-RL achieves SoTA performance on LIBERO and even outperforms $\\pi_0$\non RoboTwin 1.0\\&2.0 with the exploration-enhancing strategies we introduce.\nSimpleVLA-RL not only reduces dependence on large-scale data and enables robust\ngeneralization, but also remarkably surpasses SFT in real-world tasks.\nMoreover, we identify a novel phenomenon ``pushcut'' during RL training,\nwherein the policy discovers previously unseen patterns beyond those seen in\nthe previous training process. Github: https://github.com/PRIME-RL/SimpleVLA-RL",
+        "published": "2025-09-11T17:59:17Z",
+        "updated": "2025-09-11T17:59:17Z",
+        "pdf_url": "http://arxiv.org/pdf/2509.09674v1",
+        "arxiv_url": "http://arxiv.org/abs/2509.09674v1",
+        "used": false
+    },
+    {
+        "title": "CDE: Curiosity-Driven Exploration for Efficient Reinforcement Learning\n  in Large Language Models",
+        "authors": [
+            "Runpeng Dai",
+            "Linfeng Song",
+            "Haolin Liu",
+            "Zhenwen Liang",
+            "Dian Yu",
+            "Haitao Mi",
+            "Zhaopeng Tu",
+            "Rui Liu",
+            "Tong Zheng",
+            "Hongtu Zhu",
+            "Dong Yu"
+        ],
+        "summary": "Reinforcement Learning with Verifiable Rewards (RLVR) is a powerful paradigm\nfor enhancing the reasoning ability of Large Language Models (LLMs). Yet\ncurrent RLVR methods often explore poorly, leading to premature convergence and\nentropy collapse. To address this challenge, we introduce Curiosity-Driven\nExploration (CDE), a framework that leverages the model's own intrinsic sense\nof curiosity to guide exploration. We formalize curiosity with signals from\nboth the actor and the critic: for the actor, we use perplexity over its\ngenerated response, and for the critic, we use the variance of value estimates\nfrom a multi-head architecture. Both signals serve as an exploration bonus\nwithin the RLVR framework to guide the model. Our theoretical analysis shows\nthat the actor-wise bonus inherently penalizes overconfident errors and\npromotes diversity among correct responses; moreover, we connect the\ncritic-wise bonus to the well-established count-based exploration bonus in RL.\nEmpirically, our method achieves an approximate +3 point improvement over\nstandard RLVR using GRPO/PPO on AIME benchmarks. Further analysis identifies a\ncalibration collapse mechanism within RLVR, shedding light on common LLM\nfailure modes.",
+        "published": "2025-09-11T17:59:17Z",
+        "updated": "2025-09-11T17:59:17Z",
+        "pdf_url": "http://arxiv.org/pdf/2509.09675v1",
+        "arxiv_url": "http://arxiv.org/abs/2509.09675v1",
+        "used": false
+    },
+    {
+        "title": "Feasibility-Guided Fair Adaptive Offline Reinforcement Learning for\n  Medicaid Care Management",
+        "authors": [
+            "Sanjay Basu",
+            "Sadiq Y. Patel",
+            "Parth Sheth",
+            "Bhairavi Muralidharan",
+            "Namrata Elamaran",
+            "Aakriti Kinra",
+            "Rajaie Batniji"
+        ],
+        "summary": "We introduce Feasibility-Guided Fair Adaptive Reinforcement Learning\n(FG-FARL), an offline RL procedure that calibrates per-group safety thresholds\nto reduce harm while equalizing a chosen fairness target (coverage or harm)\nacross protected subgroups. Using de-identified longitudinal trajectories from\na Medicaid population health management program, we evaluate FG-FARL against\nbehavior cloning (BC) and HACO (Hybrid Adaptive Conformal Offline RL; a global\nconformal safety baseline). We report off-policy value estimates with bootstrap\n95% confidence intervals and subgroup disparity analyses with p-values. FG-FARL\nachieves comparable value to baselines while improving fairness metrics,\ndemonstrating a practical path to safer and more equitable decision support.",
+        "published": "2025-09-11T17:50:06Z",
+        "updated": "2025-09-11T17:50:06Z",
+        "pdf_url": "http://arxiv.org/pdf/2509.09655v1",
+        "arxiv_url": "http://arxiv.org/abs/2509.09655v1",
+        "used": false
+    },
+    {
+        "title": "Retrieval-Augmented Generation for Reliable Interpretation of Radio\n  Regulations",
+        "authors": [
+            "Zakaria El Kassimi",
+            "Fares Fourati",
+            "Mohamed-Slim Alouini"
+        ],
+        "summary": "We study question answering in the domain of radio regulations, a legally\nsensitive and high-stakes area. We propose a telecom-specific\nRetrieval-Augmented Generation (RAG) pipeline and introduce, to our knowledge,\nthe first multiple-choice evaluation set for this domain, constructed from\nauthoritative sources using automated filtering and human validation. To assess\nretrieval quality, we define a domain-specific retrieval metric, under which\nour retriever achieves approximately 97% accuracy. Beyond retrieval, our\napproach consistently improves generation accuracy across all tested models. In\nparticular, while naively inserting documents without structured retrieval\nyields only marginal gains for GPT-4o (less than 1%), applying our pipeline\nresults in nearly a 12% relative improvement. These findings demonstrate that\ncarefully targeted grounding provides a simple yet strong baseline and an\neffective domain-specific solution for regulatory question answering. All code\nand evaluation scripts, along with our derived question-answer dataset, are\navailable at https://github.com/Zakaria010/Radio-RAG.",
+        "published": "2025-09-11T17:43:42Z",
+        "updated": "2025-09-11T17:43:42Z",
+        "pdf_url": "http://arxiv.org/pdf/2509.09651v1",
+        "arxiv_url": "http://arxiv.org/abs/2509.09651v1",
+        "used": false
+    },
+    {
+        "title": "Explaining Concept Drift through the Evolution of Group Counterfactuals",
+        "authors": [
+            "Ignacy Stępka",
+            "Jerzy Stefanowski"
+        ],
+        "summary": "Machine learning models in dynamic environments often suffer from concept\ndrift, where changes in the data distribution degrade performance. While\ndetecting this drift is a well-studied topic, explaining how and why the\nmodel's decision-making logic changes still remains a significant challenge. In\nthis paper, we introduce a novel methodology to explain concept drift by\nanalyzing the temporal evolution of group-based counterfactual explanations\n(GCEs). Our approach tracks shifts in the GCEs' cluster centroids and their\nassociated counterfactual action vectors before and after a drift. These\nevolving GCEs act as an interpretable proxy, revealing structural changes in\nthe model's decision boundary and its underlying rationale. We operationalize\nthis analysis within a three-layer framework that synergistically combines\ninsights from the data layer (distributional shifts), the model layer\n(prediction disagreement), and our proposed explanation layer. We show that\nsuch holistic view allows for a more comprehensive diagnosis of drift, making\nit possible to distinguish between different root causes, such as a spatial\ndata shift versus a re-labeling of concepts.",
+        "published": "2025-09-11T16:58:34Z",
+        "updated": "2025-09-11T16:58:34Z",
+        "pdf_url": "http://arxiv.org/pdf/2509.09616v1",
+        "arxiv_url": "http://arxiv.org/abs/2509.09616v1",
+        "used": false
+    },
+    {
+        "title": "LoCoBench: A Benchmark for Long-Context Large Language Models in Complex\n  Software Engineering",
+        "authors": [
+            "Jielin Qiu",
+            "Zuxin Liu",
+            "Zhiwei Liu",
+            "Rithesh Murthy",
+            "Jianguo Zhang",
+            "Haolin Chen",
+            "Shiyu Wang",
+            "Ming Zhu",
+            "Liangwei Yang",
+            "Juntao Tan",
+            "Zhepeng Cen",
+            "Cheng Qian",
+            "Shelby Heinecke",
+            "Weiran Yao",
+            "Silvio Savarese",
+            "Caiming Xiong",
+            "Huan Wang"
+        ],
+        "summary": "The emergence of long-context language models with context windows extending\nto millions of tokens has created new opportunities for sophisticated code\nunderstanding and software development evaluation. We propose LoCoBench, a\ncomprehensive benchmark specifically designed to evaluate long-context LLMs in\nrealistic, complex software development scenarios. Unlike existing code\nevaluation benchmarks that focus on single-function completion or short-context\ntasks, LoCoBench addresses the critical evaluation gap for long-context\ncapabilities that require understanding entire codebases, reasoning across\nmultiple files, and maintaining architectural consistency across large-scale\nsoftware systems. Our benchmark provides 8,000 evaluation scenarios\nsystematically generated across 10 programming languages, with context lengths\nspanning 10K to 1M tokens, a 100x variation that enables precise assessment of\nlong-context performance degradation in realistic software development\nsettings. LoCoBench introduces 8 task categories that capture essential\nlong-context capabilities: architectural understanding, cross-file refactoring,\nmulti-session development, bug investigation, feature implementation, code\ncomprehension, integration testing, and security analysis. Through a 5-phase\npipeline, we create diverse, high-quality scenarios that challenge LLMs to\nreason about complex codebases at unprecedented scale. We introduce a\ncomprehensive evaluation framework with 17 metrics across 4 dimensions,\nincluding 8 new evaluation metrics, combined in a LoCoBench Score (LCBS). Our\nevaluation of state-of-the-art long-context models reveals substantial\nperformance gaps, demonstrating that long-context understanding in complex\nsoftware development represents a significant unsolved challenge that demands\nmore attention. LoCoBench is released at:\nhttps://github.com/SalesforceAIResearch/LoCoBench.",
+        "published": "2025-09-11T16:55:04Z",
+        "updated": "2025-09-11T16:55:04Z",
+        "pdf_url": "http://arxiv.org/pdf/2509.09614v1",
+        "arxiv_url": "http://arxiv.org/abs/2509.09614v1",
+        "used": false
+    },
+    {
+        "title": "Mechanistic Learning with Guided Diffusion Models to Predict\n  Spatio-Temporal Brain Tumor Growth",
+        "authors": [
+            "Daria Laslo",
+            "Efthymios Georgiou",
+            "Marius George Linguraru",
+            "Andreas Rauschecker",
+            "Sabine Muller",
+            "Catherine R. Jutzeler",
+            "Sarah Bruningk"
+        ],
+        "summary": "Predicting the spatio-temporal progression of brain tumors is essential for\nguiding clinical decisions in neuro-oncology. We propose a hybrid mechanistic\nlearning framework that combines a mathematical tumor growth model with a\nguided denoising diffusion implicit model (DDIM) to synthesize anatomically\nfeasible future MRIs from preceding scans. The mechanistic model, formulated as\na system of ordinary differential equations, captures temporal tumor dynamics\nincluding radiotherapy effects and estimates future tumor burden. These\nestimates condition a gradient-guided DDIM, enabling image synthesis that\naligns with both predicted growth and patient anatomy. We train our model on\nthe BraTS adult and pediatric glioma datasets and evaluate on 60 axial slices\nof in-house longitudinal pediatric diffuse midline glioma (DMG) cases. Our\nframework generates realistic follow-up scans based on spatial similarity\nmetrics. It also introduces tumor growth probability maps, which capture both\nclinically relevant extent and directionality of tumor growth as shown by 95th\npercentile Hausdorff Distance. The method enables biologically informed image\ngeneration in data-limited scenarios, offering generative-space-time\npredictions that account for mechanistic priors.",
+        "published": "2025-09-11T16:52:09Z",
+        "updated": "2025-09-11T16:52:09Z",
+        "pdf_url": "http://arxiv.org/pdf/2509.09610v1",
+        "arxiv_url": "http://arxiv.org/abs/2509.09610v1",
+        "used": false
+    },
+    {
+        "title": "Graph Alignment via Dual-Pass Spectral Encoding and Latent Space\n  Communication",
+        "authors": [
+            "Maysam Behmanesh",
+            "Erkan Turan",
+            "Maks Ovsjanikov"
+        ],
+        "summary": "Graph alignment-the problem of identifying corresponding nodes across\nmultiple graphs-is fundamental to numerous applications. Most existing\nunsupervised methods embed node features into latent representations to enable\ncross-graph comparison without ground-truth correspondences. However, these\nmethods suffer from two critical limitations: the degradation of node\ndistinctiveness due to oversmoothing in GNN-based embeddings, and the\nmisalignment of latent spaces across graphs caused by structural noise, feature\nheterogeneity, and training instability, ultimately leading to unreliable node\ncorrespondences. We propose a novel graph alignment framework that\nsimultaneously enhances node distinctiveness and enforces geometric consistency\nacross latent spaces. Our approach introduces a dual-pass encoder that combines\nlow-pass and high-pass spectral filters to generate embeddings that are both\nstructure-aware and highly discriminative. To address latent space\nmisalignment, we incorporate a geometry-aware functional map module that learns\nbijective and isometric transformations between graph embeddings, ensuring\nconsistent geometric relationships across different representations. Extensive\nexperiments on graph benchmarks demonstrate that our method consistently\noutperforms existing unsupervised alignment baselines, exhibiting superior\nrobustness to structural inconsistencies and challenging alignment scenarios.\nAdditionally, comprehensive evaluation on vision-language benchmarks using\ndiverse pretrained models shows that our framework effectively generalizes\nbeyond graph domains, enabling unsupervised alignment of vision and language\nrepresentations.",
+        "published": "2025-09-11T16:36:16Z",
+        "updated": "2025-09-11T16:36:16Z",
+        "pdf_url": "http://arxiv.org/pdf/2509.09597v1",
+        "arxiv_url": "http://arxiv.org/abs/2509.09597v1",
+        "used": false
+    },
+    {
+        "title": "ObjectReact: Learning Object-Relative Control for Visual Navigation",
+        "authors": [
+            "Sourav Garg",
+            "Dustin Craggs",
+            "Vineeth Bhat",
+            "Lachlan Mares",
+            "Stefan Podgorski",
+            "Madhava Krishna",
+            "Feras Dayoub",
+            "Ian Reid"
+        ],
+        "summary": "Visual navigation using only a single camera and a topological map has\nrecently become an appealing alternative to methods that require additional\nsensors and 3D maps. This is typically achieved through an \"image-relative\"\napproach to estimating control from a given pair of current observation and\nsubgoal image. However, image-level representations of the world have\nlimitations because images are strictly tied to the agent's pose and\nembodiment. In contrast, objects, being a property of the map, offer an\nembodiment- and trajectory-invariant world representation. In this work, we\npresent a new paradigm of learning \"object-relative\" control that exhibits\nseveral desirable characteristics: a) new routes can be traversed without\nstrictly requiring to imitate prior experience, b) the control prediction\nproblem can be decoupled from solving the image matching problem, and c) high\ninvariance can be achieved in cross-embodiment deployment for variations across\nboth training-testing and mapping-execution settings. We propose a topometric\nmap representation in the form of a \"relative\" 3D scene graph, which is used to\nobtain more informative object-level global path planning costs. We train a\nlocal controller, dubbed \"ObjectReact\", conditioned directly on a high-level\n\"WayObject Costmap\" representation that eliminates the need for an explicit RGB\ninput. We demonstrate the advantages of learning object-relative control over\nits image-relative counterpart across sensor height variations and multiple\nnavigation tasks that challenge the underlying spatial understanding\ncapability, e.g., navigating a map trajectory in the reverse direction. We\nfurther show that our sim-only policy is able to generalize well to real-world\nindoor environments. Code and supplementary material are accessible via project\npage: https://object-react.github.io/",
+        "published": "2025-09-11T16:34:17Z",
+        "updated": "2025-09-11T16:34:17Z",
+        "pdf_url": "http://arxiv.org/pdf/2509.09594v1",
+        "arxiv_url": "http://arxiv.org/abs/2509.09594v1",
+        "used": false
+    },
+    {
+        "title": "Fluent but Unfeeling: The Emotional Blind Spots of Language Models",
+        "authors": [
+            "Bangzhao Shu",
+            "Isha Joshi",
+            "Melissa Karnaze",
+            "Anh C. Pham",
+            "Ishita Kakkar",
+            "Sindhu Kothe",
+            "Arpine Hovasapian",
+            "Mai ElSherief"
+        ],
+        "summary": "The versatility of Large Language Models (LLMs) in natural language\nunderstanding has made them increasingly popular in mental health research.\nWhile many studies explore LLMs' capabilities in emotion recognition, a\ncritical gap remains in evaluating whether LLMs align with human emotions at a\nfine-grained level. Existing research typically focuses on classifying emotions\ninto predefined, limited categories, overlooking more nuanced expressions. To\naddress this gap, we introduce EXPRESS, a benchmark dataset curated from Reddit\ncommunities featuring 251 fine-grained, self-disclosed emotion labels. Our\ncomprehensive evaluation framework examines predicted emotion terms and\ndecomposes them into eight basic emotions using established emotion theories,\nenabling a fine-grained comparison. Systematic testing of prevalent LLMs under\nvarious prompt settings reveals that accurately predicting emotions that align\nwith human self-disclosed emotions remains challenging. Qualitative analysis\nfurther shows that while certain LLMs generate emotion terms consistent with\nestablished emotion theories and definitions, they sometimes fail to capture\ncontextual cues as effectively as human self-disclosures. These findings\nhighlight the limitations of LLMs in fine-grained emotion alignment and offer\ninsights for future research aimed at enhancing their contextual understanding.",
+        "published": "2025-09-11T16:31:13Z",
+        "updated": "2025-09-11T16:31:13Z",
+        "pdf_url": "http://arxiv.org/pdf/2509.09593v1",
+        "arxiv_url": "http://arxiv.org/abs/2509.09593v1",
+        "used": false
+    },
+    {
+        "title": "Boosting Embodied AI Agents through Perception-Generation Disaggregation\n  and Asynchronous Pipeline Execution",
+        "authors": [
+            "Shulai Zhang",
+            "Ao Xu",
+            "Quan Chen",
+            "Han Zhao",
+            "Weihao Cui",
+            "Ningxin Zheng",
+            "Haibin Lin",
+            "Xin Liu",
+            "Minyi Guo"
+        ],
+        "summary": "Embodied AI systems operate in dynamic environments, requiring seamless\nintegration of perception and generation modules to process high-frequency\ninput and output demands. Traditional sequential computation patterns, while\neffective in ensuring accuracy, face significant limitations in achieving the\nnecessary \"thinking\" frequency for real-world applications. In this work, we\npresent Auras, an algorithm-system co-designed inference framework to optimize\nthe inference frequency of embodied AI agents. Auras disaggregates the\nperception and generation and provides controlled pipeline parallelism for them\nto achieve high and stable throughput. Faced with the data staleness problem\nthat appears when the parallelism is increased, Auras establishes a public\ncontext for perception and generation to share, thereby promising the accuracy\nof embodied agents. Experimental results show that Auras improves throughput by\n2.54x on average while achieving 102.7% of the original accuracy, demonstrating\nits efficacy in overcoming the constraints of sequential computation and\nproviding high throughput.",
+        "published": "2025-09-11T15:51:43Z",
+        "updated": "2025-09-11T15:51:43Z",
+        "pdf_url": "http://arxiv.org/pdf/2509.09560v1",
+        "arxiv_url": "http://arxiv.org/abs/2509.09560v1",
+        "used": false
+    },
+    {
+        "title": "Invisible Attributes, Visible Biases: Exploring Demographic Shortcuts in\n  MRI-based Alzheimer's Disease Classification",
+        "authors": [
+            "Akshit Achara",
+            "Esther Puyol Anton",
+            "Alexander Hammers",
+            "Andrew P. King"
+        ],
+        "summary": "Magnetic resonance imaging (MRI) is the gold standard for brain imaging. Deep\nlearning (DL) algorithms have been proposed to aid in the diagnosis of diseases\nsuch as Alzheimer's disease (AD) from MRI scans. However, DL algorithms can\nsuffer from shortcut learning, in which spurious features, not directly related\nto the output label, are used for prediction. When these features are related\nto protected attributes, they can lead to performance bias against\nunderrepresented protected groups, such as those defined by race and sex. In\nthis work, we explore the potential for shortcut learning and demographic bias\nin DL based AD diagnosis from MRI. We first investigate if DL algorithms can\nidentify race or sex from 3D brain MRI scans to establish the presence or\notherwise of race and sex based distributional shifts. Next, we investigate\nwhether training set imbalance by race or sex can cause a drop in model\nperformance, indicating shortcut learning and bias. Finally, we conduct a\nquantitative and qualitative analysis of feature attributions in different\nbrain regions for both the protected attribute and AD classification tasks.\nThrough these experiments, and using multiple datasets and DL models (ResNet\nand SwinTransformer), we demonstrate the existence of both race and sex based\nshortcut learning and bias in DL based AD classification. Our work lays the\nfoundation for fairer DL diagnostic tools in brain MRI. The code is provided at\nhttps://github.com/acharaakshit/ShortMR",
+        "published": "2025-09-11T15:48:30Z",
+        "updated": "2025-09-11T15:48:30Z",
+        "pdf_url": "http://arxiv.org/pdf/2509.09558v1",
+        "arxiv_url": "http://arxiv.org/abs/2509.09558v1",
+        "used": false
+    },
+    {
+        "title": "An improved educational competition optimizer with multi-covariance\n  learning operators for global optimization problems",
+        "authors": [
+            "Baoqi Zhao",
+            "Xiong Yang",
+            "Hoileong Lee",
+            "Bowen Dong"
+        ],
+        "summary": "The educational competition optimizer is a recently introduced metaheuristic\nalgorithm inspired by human behavior, originating from the dynamics of\neducational competition within society. Nonetheless, ECO faces constraints due\nto an imbalance between exploitation and exploration, rendering it susceptible\nto local optima and demonstrating restricted effectiveness in addressing\ncomplex optimization problems. To address these limitations, this study\npresents an enhanced educational competition optimizer (IECO-MCO) utilizing\nmulti-covariance learning operators. In IECO, three distinct covariance\nlearning operators are introduced to improve the performance of ECO. Each\noperator effectively balances exploitation and exploration while preventing\npremature convergence of the population. The effectiveness of IECO is assessed\nthrough benchmark functions derived from the CEC 2017 and CEC 2022 test suites,\nand its performance is compared with various basic and improved algorithms\nacross different categories. The results demonstrate that IECO-MCO surpasses\nthe basic ECO and other competing algorithms in convergence speed, stability,\nand the capability to avoid local optima. Furthermore, statistical analyses,\nincluding the Friedman test, Kruskal-Wallis test, and Wilcoxon rank-sum test,\nare conducted to validate the superiority of IECO-MCO over the compared\nalgorithms. Compared with the basic algorithm (improved algorithm), IECO-MCO\nachieved an average ranking of 2.213 (2.488) on the CE2017 and CEC2022 test\nsuites. Additionally, the practical applicability of the proposed IECO-MCO\nalgorithm is verified by solving constrained optimization problems. The\nexperimental outcomes demonstrate the superior performance of IECO-MCO in\ntackling intricate optimization problems, underscoring its robustness and\npractical effectiveness in real-world scenarios.",
+        "published": "2025-09-11T15:41:14Z",
+        "updated": "2025-09-11T15:41:14Z",
+        "pdf_url": "http://arxiv.org/pdf/2509.09552v1",
+        "arxiv_url": "http://arxiv.org/abs/2509.09552v1",
+        "used": false
+    },
+    {
+        "title": "Improving Video Diffusion Transformer Training by Multi-Feature Fusion\n  and Alignment from Self-Supervised Vision Encoders",
+        "authors": [
+            "Dohun Lee",
+            "Hyeonho Jeong",
+            "Jiwook Kim",
+            "Duygu Ceylan",
+            "Jong Chul Ye"
+        ],
+        "summary": "Video diffusion models have advanced rapidly in the recent years as a result\nof series of architectural innovations (e.g., diffusion transformers) and use\nof novel training objectives (e.g., flow matching). In contrast, less attention\nhas been paid to improving the feature representation power of such models. In\nthis work, we show that training video diffusion models can benefit from\naligning the intermediate features of the video generator with feature\nrepresentations of pre-trained vision encoders. We propose a new metric and\nconduct an in-depth analysis of various vision encoders to evaluate their\ndiscriminability and temporal consistency, thereby assessing their suitability\nfor video feature alignment. Based on the analysis, we present Align4Gen which\nprovides a novel multi-feature fusion and alignment method integrated into\nvideo diffusion model training. We evaluate Align4Gen both for unconditional\nand class-conditional video generation tasks and show that it results in\nimproved video generation as quantified by various metrics. Full video results\nare available on our project page: https://align4gen.github.io/align4gen/",
+        "published": "2025-09-11T15:39:27Z",
+        "updated": "2025-09-11T15:39:27Z",
+        "pdf_url": "http://arxiv.org/pdf/2509.09547v1",
+        "arxiv_url": "http://arxiv.org/abs/2509.09547v1",
+        "used": false
+    },
+    {
+        "title": "Compositional Concept Generalization with Variational Quantum Circuits",
+        "authors": [
+            "Hala Hawashin",
+            "Mina Abbaszadeh",
+            "Nicholas Joseph",
+            "Beth Pearson",
+            "Martha Lewis",
+            "Mehrnoosh sadrzadeh"
+        ],
+        "summary": "Compositional generalization is a key facet of human cognition, but lacking\nin current AI tools such as vision-language models. Previous work examined\nwhether a compositional tensor-based sentence semantics can overcome the\nchallenge, but led to negative results. We conjecture that the increased\ntraining efficiency of quantum models will improve performance in these tasks.\nWe interpret the representations of compositional tensor-based models in\nHilbert spaces and train Variational Quantum Circuits to learn these\nrepresentations on an image captioning task requiring compositional\ngeneralization. We used two image encoding techniques: a multi-hot encoding\n(MHE) on binary image vectors and an angle/amplitude encoding on image vectors\ntaken from the vision-language model CLIP. We achieve good proof-of-concept\nresults using noisy MHE encodings. Performance on CLIP image vectors was more\nmixed, but still outperformed classical compositional models.",
+        "published": "2025-09-11T15:34:33Z",
+        "updated": "2025-09-11T15:34:33Z",
+        "pdf_url": "http://arxiv.org/pdf/2509.09541v1",
+        "arxiv_url": "http://arxiv.org/abs/2509.09541v1",
+        "used": false
+    },
+    {
+        "title": "A modified RIME algorithm with covariance learning and diversity\n  enhancement for numerical optimization",
+        "authors": [
+            "Shangqing Shi",
+            "Luoxiao Zhang",
+            "Yuchen Yin",
+            "Xiong Yang",
+            "Hoileong Lee"
+        ],
+        "summary": "Metaheuristics are widely applied for their ability to provide more efficient\nsolutions. The RIME algorithm is a recently proposed physical-based\nmetaheuristic algorithm with certain advantages. However, it suffers from rapid\nloss of population diversity during optimization and is prone to fall into\nlocal optima, leading to unbalanced exploitation and exploration. To address\nthe shortcomings of RIME, this paper proposes a modified RIME with covariance\nlearning and diversity enhancement (MRIME-CD). The algorithm applies three\nstrategies to improve the optimization capability. First, a covariance learning\nstrategy is introduced in the soft-rime search stage to increase the population\ndiversity and balance the over-exploitation ability of RIME through the\nbootstrapping effect of dominant populations. Second, in order to moderate the\ntendency of RIME population to approach the optimal individual in the early\nsearch stage, an average bootstrapping strategy is introduced into the\nhard-rime puncture mechanism, which guides the population search through the\nweighted position of the dominant populations, thus enhancing the global search\nability of RIME in the early stage. Finally, a new stagnation indicator is\nproposed, and a stochastic covariance learning strategy is used to update the\nstagnant individuals in the population when the algorithm gets stagnant, thus\nenhancing the ability to jump out of the local optimal solution. The proposed\nMRIME-CD algorithm is subjected to a series of validations on the CEC2017 test\nset, the CEC2022 test set, and the experimental results are analyzed using the\nFriedman test, the Wilcoxon rank sum test, and the Kruskal Wallis test. The\nresults show that MRIME-CD can effectively improve the performance of basic\nRIME and has obvious superiorities in terms of solution accuracy, convergence\nspeed and stability.",
+        "published": "2025-09-11T15:12:03Z",
+        "updated": "2025-09-11T15:12:03Z",
+        "pdf_url": "http://arxiv.org/pdf/2509.09529v1",
+        "arxiv_url": "http://arxiv.org/abs/2509.09529v1",
+        "used": false
+    },
+    {
+        "title": "Towards Explainable Job Title Matching: Leveraging Semantic Textual\n  Relatedness and Knowledge Graphs",
+        "authors": [
+            "Vadim Zadykian",
+            "Bruno Andrade",
+            "Haithem Afli"
+        ],
+        "summary": "Semantic Textual Relatedness (STR) captures nuanced relationships between\ntexts that extend beyond superficial lexical similarity. In this study, we\ninvestigate STR in the context of job title matching - a key challenge in\nresume recommendation systems, where overlapping terms are often limited or\nmisleading. We introduce a self-supervised hybrid architecture that combines\ndense sentence embeddings with domain-specific Knowledge Graphs (KGs) to\nimprove both semantic alignment and explainability. Unlike previous work that\nevaluated models on aggregate performance, our approach emphasizes data\nstratification by partitioning the STR score continuum into distinct regions:\nlow, medium, and high semantic relatedness. This stratified evaluation enables\na fine-grained analysis of model performance across semantically meaningful\nsubspaces. We evaluate several embedding models, both with and without KG\nintegration via graph neural networks. The results show that fine-tuned SBERT\nmodels augmented with KGs produce consistent improvements in the high-STR\nregion, where the RMSE is reduced by 25% over strong baselines. Our findings\nhighlight not only the benefits of combining KGs with text embeddings, but also\nthe importance of regional performance analysis in understanding model\nbehavior. This granular approach reveals strengths and weaknesses hidden by\nglobal metrics, and supports more targeted model selection for use in Human\nResources (HR) systems and applications where fairness, explainability, and\ncontextual matching are essential.",
+        "published": "2025-09-11T15:02:54Z",
+        "updated": "2025-09-11T15:02:54Z",
+        "pdf_url": "http://arxiv.org/pdf/2509.09522v1",
+        "arxiv_url": "http://arxiv.org/abs/2509.09522v1",
+        "used": false
+    },
+    {
+        "title": "Explainable AI for Accelerated Microstructure Imaging: A SHAP-Guided\n  Protocol on the Connectome 2.0 scanner",
+        "authors": [
+            "Quentin Uhl",
+            "Tommaso Pavan",
+            "Julianna Gerold",
+            "Kwok-Shing Chan",
+            "Yohan Jun",
+            "Shohei Fujita",
+            "Aneri Bhatt",
+            "Yixin Ma",
+            "Qiaochu Wang",
+            "Hong-Hsi Lee",
+            "Susie Y. Huang",
+            "Berkin Bilgic",
+            "Ileana Jelescu"
+        ],
+        "summary": "The diffusion MRI Neurite Exchange Imaging model offers a promising framework\nfor probing gray matter microstructure by estimating parameters such as\ncompartment sizes, diffusivities, and inter-compartmental water exchange time.\nHowever, existing protocols require long scan times. This study proposes a\nreduced acquisition scheme for the Connectome 2.0 scanner that preserves model\naccuracy while substantially shortening scan duration. We developed a\ndata-driven framework using explainable artificial intelligence with a guided\nrecursive feature elimination strategy to identify an optimal 8-feature subset\nfrom a 15-feature protocol. The performance of this optimized protocol was\nvalidated in vivo and benchmarked against the full acquisition and alternative\nreduction strategies. Parameter accuracy, preservation of anatomical contrast,\nand test-retest reproducibility were assessed. The reduced protocol yielded\nparameter estimates and cortical maps comparable to the full protocol, with low\nestimation errors in synthetic data and minimal impact on test-retest\nvariability. Compared to theory-driven and heuristic reduction schemes, the\noptimized protocol demonstrated superior robustness, reducing the deviation in\nwater exchange time estimates by over two-fold. In conclusion, this hybrid\noptimization framework enables viable imaging of neurite exchange in 14 minutes\nwithout loss of parameter fidelity. This approach supports the broader\napplication of exchange-sensitive diffusion magnetic resonance imaging in\nneuroscience and clinical research, and offers a generalizable method for\ndesigning efficient acquisition protocols in biophysical parameter mapping.",
+        "published": "2025-09-11T14:53:26Z",
+        "updated": "2025-09-11T14:53:26Z",
+        "pdf_url": "http://arxiv.org/pdf/2509.09513v1",
+        "arxiv_url": "http://arxiv.org/abs/2509.09513v1",
+        "used": false
+    }
+]
