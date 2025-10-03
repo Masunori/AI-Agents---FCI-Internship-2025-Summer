@@ -115,7 +115,7 @@ class GuardRails_Rerank_Workflow:
                     print(f"Not allow the {doc.url} to pass")
                     continue
                 elif response == "1":
-                    print("Pass")
+                    print(f"Allow the {doc.url} to pass")
                     filtered_docs.append(doc)
                 else: 
                     print(f"Response: {response}")
@@ -139,7 +139,7 @@ class GuardRails_Rerank_Workflow:
         
         #wrap the document's content for LLM
         doc_contents = []
-        for i, doc in enumerate(all_documents[:self.config.MAXIMUM_NUM_DOCS_TO_LLM], 1):
+        for i, doc in enumerate(all_documents, 1):
             if doc.content_type == "paper":  # paper
                 doc_content = f"""
                             ## Document {i}: {doc.title}

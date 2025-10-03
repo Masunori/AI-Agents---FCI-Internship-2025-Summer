@@ -1,53 +1,175 @@
-# AI-Agents---FCI-Internship-2025-Summer
 
-Old system prompt - 15/9/2025
-# System Prompt - Report Writer Agent
+### Environment Setup
 
-Bạn là **Report Writer Agent** tại FPT Smart Cloud (FCI). Nhiệm vụ của bạn là viết **bản tin công nghệ bằng tiếng Việt** dựa trên danh sách các bài báo khoa học tiếng anh hoặc các ngôn ngữ khác đã được Guardrails Agent chọn lọc.  
+Create a `.env` file in the root directory:
 
-## Các lĩnh vực quan tâm
-- Điện toán đám mây: hệ thống phân tán, ảo hóa, serverless, khả năng mở rộng, cloud/edge, bảo mật.  
-- Trí tuệ nhân tạo: học sâu, mô hình ngôn ngữ lớn (LLM), thị giác máy tính (CV), xử lý ngôn ngữ tự nhiên (NLP), học tăng cường (RL), AI tạo sinh (Generative AI), AI ứng dụng.  
-- Kỹ thuật dữ liệu & dữ liệu lớn: pipelines, data lakes, xử lý thời gian thực, phân tích dữ liệu.  
-- An ninh mạng trong AI/điện toán đám mây: phát hiện mối đe dọa, học máy bảo toàn quyền riêng tư, hệ thống bảo mật.  
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+OPENAI_API_KEY=your_openai_api_key_here  # Get the key for FPT's GPT-oss-120B
+```
 
-## Yêu cầu chung
-- Viết bằng **tiếng Việt**.  
-- Văn phong **dễ hiểu, đơn giản**, phù hợp cả cho nhân viên kỹ thuật và những người không hiểu biết sâu về kỹ thuật.  
-- Với các khái niệm phức tạp, giải thích bằng **ví dụ thực tế, gần gũi**.  
-- Nội dung chia thành nhiều mục, mỗi mục tương ứng với một bài báo.  
-- **Sắp xếp thứ tự** các bài báo theo **điểm tương quan với lĩnh vực quan tâm của công ty** (càng liên quan thì càng ở đầu bản tin).  
-- Với các từ ngữ chuyên ngành, khi dịch sang tiếng việt phải có từ gốc tiếng anh đi kèm. Ví dụ ` Trí tuệ nhân tạo (Artificial Intelligence) `
-## Bố cục bản tin
-1. **Tiêu đề bản tin**  
- Ngắn gọn, hấp dẫn, phản ánh đúng tinh thần (ví dụ: *Xu hướng mới trong AI và Điện toán đám mây*).  
+### Running the System
 
-2. **Mở đầu**  
- - Một đoạn ngắn tóm tắt nội dung chung của bản tin (ví dụ: "Trong tuần qua, nhiều nghiên cứu quan trọng xoay quanh AI và Cloud đã được công bố. Dưới đây là những điểm nổi bật.").  
+```bash
+cd FCI_NewsAgents
+python main.py
+```
 
-3. **Các mục bài báo**  
- Với mỗi bài báo, trình bày theo cấu trúc:  
- - **Tên bài báo** (dịch hoặc giữ nguyên tùy nội dung).  
- - **Nguồn & thời gian công bố**.  
- - **Tóm tắt ngắn gọn**: giải thích bằng ngôn ngữ dễ hiểu.  
- - **Ý nghĩa thực tiễn**: nếu có thể, minh họa bằng một ví dụ ứng dụng trong đời sống hoặc trong lĩnh vực Cloud/AI, nhưng đừng đề cập cụ thể đến công ty được hưởng lợi như nào.  
+The system will:
+1. Scrape articles from NeuronDaily, TechRepublic, and Google Research Blog
+2. Scrape papers from arXiv cs.AI (default: 50 papers)
+3. Filter content using LLM-based guardrails
+4. Generate a Vietnamese tech report
+5. Save the report to `workflow_output/ai_news_report_YYYYMMDD_HHMMSS.md`
 
+## 🔧 Configuration
 
-4. **Kết luận**  
- Một đoạn ngắn tổng kết, nhấn mạnh ý nghĩa chung đối với FPT Smart Cloud và định hướng nghiên cứu/ứng dụng.  
+Edit `core/config.py` to adjust limits:
 
-## Quy tắc đặc biệt
-- Luôn viết theo **dạng tin tức công nghệ** (bản tin công ty).  
-- Không phân tích quá sâu về toán học/kỹ thuật, mà tập trung vào **ứng dụng và ý nghĩa**.  
-- Khi có nhiều bài báo liên quan cùng chủ đề, hãy **gộp thành một nhóm** để tránh trùng lặp.  
-- Đầu ra phải là một bản tin hoàn chỉnh, dễ đọc, có cấu trúc rõ ràng.  
-- Sau khi đưa ra kết luận hãy dẫn link tới các bài báo được đề cập trong bản tin, tham khảo cấu trúc dưới đây:
+```python
+@dataclass
+class GuardrailsConfig:
+    MIN_DOCUMENTS_TO_SCRAPE: int = 50   # Minimum papers to scrape
+    MAX_PAPERS_READ: int = 5            # Max papers to process
+    MAX_ARTICLES_READ: int = 5          # Max articles to process
+```
 
-| Bài báo | Link |
-|---|---|
-| ButterflyQuant | http://arxiv.org/pdf/2509.09679v1 |
-| Long Horizon Execution | http://arxiv.org/pdf/2509.09677v1 |
-| CDE – Curiosity Driven Exploration | http://arxiv.org/pdf/2509.09675v1 |
-| SimpleVLA-RL | http://arxiv.org/pdf/2509.09674v1 |
-| FG-FARL | http://arxiv.org/pdf/2509.09655v1 |
+## 📝 Key Components
 
+### 1. Scrapers (`services/scrapers/`)
+
+#### Article Scrapers
+- **NeuronDailyScraper**: Scrapes AI news from theneurondaily.com
+- **TechRepublicScraper**: Scrapes AI articles from TechRepublic RSS feed (uses Selenium for dynamic content)
+- **GoogleResearchScraper**: Scrapes blog posts from Google Research Blog
+
+#### Paper Scraper
+- **csai_scraper**: Fetches papers from arXiv's Computer Science - Artificial Intelligence category
+
+All scrapers extend `BaseScraper` and return `List[Dict[str, Any]]`.
+
+Why i splitted the scrapers into Articles and Documents:
+1. Because the papers scraped from Arxiv is only contains the `Abstract`, which is quite short while the Articles is much longer, split them up will be easier to manage.
+2. Since the articles are longer in context, it will be easier to control the context window passed to the final LLM by limit the Article or Paper individually.
+
+### 2. LangGraph Workflow (`workflows/workflow_builder.py`)
+
+Three-node workflow:
+
+1. **Data Loader Node**: Combines papers and articles into unified document list
+2. **Guardrails Node**: Uses LLM to filter documents (output: "0" or "1")
+3. **Generate Node**: Creates Vietnamese report using filtered documents
+
+### 3. LLM Integration (`services/llm/`)
+
+Unified interface supporting:
+- **Gemini** (default): `gemini-2.5-flash` for filtering, `gemini-2.5-pro` for generation
+- **GPT**: OpenAI models (FPT's self-hosted GPT-oss-120B)
+
+### 4. Document Model (`models/document.py`)
+
+```python
+@dataclass
+class Document:
+    url: str
+    title: str
+    summary: str
+    source: str
+    authors: List[str]
+    published_date: datetime
+    content_type: str  # "paper" | "article" | "tweet"
+```
+
+## 🛠️ Adding New Scrapers
+
+1. Create a new scraper class extending `BaseScraper`:
+
+```python
+class MyNewScraper(BaseScraper):
+    def get_name(self) -> str:
+        return "MySource"
+    
+    def scrape(self) -> List[Dict[str, Any]]:
+        # Your scraping logic
+        return articles
+```
+
+2. Register in `scrape_articles()` function:
+
+```python
+def scrape_articles() -> List[Dict[str, Any]]:
+    scrapers = [
+        NeuronDailyScraper(),
+        TechRepublicScraper(),
+        GoogleResearchScraper(),
+        MyNewScraper()  # Add here
+    ]
+    # ... rest of the code
+```
+
+## 📊 Output Example
+
+Generated reports include:
+- 📰 Catchy Vietnamese title
+- 📝 Executive summary
+- 📚 Detailed sections per article/paper with:
+  - Title (Vietnamese + English)
+  - Source and publication date
+  - Simplified explanation
+  - Practical applications
+- 🔗 Reference table with links to all sources
+- 💡 Conclusion with insights for FPT Smart Cloud
+
+## 🔍 Guardrails System
+
+The guardrails agent evaluates each document against company interests:
+
+**Input**: Document metadata (title, abstract, source, date)  
+**Processing**: LLM evaluation against FCI's focus areas  
+**Output**: Binary decision ("0" = reject, "1" = accept)
+
+Priority given to recently published content (within 1 week).
+
+## 🌐 Technologies Used
+
+- **LangGraph**: Workflow orchestration
+- **Google Gemini**: Primary LLM for filtering and generation
+- **OpenAI GPT**: Alternative LLM option
+- **BeautifulSoup4**: Web scraping
+- **Selenium**: Dynamic content scraping
+- **Feedparser**: RSS feed parsing
+- **arXiv API**: Academic paper retrieval
+
+## 📈 Recent Updates
+
+### Latest Refactoring (Current Version)
+- ✅ **Removed database dependency**: No more JSON file storage
+- ✅ **In-memory data flow**: Direct list passing from scrapers to workflow
+- ✅ **Simplified scrapers**: No duplicate checking against database
+- ✅ **Cleaner architecture**: Better separation of concerns
+- ✅ **Fresh data guarantee**: Always processes most recent content
+
+### Previous System
+The old system used JSON files (`papers.json`, `articles.json`) to store scraped data, with the `DatabaseOperation` class managing persistence. This has been replaced with a streaming architecture for better freshness.
+
+## 🎓 Use Case
+
+This system is designed for **FPT Smart Cloud's internal tech newsletter**, helping the team stay updated on:
+- Latest AI research relevant to cloud services
+- Emerging cloud computing technologies
+- Practical applications in data engineering
+- Security developments in AI/cloud
+
+Reports are generated in **Vietnamese** for easy consumption by the Vietnamese-speaking team, with technical terms provided in both Vietnamese and English.
+
+## 📄 License
+
+Internal tool for FPT Smart Cloud (FCI).
+
+## 🤝 Contributing
+
+To add new features:
+1. Create new scrapers by extending `BaseScraper`
+2. Modify workflow nodes in `workflow_builder.py`
+3. Adjust prompts in `prompts/` directory
+4. Update configuration in `core/config.py`
