@@ -2,7 +2,9 @@ import requests
 import os
 import dotenv
 
-def call_llm(api_key, user_prompt, system_prompt):
+def call_gpt(user_prompt, system_prompt):
+    dotenv.load_dotenv()
+    api_key = os.getenv("FPT_120B")
     url = "https://mkp-api.fptcloud.com/v1/chat/completions"
     headers = {
         "Content-Type": "application/json",
@@ -21,7 +23,6 @@ def call_llm(api_key, user_prompt, system_prompt):
 
     response = requests.post(url, headers=headers, json=data)
 
-    print("Status code:", response.status_code)
     data = response.json()
     return data['choices'][0]['message']['content']
 
@@ -33,4 +34,4 @@ if __name__ == "__main__":
         print("Get api key successfully")
     else:
         raise Exception("API key does not exist")
-    print(call_llm(api_key, "Print a question mark", "If you can see this system prompt, add a question before the question mark."))
+    print(call_gpt("Print a question mark", "If you can see this system prompt, add a question before the question mark."))

@@ -326,3 +326,4 @@ def fetch_tweets_by_username(username: str, num_posts: int = 5):
 if __name__ == "__main__":
     username = "elonmusk"
     result = fetch_tweets_by_username(username)
+    print(result)

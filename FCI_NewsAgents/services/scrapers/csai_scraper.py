@@ -45,6 +45,16 @@ def scrape_arxiv_cs_ai(max_results=10, sort_by="submittedDate"):
 
     return papers
  
+def scrape_papers(max_results=50) -> list:
+    """
+    Scrape arXiv papers and return them as a list
+    (no saving to database)
+    """
+    print(f"Scraping {max_results} papers from arXiv cs.AI...")
+    papers = scrape_arxiv_cs_ai(max_results=max_results, sort_by="submittedDate")
+    print(f"Successfully scraped {len(papers)} papers")
+    return papers
+
 def add_scraped_paper(filepath : str, papers: list):
     if not filepath.endswith(".json"):
         raise Exception("The filepath should be a json file.")
@@ -57,9 +67,9 @@ def add_scraped_paper(filepath : str, papers: list):
         with open(filepath, 'r') as f:
             existed_papers = json.load(f)
         new_papers = []
-        existed_paper_id = set([p['arxiv_url'] for p in existed_papers])
+        existed_paper_id = set([p['url'] for p in existed_papers])
         for paper in papers:
-            if paper['arxiv_url'] not in existed_paper_id:
+            if paper['url'] not in existed_paper_id:
                 new_papers.append(paper)
         if len(new_papers) > 0:
             with open(filepath, 'w', encoding='utf-8') as f:
@@ -70,13 +80,13 @@ def add_scraped_paper(filepath : str, papers: list):
 
 # Example usage
 if __name__ == "__main__":
-    results = scrape_arxiv_cs_ai(max_results=20)
+    results = scrape_arxiv_cs_ai(max_results=100)
     # for i, paper in enumerate(results, 1):
     #     print(f"\n{i}. {paper['title']}")
     #     print(f"   Authors: {', '.join(paper['authors'])}")
     #     print(f"   Published: {paper['published']}")
     #     print(f"   PDF: {paper['pdf_url']}")
-    filepath = "papers.json"
+    filepath = r"FCI_NewsAgents\database\papers.json"
     add_scraped_paper(filepath, results)
     
     
