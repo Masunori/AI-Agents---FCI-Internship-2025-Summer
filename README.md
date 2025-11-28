@@ -1,5 +1,37 @@
-
 ### Environment Setup
+
+#### 1. Create Virtual Environment
+
+Create a virtual environment named `agents_env`:
+
+```bash
+# Windows
+python -m venv agents_env
+
+# macOS/Linux
+python3 -m venv agents_env
+```
+
+#### 2. Activate Virtual Environment
+
+```bash
+# Windows (PowerShell)
+.\agents_env\Scripts\Activate.ps1
+
+# Windows (Command Prompt)
+.\agents_env\Scripts\activate.bat
+
+# macOS/Linux
+source agents_env/bin/activate
+```
+
+#### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+#### 4. Configure API Keys
 
 Create a `.env` file in the root directory:
 
@@ -8,7 +40,10 @@ GEMINI_API_KEY=your_gemini_api_key_here
 OPENAI_API_KEY=your_openai_api_key_here  # Get the key for FPT's GPT-oss-120B
 ```
 
+For clarification, you can check the `services/llm/` folder to see how the `.env` variables are extracted.
 ### Running the System
+
+#### Option 1: CLI Version (Original)
 
 ```bash
 cd FCI_NewsAgents
@@ -16,23 +51,48 @@ python main.py
 ```
 
 The system will:
-1. Scrape articles from NeuronDaily, TechRepublic, and Google Research Blog
-2. Scrape papers from arXiv cs.AI (default: 50 papers)
+1. Scrape articles from NeuronDaily, TechRepublic, Google Research Blog, and MIT News
+2. Scrape papers from arXiv cs.AI (default: 30 papers)
 3. Filter content using LLM-based guardrails
 4. Generate a Vietnamese tech report
 5. Save the report to `workflow_output/ai_news_report_YYYYMMDD_HHMMSS.md`
 
+#### Option 2: Streamlit Web UI (Recommended)
+
+```bash
+streamlit run streamlit_app.py
+```
+
+The Streamlit interface provides:
+- **Interactive Configuration**: Adjust scraping limits, processing parameters via UI
+- **Real-time Progress**: Visual progress bars and live execution logs
+- **Report Management**: View, download, and browse all previously generated reports
+- **Environment Check**: Verify API key configuration
+- **Filtered Logs**: Clean output without verbose Selenium/Chrome warnings
+
+**Streamlit Features:**
+- Configure papers to scrape (10-100, default: 30)
+- Enable/disable parallel scraping with adjustable workers (2-8)
+- Set MAX_PAPERS_READ (1-20, default: 10)
+- Set MAX_ARTICLES_READ (1-20, default: 10)
+- Set MAX_DOCUMENTS_TO_LLM (1-20, default: 10)
+- View all generated reports in one place
+- Download reports as `.md` files
+
 ## 🔧 Configuration
 
-Edit `core/config.py` to adjust limits:
+Edit `core/config.py` to adjust default limits:
 
 ```python
 @dataclass
 class GuardrailsConfig:
-    MIN_DOCUMENTS_TO_SCRAPE: int = 50   # Minimum papers to scrape
     MAX_PAPERS_READ: int = 5            # Max papers to process
-    MAX_ARTICLES_READ: int = 5          # Max articles to process
+    MAX_TWEETS_PER_USER: int = 5        # Max tweets per user
+    MAX_ARTICLES_READ: int = 10         # Max articles to process
+    MAX_DOCUMENTS_TO_LLM: int = 10      # Max documents in final report
 ```
+
+> **Note**: When using the Streamlit UI, these values can be overridden via the sidebar controls without editing the config file.
 
 ## 📝 Key Components
 
@@ -42,11 +102,14 @@ class GuardrailsConfig:
 - **NeuronDailyScraper**: Scrapes AI news from theneurondaily.com
 - **TechRepublicScraper**: Scrapes AI articles from TechRepublic RSS feed (uses Selenium for dynamic content)
 - **GoogleResearchScraper**: Scrapes blog posts from Google Research Blog
+- **MITNewsScraper**: Scrapes AI-related news from MIT News
 
 #### Paper Scraper
 - **csai_scraper**: Fetches papers from arXiv's Computer Science - Artificial Intelligence category
 
 All scrapers extend `BaseScraper` and return `List[Dict[str, Any]]`.
+
+**Parallel Scraping**: The system supports parallel article scraping with configurable max_workers (default: 4) for improved performance.
 
 Why i splitted the scrapers into Articles and Documents:
 1. Because the papers scraped from Arxiv is only contains the `Abstract`, which is quite short while the Articles is much longer, split them up will be easier to manage.
@@ -77,7 +140,7 @@ class Document:
     source: str
     authors: List[str]
     published_date: datetime
-    content_type: str  # "paper" | "article" | "tweet"
+    content_type: str  # "paper" | "article"
 ```
 
 ## 🛠️ Adding New Scrapers
@@ -102,6 +165,7 @@ def scrape_articles() -> List[Dict[str, Any]]:
         NeuronDailyScraper(),
         TechRepublicScraper(),
         GoogleResearchScraper(),
+        MITNewsScraper(),
         MyNewScraper()  # Add here
     ]
     # ... rest of the code
@@ -139,10 +203,14 @@ Priority given to recently published content (within 1 week).
 - **Selenium**: Dynamic content scraping
 - **Feedparser**: RSS feed parsing
 - **arXiv API**: Academic paper retrieval
+- **Streamlit**: Interactive web UI
 
 ## 📈 Recent Updates
 
 ### Latest Refactoring (Current Version)
+- ✅ **Streamlit Web UI**: Interactive interface with real-time progress tracking
+- ✅ **Parallel Scraping**: Configurable concurrent execution with ThreadPoolExecutor
+- ✅ **MIT News Integration**: Added fourth article scraper for MIT AI news
 - ✅ **Removed database dependency**: No more JSON file storage
 - ✅ **In-memory data flow**: Direct list passing from scrapers to workflow
 - ✅ **Simplified scrapers**: No duplicate checking against database
@@ -173,3 +241,5 @@ To add new features:
 2. Modify workflow nodes in `workflow_builder.py`
 3. Adjust prompts in `prompts/` directory
 4. Update configuration in `core/config.py`
+5. Enhance Streamlit UI in `streamlit_app.py`
+

@@ -3,8 +3,6 @@ from datetime import datetime, timezone
 from typing import List
 import os
 from FCI_NewsAgents.models.document import Document
-from FCI_NewsAgents.services.scrapers.get_tweet_by_username import fetch_tweets_by_username
-from FCI_NewsAgents.services.scrapers.get_tweet_by_url import extracting_tweet_info
 from FCI_NewsAgents.core.config import GuardrailsConfig
 
 
@@ -109,103 +107,103 @@ def convert_article_to_document(article_data: dict, source: str = "Article") -> 
     )
 
 
-def scrape_tweets_by_usernames(x_scraped_list_path: str, config: GuardrailsConfig) -> List[Document]:
-    """Scrape tweets from usernames listed in x_scrapelist.json"""
-    tweet_documents = []
+# def scrape_tweets_by_usernames(x_scraped_list_path: str, config: GuardrailsConfig) -> List[Document]:
+#     """Scrape tweets from usernames listed in x_scrapelist.json"""
+#     tweet_documents = []
     
-    if not os.path.exists(x_scraped_list_path):
-        print(f"Twitter username list file not found: {x_scraped_list_path}")
-        return tweet_documents
+#     if not os.path.exists(x_scraped_list_path):
+#         print(f"Twitter username list file not found: {x_scraped_list_path}")
+#         return tweet_documents
     
-    try:
-        with open(x_scraped_list_path, 'r', encoding='utf-8') as f:
-            scrape_data = json.load(f)
+#     try:
+#         with open(x_scraped_list_path, 'r', encoding='utf-8') as f:
+#             scrape_data = json.load(f)
         
-        # Handle the array structure from x_scrapelist.json
-        if isinstance(scrape_data, list) and len(scrape_data) > 0:
-            # Get the first object in the array
-            data_obj = scrape_data[0]
-            usernames = data_obj.get('users_list', [])
-        else:
-            print("Invalid format in x_scrapelist.json")
-            return tweet_documents
+#         # Handle the array structure from x_scrapelist.json
+#         if isinstance(scrape_data, list) and len(scrape_data) > 0:
+#             # Get the first object in the array
+#             data_obj = scrape_data[0]
+#             usernames = data_obj.get('users_list', [])
+#         else:
+#             print("Invalid format in x_scrapelist.json")
+#             return tweet_documents
         
-        print(f"Found {len(usernames)} usernames to scrape")
+#         print(f"Found {len(usernames)} usernames to scrape")
         
-        for username in usernames:
-            try:
-                print(f"Scraping tweets from @{username}...")
-                tweets_result = fetch_tweets_by_username(username, config.MAX_TWEETS_PER_USER)
+#         for username in usernames:
+#             try:
+#                 print(f"Scraping tweets from @{username}...")
+#                 tweets_result = fetch_tweets_by_username(username, config.MAX_TWEETS_PER_USER)
                 
-                if tweets_result['success'] and tweets_result['tweets']:
-                    for tweet in tweets_result['tweets']:
-                        tweet_doc = convert_tweet_to_document(tweet, "Twitter_Username")
-                        tweet_documents.append(tweet_doc)
-                    print(f"Successfully scraped {len(tweets_result['tweets'])} tweets from @{username}")
-                else:
-                    print(f"Failed to scrape tweets from @{username}: {tweets_result.get('error', 'Unknown error')}")
+#                 if tweets_result['success'] and tweets_result['tweets']:
+#                     for tweet in tweets_result['tweets']:
+#                         tweet_doc = convert_tweet_to_document(tweet, "Twitter_Username")
+#                         tweet_documents.append(tweet_doc)
+#                     print(f"Successfully scraped {len(tweets_result['tweets'])} tweets from @{username}")
+#                 else:
+#                     print(f"Failed to scrape tweets from @{username}: {tweets_result.get('error', 'Unknown error')}")
                     
-            except Exception as e:
-                print(f"Error scraping tweets from @{username}: {e}")
+#             except Exception as e:
+#                 print(f"Error scraping tweets from @{username}: {e}")
                 
-    except Exception as e:
-        print(f"Error reading username list: {e}")
+#     except Exception as e:
+#         print(f"Error reading username list: {e}")
     
-    return tweet_documents
+#     return tweet_documents
 
-def scrape_tweets_by_urls(url_list: List[str]) -> List[Document]:
-    """Scrape tweets from URLs"""
-    tweet_documents = []
+# def scrape_tweets_by_urls(url_list: List[str]) -> List[Document]:
+#     """Scrape tweets from URLs"""
+#     tweet_documents = []
     
-    for url in url_list:
-        try:
-            print(f"Scraping tweet from URL: {url}")
-            tweet_result = extracting_tweet_info(url)
+#     for url in url_list:
+#         try:
+#             print(f"Scraping tweet from URL: {url}")
+#             tweet_result = extracting_tweet_info(url)
             
-            if tweet_result['success'] and tweet_result['tweets']:
-                for tweet in tweet_result['tweets']:
-                    tweet_doc = convert_tweet_to_document(tweet, "Twitter_URL")
-                    tweet_documents.append(tweet_doc)
+#             if tweet_result['success'] and tweet_result['tweets']:
+#                 for tweet in tweet_result['tweets']:
+#                     tweet_doc = convert_tweet_to_document(tweet, "Twitter_URL")
+#                     tweet_documents.append(tweet_doc)
                 
-                # Handle quoted tweets if any
-                if 'quoted_tweets' in tweet_result:
-                    for quoted_tweet in tweet_result['quoted_tweets']:
-                        quoted_doc = convert_tweet_to_document(quoted_tweet, "Twitter_Quoted")
-                        tweet_documents.append(quoted_doc)
+#                 # Handle quoted tweets if any
+#                 if 'quoted_tweets' in tweet_result:
+#                     for quoted_tweet in tweet_result['quoted_tweets']:
+#                         quoted_doc = convert_tweet_to_document(quoted_tweet, "Twitter_Quoted")
+#                         tweet_documents.append(quoted_doc)
                         
-                print(f"Successfully scraped tweet from URL: {url}")
-            else:
-                print(f"Failed to scrape tweet from URL {url}: {tweet_result.get('error', 'Unknown error')}")
+#                 print(f"Successfully scraped tweet from URL: {url}")
+#             else:
+#                 print(f"Failed to scrape tweet from URL {url}: {tweet_result.get('error', 'Unknown error')}")
                 
-        except Exception as e:
-            print(f"Error scraping tweet from URL {url}: {e}")
+#         except Exception as e:
+#             print(f"Error scraping tweet from URL {url}: {e}")
     
-    return tweet_documents
+#     return tweet_documents
 
-def get_tweet_urls(x_scraped_list_path: str) -> List[str]:
-    """Get tweet URLs from x_scrapelist.json"""
-    tweet_urls = []
+# def get_tweet_urls(x_scraped_list_path: str) -> List[str]:
+#     """Get tweet URLs from x_scrapelist.json"""
+#     tweet_urls = []
     
-    if not os.path.exists(x_scraped_list_path):
-        print(f"Twitter config file not found: {x_scraped_list_path}")
-        return tweet_urls
+#     if not os.path.exists(x_scraped_list_path):
+#         print(f"Twitter config file not found: {x_scraped_list_path}")
+#         return tweet_urls
     
-    try:
-        with open(x_scraped_list_path, 'r', encoding='utf-8') as f:
-            scrape_data = json.load(f)
+#     try:
+#         with open(x_scraped_list_path, 'r', encoding='utf-8') as f:
+#             scrape_data = json.load(f)
         
-        # Handle the array structure from x_scrapelist.json
-        if isinstance(scrape_data, list) and len(scrape_data) > 0:
-            # Get the first object in the array
-            data_obj = scrape_data[0]
-            tweet_urls = data_obj.get('post_urls', [])
-        else:
-            print("Invalid format in x_scrapelist.json")
+#         # Handle the array structure from x_scrapelist.json
+#         if isinstance(scrape_data, list) and len(scrape_data) > 0:
+#             # Get the first object in the array
+#             data_obj = scrape_data[0]
+#             tweet_urls = data_obj.get('post_urls', [])
+#         else:
+#             print("Invalid format in x_scrapelist.json")
     
-    except Exception as e:
-        print(f"Error reading tweet URLs: {e}")
+#     except Exception as e:
+#         print(f"Error reading tweet URLs: {e}")
     
-    return tweet_urls
+#     return tweet_urls
 
 def save_report(report: str, output_path: str = "ai_news_report.md"):
     '''Save the final report to a markdown file'''
