@@ -1,12 +1,15 @@
 #langgraph workflow state
-from dataclasses import dataclass, field
-import sys
 import os
-from typing import List, Dict
+import sys
+from dataclasses import dataclass, field
+from typing import Dict, List
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 
-from FCI_NewsAgents.models.document import Document
 from FCI_NewsAgents.core.config import GuardrailsConfig
+from FCI_NewsAgents.models.document import Document
+
+
 @dataclass
 class WorkflowState:
     '''Langgraph workflow state'''

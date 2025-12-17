@@ -1,5 +1,6 @@
 guardrail_prompt_path = r"FCI_NewsAgents\prompts\guardrails_prompt.md"
 generation_prompt_path = r"FCI_NewsAgents\prompts\report_generation_prompt.md"
+
 def get_guardrails_prompt() -> str:
     try:
         with open(guardrail_prompt_path, 'r', encoding= 'utf-8') as f:

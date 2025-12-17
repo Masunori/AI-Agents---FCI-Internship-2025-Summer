@@ -24,6 +24,10 @@ def call_gpt(user_prompt, system_prompt):
     response = requests.post(url, headers=headers, json=data)
 
     data = response.json()
+
+    # from pprint import pprint
+    # pprint(data)
+
     return data['choices'][0]['message']['content']
 
 

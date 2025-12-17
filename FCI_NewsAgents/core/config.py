@@ -11,7 +11,7 @@ class GuardrailsConfig:
     MAX_TWEETS_PER_USER: int = 5
     
     # Articles Settings
-    MAX_ARTICLES_READ = 10
+    MAX_ARTICLES_READ: int = 10
 
     # Generation node limit
-    MAX_DOCUMENTS_TO_LLM = 10
+    MAX_DOCUMENTS_TO_LLM: int = 10

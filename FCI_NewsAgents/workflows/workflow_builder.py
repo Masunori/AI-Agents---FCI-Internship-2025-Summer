@@ -135,7 +135,7 @@ class GuardRails_Rerank_Workflow:
             """
             
             # Get score from LLM
-            response = call_llm(message, self.guardrails_system_prompt, model_used="gemini")
+            response = call_llm(message, self.guardrails_system_prompt, model_used="gpt")
             
             try:
                 # Parse the float score
@@ -222,7 +222,7 @@ class GuardRails_Rerank_Workflow:
         #generate reports using LLM
         try:
             messages = f"Hãy viết cho tôi một bản tin công nghệ dựa trên các thông tin được cung cấp sau, cho biết thời gian hiện tại là {get_time()} hãy chọn ra top {self.config.MAX_DOCUMENTS_TO_LLM} thú vị nhất: \n\n{context}"
-            response = call_llm(messages, self.report_generation_system_prompt, model_used="gemini", gemini_model="gemini-2.5-pro")
+            response = call_llm(messages, self.report_generation_system_prompt, model_used="gpt")
             state.final_report = response
             
         except Exception as e:

@@ -17,7 +17,7 @@ if __name__ == "__main__":
     print("="*50)
     print("SCRAPING ARTICLES")
     print("="*50)
-    article_dicts = scrape_articles(parallel=True, max_workers=4)
+    article_dicts = scrape_articles(parallel=True)
     articles = [convert_article_to_document(a) for a in article_dicts]
     
     # Scrape papers
