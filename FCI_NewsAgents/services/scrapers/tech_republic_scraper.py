@@ -11,7 +11,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium_stealth import stealth
 
 from FCI_NewsAgents.services.scrapers.base_scraper import BaseScraper
-from FCI_NewsAgents.services.scrapers.scraper_utils import Article
+from FCI_NewsAgents.models.article import Article
 from FCI_NewsAgents.services.scrapers.registry import register
 
 

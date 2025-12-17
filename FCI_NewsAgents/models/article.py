@@ -4,9 +4,9 @@ import datetime as datetime_module
 @dataclass
 class Article:
     """
-    Dataclass representing a scraped article.
+    Dataclass representing a scraped article. Used in the scraping process.
 
-    - When creating an Article instance, at least one of 'title' or 'summary' must be provided.
+    - When creating an Article instance, at least one of `title` or `summary` must be provided.
     - When scraping articles, it is the most ideal to include published_date and authors if available.
 
     Attributes:
@@ -27,5 +27,6 @@ class Article:
         if self.title == "" and self.summary == "":
             raise ValueError("Either title or summary must be provided.")
         
+        # Set published_date to current time if not provided (for processing consistency)
         if self.published_date == "":
             self.published_date = datetime_module.datetime.now().isoformat()

@@ -5,3 +5,4 @@ test
 workflow_output
 .vscode
 dummy.py
+FCI_NewsAgents/services/article_url_cache/data/*

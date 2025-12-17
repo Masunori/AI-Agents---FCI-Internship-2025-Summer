@@ -51,13 +51,15 @@ def _run_scraper_safe(scraper: BaseScraper) -> tuple:
         return (scraper_name, [], error_msg, duration)
 
 
-def scrape_articles(parallel: bool = True, max_workers: int = 1) -> List[Dict[str, Any]]:
+def scrape_articles(parallel: bool = True, max_workers: int = -1) -> List[Dict[str, Any]]:
     """
     Run all article scrapers and return results as a list.
+
+    If `max_workers` is -1, use 1 worker per scraper, capped at 16 workers. `max_workers` is ignored if `parallel` is False.
     
     Args:
         parallel: If True, run scrapers in parallel. If False, run sequentially (default: True)
-        max_workers: Maximum number of concurrent threads (default: 7)
+        max_workers: Maximum number of concurrent threads (default: -1)
         
     Returns:
         List of article dictionaries from all scrapers
@@ -66,7 +68,9 @@ def scrape_articles(parallel: bool = True, max_workers: int = 1) -> List[Dict[st
     overall_start_time = time.time()
 
     scrapers = [scraper_cls() for scraper_cls in SCRAPERS.values()]
-    # scrapers = [SCRAPERS['NVIDIADevBlog'](),]
+
+    if max_workers == -1:
+        max_workers = min(len(scrapers), 16)
     
     all_articles = []
     scraping_stats = {
