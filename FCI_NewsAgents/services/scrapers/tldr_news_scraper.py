@@ -1,12 +1,12 @@
 import datetime as datetime_module
-from dataclasses import asdict
 from typing import Any, Dict, List
+import re
 
 import feedparser
 from bs4 import BeautifulSoup
 
-from FCI_NewsAgents.services.scrapers.base_scraper import BaseScraper
 from FCI_NewsAgents.models.article import Article
+from FCI_NewsAgents.services.scrapers.base_scraper import BaseScraper
 from FCI_NewsAgents.services.scrapers.registry import register
 
 
@@ -30,9 +30,20 @@ class TLDRNewsScraper(BaseScraper):
     def get_name(self) -> str:
         return "TLDRNews"
     
-    def scrape(self) -> List[Dict[str, Any]]:
+    def strip_read_time(self, title: str) -> str:
+        """
+        Strip 'X min read' from the given title
+
+        Args:
+            title (str): The article title of format "Some Title (xx min read)"
+        Returns:
+            str: The title without the read time.
+        """
+        return re.sub(r"\s*\(\d+\s+minutes?\s+read\)\s*$", "", title)
+    
+    def scrape(self) -> List[Article]:
         """Scrape articles from TLDR News RSS feed"""
-        article_list: List[Dict[str, Any]] = []
+        article_list: List[Article] = []
 
         for rss_url, days_ago in self.__rss_urls_to_days_ago.items():
             ytd_str = (datetime_module.date.today() - datetime_module.timedelta(days=days_ago)).strftime("%Y-%m-%d")
@@ -55,14 +66,14 @@ class TLDRNewsScraper(BaseScraper):
                         summary = summary_div.get_text(separator="\n", strip=True) if summary_div else "No summary available."
 
                         article = Article(
-                            title=title,
+                            title=self.strip_read_time(title),
                             url=url,
                             summary=summary,
                             published_date="",
                             authors="",
                         )
 
-                        article_list.append(asdict(article))
+                        article_list.append(article)
                     except Exception as e:
                         print(f"Error processing TLDR article: {e}")
                         continue

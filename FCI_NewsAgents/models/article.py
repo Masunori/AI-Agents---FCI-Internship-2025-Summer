@@ -1,5 +1,7 @@
+import datetime
 from dataclasses import dataclass
-import datetime as datetime_module
+from typing import List
+
 
 @dataclass
 class Article:
@@ -14,19 +16,34 @@ class Article:
         url (str): The URL of the article
         summary (str): A brief summary of the article
         published_date (str): The published date of the article in ISO format
-        authors (str): The authors of the article
+        authors (str | List[str]): The author(s) of the article
     """
     url: str
     title: str = ""
     summary: str = ""
     published_date: str = ""
-    authors: str = ""
+    authors: str | List[str] = ""
 
     def __post_init__(self):
         # Validate that at least title or summary is provided
-        if self.title == "" and self.summary == "":
-            raise ValueError("Either title or summary must be provided.")
+        if self.title == "":
+            if self.summary == "":
+                raise ValueError("Either title or summary must be provided.")
+            else:
+                self.title = "Untitled Article"
+        
+        if self.summary == "":
+            if self.title == "":
+                raise ValueError("Either title or summary must be provided.")
+            else:
+                self.summary = ""
         
         # Set published_date to current time if not provided (for processing consistency)
         if self.published_date == "":
-            self.published_date = datetime_module.datetime.now().isoformat()
+            self.published_date = datetime.datetime.now().isoformat()
+
+        # Default authors to "Unknown" if not provided
+        if self.authors == "":
+            self.authors = "Unknown"
+
+        

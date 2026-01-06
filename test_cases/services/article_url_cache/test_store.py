@@ -1,57 +1,108 @@
 import os
 import sys
+from datetime import date, timedelta
 from pathlib import Path
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
-from FCI_NewsAgents.services.article_url_cache.store import DedupStore
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+from FCI_NewsAgents.services.article_url_cache.store import ArticleURLStore
 
 
-def test_dedup_store(tmp_path: Path):
+def test_dedup_store_insert_different_days(tmp_path: Path):
     db_path = tmp_path / "test_article_cache__002.db"
 
     if db_path.exists():
         db_path.unlink()
-    
-    store = DedupStore(db_path)
 
-    single_article = ("https://example.com/article0", "2024-06-01")
+    store = ArticleURLStore(db_path)
+    today = date.today().isoformat()
+    yesterday = (date.today() - timedelta(days=1)).isoformat()
 
     articles = [
-        ("https://example.com/article1", "2024-06-02"),
-        ("https://example.com/article2", "2024-06-03"),
-        ("https://example.com/article3", "2024-06-04"),
+        ("https://example.com/article1", yesterday),
+        ("https://example.com/article2", yesterday),
+        ("https://example.com/article1", today),  # Same URL, different day
+        ("https://example.com/article3", today),
     ]
 
-    half_dedup_articles = [
-        ("https://example.com/article2", "2024-06-03"),  # duplicate
-        ("https://example.com/article3", "2024-06-04"),  # duplicate
-        ("https://example.com/article4", "2024-06-05"),  # new
+    # Initially, none of the URLs should exist
+    for url, _ in articles:
+        assert not store.exists(url), f"URL {url} should not exist initially."
+
+    # Insert articles and check existence
+    assert store.insert_if_new(articles[0][0], articles[0][1]), f"URL {articles[0][0]} of date {articles[0][1]} should be inserted."
+    assert store.insert_if_new(articles[1][0], articles[1][1]), f"URL {articles[1][0]} of date {articles[1][1]} should be inserted."
+    assert not store.insert_if_new(articles[2][0], articles[2][1]), f"URL {articles[2][0]} of date {articles[2][1]} should NOT be inserted again."
+    assert store.insert_if_new(articles[3][0], articles[3][1]), f"URL {articles[3][0]} of date {articles[3][1]} should be inserted."
+
+    # After all insertions, count should be 3 unique URLs
+    assert store.count() == 3, "There should be exactly 3 unique URLs in the store."
+
+    store.close()
+
+def test_dedup_store_insert_same_days(tmp_path: Path):
+    db_path = tmp_path / "test_article_cache__002.db"
+
+    if db_path.exists():
+        db_path.unlink()
+
+    store = ArticleURLStore(db_path)
+
+    today = date.today().isoformat()
+
+    articles = [
+        ("https://example.com/article1", today),
+        ("https://example.com/article2", today),
+        ("https://example.com/article1", today),  # Same URL, same day
     ]
 
-    # Existence check before insertion
+    # Initially, none of the URLs should exist
     for url, _ in articles:
-        assert not store.exists(url), f"URL {url} should not exist before insertion."
+        assert not store.exists(url), f"URL {url} should not exist initially."
 
-    # Insert 1 article
-    inserted = store.insert_if_new(single_article[0], single_article[1])
-    assert inserted, "Insertion should succeed for a new URL."
-    assert store.exists(single_article[0]), "URL should exist after insertion."
+    # Insert articles and check existence
+    assert store.insert_if_new(articles[0][0], articles[0][1]), f"URL {articles[0][0]} of date {articles[0][1]} should be inserted."
+    assert store.insert_if_new(articles[1][0], articles[1][1]), f"URL {articles[1][0]} of date {articles[1][1]} should be inserted."
+    assert store.insert_if_new(articles[2][0], articles[2][1]), f"URL {articles[2][0]} of date {articles[2][1]} should be considered new for the same day."
 
-    # Insert multiple articles
-    inserted_count = store.insert_many_if_new(articles)
-    assert inserted_count == len(articles), "All new URLs should be inserted."
+    # After all insertions, count should be 2 unique URLs
+    assert store.count() == 2, "There should be exactly 2 unique URLs in the store."
+
+    store.close()
+
+def test_dedup_store_insert_many(tmp_path: Path):
+    db_path = tmp_path / "test_article_cache__002.db"
+
+    if db_path.exists():
+        db_path.unlink()
+
+    store = ArticleURLStore(db_path)
+    today = date.today().isoformat()
+    yesterday = (date.today() - timedelta(days=1)).isoformat()
+
+    articles = [
+        ("https://example.com/article1", yesterday),
+        ("https://example.com/article2", today),
+        ("https://example.com/article1", today),  # Same URL, different day
+        ("https://example.com/article3", today),
+        ("https://example.com/article2", today),  # Same URL, different day
+    ]
+
+    second_batch = [
+        ("https://example.com/article4", today),
+        ("https://example.com/article1", yesterday),  # Duplicate from first batch
+    ]
+
+    # Initially, none of the URLs should exist
     for url, _ in articles:
-        assert store.exists(url), f"URL {url} should exist after insertion."
+        assert not store.exists(url), f"URL {url} should not exist initially."
 
-    # Attempt to re-insert existing articles
-    reinserted = store.insert_if_new(single_article[0], single_article[1])
-    assert not reinserted, "Re-insertion should fail for existing URL."
-    reinserted_count = store.insert_many_if_new(articles)
-    assert reinserted_count == 0, "No URLs should be re-inserted."
+    # Insert articles and check existence
+    results = store.insert_many_if_new(articles)
+    assert results == [True, True, False, True, True], "Insert many results do not match expected."
+    assert store.count() == 3, "There should be exactly 3 unique URLs in the store."
 
-    # Insert half deduplicated articles
-    half_inserted_count = store.insert_many_if_new(half_dedup_articles)
-    assert half_inserted_count == 1, "Only new URLs should be inserted."
-    assert store.exists("https://example.com/article4"), "New URL should exist after insertion."
+    # Insert second batch
+    assert store.insert_many_if_new(second_batch) == [True, False], "Second batch insert results do not match expected."
+    assert store.count() == 4, "There should be exactly 4 unique URLs in the store."
 
     store.close()

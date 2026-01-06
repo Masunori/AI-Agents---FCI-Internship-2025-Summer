@@ -1,13 +1,12 @@
 import datetime as datetime_module
-from dataclasses import asdict
 from typing import Any, Dict, List
 
 import requests
 from bs4 import BeautifulSoup
 
+from FCI_NewsAgents.models.article import Article
 from FCI_NewsAgents.services.scrapers.base_scraper import BaseScraper
 from FCI_NewsAgents.services.scrapers.registry import register
-from FCI_NewsAgents.models.article import Article
 
 
 @register("GoogleResearch")
@@ -63,7 +62,7 @@ class GoogleResearchScraper(BaseScraper):
             'summary': summary
         }
     
-    def scrape(self) -> List[Dict[str, Any]]:
+    def scrape(self) -> List[Article]:
         """Scrape articles from Google Research Blog"""
         print(f"Scraping articles from {self.blog_url}...")
         
@@ -77,7 +76,7 @@ class GoogleResearchScraper(BaseScraper):
         soup = BeautifulSoup(response.text, "html.parser")
         a_tags = soup.find_all("a", attrs={"class": "glue-card not-glue"})
         
-        blog_posts = []
+        blog_posts: List[Article] = []
         for a_tag in a_tags:
             try:
                 # Get the blog path from href (e.g., "/blog/article-name")
@@ -111,7 +110,7 @@ class GoogleResearchScraper(BaseScraper):
                     authors=content['authors'],
                 )
                 
-                blog_posts.append(asdict(article))
+                blog_posts.append(article)
                 
             except Exception as e:
                 print(f"Error processing article: {e}")

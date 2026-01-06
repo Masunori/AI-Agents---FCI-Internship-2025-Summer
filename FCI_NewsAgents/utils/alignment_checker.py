@@ -1,12 +1,19 @@
+import os
+import sys
+from queue import Queue
+from threading import Thread
+from typing import Dict, List, Literal, Tuple
+
+import numpy as np
+import requests
 from dotenv import load_dotenv
 from pydantic import BaseModel
-from typing import Dict, List, Literal, Tuple
-import numpy as np, os, requests, sys
 
-# To import Document class
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 
 from FCI_NewsAgents.models.document import Document
+from FCI_NewsAgents.utils.logger import file_writer
+
 
 class EmbeddingRequest(BaseModel):
     model: str
@@ -34,23 +41,18 @@ class EmbeddingResponse(BaseModel):
     data: List[DataItem]
     usage: UsageInfo
 
-
-def get_embedding(query_strings: List[str], key_strings: List[str]) -> Tuple[np.ndarray, np.ndarray]:
+def get_embedding(texts: List[str]) -> np.ndarray:
     """
-    Get embeddings for query and key strings.
+    Get embeddings for a list of texts.
 
-    The return value contains two numpy arrays, where:
-    - The first array is the embedding for the query strings, of size (num_queries, 1024).
-    - The second array is the embeddings for the key strings, of size (num_keys, 1024).
+    The return value is the embedding for the texts of size (num_strings, 1024).
 
     Args:
-        query_strings (List[str]): The main text to get the embedding for.
-        key_strings (List[str]): A list of additional texts to get embeddings for.
-    Returns:
-        A tuple containing the embedding for the query string and an array of embeddings for the key strings.
-    """
-    inputs = query_strings + key_strings
+        texts (List[str]): The texts.
 
+    Returns:
+        A numpy array of embeddings for the texts.
+    """
     load_dotenv()
 
     api_key = os.getenv("FPT_API_KEY")
@@ -64,7 +66,7 @@ def get_embedding(query_strings: List[str], key_strings: List[str]) -> Tuple[np.
 
     payload = EmbeddingRequest(
         model="multilingual-e5-large",
-        input=inputs,
+        input=texts,
         dimensions=1024,
         encoding_format="float",
         input_text_truncate="none",
@@ -74,10 +76,7 @@ def get_embedding(query_strings: List[str], key_strings: List[str]) -> Tuple[np.
     response = requests.post(url, headers=headers, json=payload)
     json_response = response.json()
     embedding_response = EmbeddingResponse.model_validate(json_response)
-
-    embeddings = [np.array(item.embedding) for item in embedding_response.data]
-
-    return np.array(embeddings[:len(query_strings)]), np.array(embeddings[len(query_strings):])
+    return np.array([item.embedding for item in embedding_response.data])
 
 def cosine_similarity(query_embeddings: np.ndarray, key_embeddings: np.ndarray) -> np.ndarray:
     """
@@ -109,46 +108,48 @@ def cosine_similarity(query_embeddings: np.ndarray, key_embeddings: np.ndarray) 
 
 def get_most_aligned_documents(
     query_strings: List[str], 
-    documents: List[Document], 
-    criterion_key: Literal['top_k', 'threshold', 'percentile']='top_k', 
-    criterion_value: int | float=5
-) -> List[Document]:
+    documents: List[Document],
+    threshold: float = 0.8,
+) -> List[Tuple[Document, List[int]]]:
     """
     Get the most aligned documents to the query string based on cosine similarity of embeddings.
+    Documents are removed if their similarity scores for ALL domains are below the threshold.
 
     Args:
         query_strings (List[str]): The main texts to compare against the documents.
         documents (List[Document]): A list of Document objects.
-        criterion_key (Literal['top_k', 'threshold', 'percentile']): The criterion to use for selecting similar documents.
-        criterion_value (int | float): The value associated with the criterion. 
-            - If 'top_k', this is an non-negative integer k. 
-            - If 'threshold', this is a float threshold between 0 and 1. 
-            - If 'percentile', this is a float percentile between 0 and 100.
+        threshold (float): Similarity score threshold to filter documents. This will be clamped between 0 and 1 if out of range.
     Returns:
-        List[Document]: The most aligned Document objects based on the criterion.
+        List[Tuple[Document, List[int]]]: The most aligned Document objects based on the criterion, and their corresponding closest domain indexes.
     """
+    if len(documents) == 0:
+        print("No documents provided for alignment check.")
+        return []
+    
+    threshold = max(0.0, min(1.0, threshold))
 
-    query_embeddings, key_embeddings = get_embedding(query_strings, [d.title for d in documents])
+    query_embeddings = get_embedding(query_strings)
+    key_embeddings = get_embedding([d.title for d in documents])
+
     similarities = cosine_similarity(query_embeddings, np.array(key_embeddings))
 
-    best_similarity_scores = np.max(similarities, axis=1)
-    sorted_documents = sorted(documents, key=lambda d: best_similarity_scores[documents.index(d)], reverse=True)
+    documents_with_scores: List[Tuple[Document, np.ndarray]] = list(zip(documents, similarities))
+    documents_with_top_domains: List[Tuple[Document, List[int]]] = [(d, [idx for idx, s in enumerate(scores) if s >= threshold]) for d, scores in documents_with_scores]
+
+    info_queue: Queue[str] = Queue()
+    log_thread = Thread(target=file_writer, args=("guardrail_checker.log", info_queue))
+
+    info_queue.put("\n=== Document Similarity Scores ===")
+
+    print("\n=== Document Similarity Scores ===")
+    for doc, domains in documents_with_top_domains:
+        print(f"Document: {doc.title}, Matched Domains: {domains}")
+        info_queue.put(f"Document: {doc.title}, Matched Domains: {domains}")
+    print("==================================\n")
+
+    info_queue.put("==================================\n")
+    info_queue.put(None)
+    log_thread.start()
     
-    if criterion_key == 'top_k':
-        # top-k: return the top k documents with highest similarity scores
-        if not isinstance(criterion_value, int) or criterion_value < 0:
-            raise ValueError("criterion_value must be a non-negative integer for 'top_k' criterion.")
-        return sorted_documents[:criterion_value]
-    
-    elif criterion_key == 'threshold':
-        # threshold: return all documents with similarity scores above the threshold
-        if not isinstance(criterion_value, float) or not (0 <= criterion_value <= 1):
-            raise ValueError("criterion_value must be a float between 0 and 1 for 'threshold' criterion.")
-        return [doc for doc in sorted_documents if best_similarity_scores[documents.index(doc)] >= criterion_value]
-    
-    elif criterion_key == 'percentile':
-        # percentile: return all documents with similarity scores above the given percentile
-        if not isinstance(criterion_value, float) or not (0 <= criterion_value <= 100):
-            raise ValueError("criterion_value must be a float between 0 and 100 for 'percentile' criterion.")
-        threshold = np.percentile(best_similarity_scores, criterion_value)
-        return [doc for doc in sorted_documents if best_similarity_scores[documents.index(doc)] >= threshold]
+    threshold = max(0.0, min(1.0, threshold))
+    return [doc for doc in documents_with_top_domains if len(doc[1]) > 0]

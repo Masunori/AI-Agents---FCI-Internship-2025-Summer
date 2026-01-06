@@ -1,12 +1,11 @@
 import datetime as datetime_module
-from dataclasses import asdict
 from typing import Any, Dict, List
 
 import feedparser
 from bs4 import BeautifulSoup
 
-from FCI_NewsAgents.services.scrapers.base_scraper import BaseScraper
 from FCI_NewsAgents.models.article import Article
+from FCI_NewsAgents.services.scrapers.base_scraper import BaseScraper
 from FCI_NewsAgents.services.scrapers.registry import register
 
 
@@ -29,11 +28,11 @@ class NVIDIADevBlogScraper(BaseScraper):
     def get_name(self) -> str:
         return "NVIDIADevBlog"
     
-    def scrape(self) -> List[Dict[str, Any]]:
+    def scrape(self) -> List[Article]:
         """Scrape articles from NVIDIA Developer Blog RSS feed"""
         print(f"Scraping articles from {self.rss_url}...")
 
-        articles: List[Dict[str, Any]] = []
+        articles: List[Article] = []
         
         for rss_url in self.rss_urls:
             try:
@@ -60,7 +59,7 @@ class NVIDIADevBlogScraper(BaseScraper):
                             authors=entry.get("author", "")
                         )
 
-                        articles.append(asdict(article))
+                        articles.append(article)
                         
                     except Exception as e:
                         print(f"Error processing NVIDIA article: {e}")

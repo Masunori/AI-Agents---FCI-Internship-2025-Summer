@@ -10,8 +10,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium_stealth import stealth
 
-from FCI_NewsAgents.services.scrapers.base_scraper import BaseScraper
 from FCI_NewsAgents.models.article import Article
+from FCI_NewsAgents.services.scrapers.base_scraper import BaseScraper
 from FCI_NewsAgents.services.scrapers.registry import register
 
 
@@ -54,7 +54,7 @@ class TechRepublicScraper(BaseScraper):
             soup = BeautifulSoup(driver.page_source, "html.parser")
 
             # === extract metadata ===
-            authors = [span.get_text(strip=True) for span in soup.select('span[property="name"]')]
+            authors: List[str] = [span.get_text(strip=True) for span in soup.select('span[property="name"]')]
             published_date = soup.select_one('time[property="datePublished"]')
             published_date = published_date.get("datetime") if published_date else None
 
@@ -74,7 +74,7 @@ class TechRepublicScraper(BaseScraper):
             content_text = "\n\n".join(content_parts)
 
             # Convert authors list to string
-            authors_str = ", ".join(authors) if authors else ""
+            authors: str | List[str] = authors if authors else ""
             
             # Convert published_date to ISO format if available
             if published_date:
@@ -90,7 +90,7 @@ class TechRepublicScraper(BaseScraper):
 
             article_data = Article(
                 url=url,
-                authors=authors_str,
+                authors=authors,
                 published_date=published_date,
                 summary=content_text,
             )
@@ -103,11 +103,11 @@ class TechRepublicScraper(BaseScraper):
         finally:
             driver.quit()
     
-    def scrape(self) -> List[Dict[str, Any]]:
+    def scrape(self) -> List[Article]:
         """Scrape articles from TechRepublic RSS feed"""
         print(f"Scraping articles from {self.rss_url}...")
         
-        articles = []
+        articles: List[Article] = []
         
         try:
             feed = feedparser.parse(self.rss_url)
@@ -127,7 +127,7 @@ class TechRepublicScraper(BaseScraper):
                                 continue
 
                         article_data["title"] = entry.title
-                        articles.append(article_data)
+                        articles.append(Article(**article_data))
                         print(f"Successfully scraped: {entry.title}")
                 except Exception as e:
                     print(f"Error scraping article {entry.link}: {e}")

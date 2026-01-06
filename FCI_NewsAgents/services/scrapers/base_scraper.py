@@ -1,6 +1,9 @@
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List
 
+from FCI_NewsAgents.models.article import Article
+
+
 class BaseScraper(ABC):
     """Base class for all article scrapers"""
     
@@ -10,8 +13,8 @@ class BaseScraper(ABC):
         pass
     
     @abstractmethod
-    def scrape(self) -> List[Dict[str, Any]]:
-        """Scrape articles and return them as a list of dictionaries"""
+    def scrape(self) -> List[Article]:
+        """Scrape articles and return them as a list of Article objects"""
         pass
     
     def is_enabled(self) -> bool:

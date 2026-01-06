@@ -1,11 +1,10 @@
 import datetime as datetime_module
-from dataclasses import asdict
 from typing import Any, Dict, List
 
 import feedparser
 
-from FCI_NewsAgents.services.scrapers.base_scraper import BaseScraper
 from FCI_NewsAgents.models.article import Article
+from FCI_NewsAgents.services.scrapers.base_scraper import BaseScraper
 from FCI_NewsAgents.services.scrapers.registry import register
 
 
@@ -19,14 +18,20 @@ class OpenAINewsScraper(BaseScraper):
     def get_name(self) -> str:
         return "OpenAINews"
     
-    def scrape(self) -> List[Dict[str, Any]]:
+    def scrape(self) -> List[Article]:
         """
         Scrape articles from OpenAI News RSS feed
         """
         print(f"Scraping articles from {self.rss_url}...")
 
         try:
-            feed = feedparser.parse(self.rss_url)
+            request_headers = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                "Accept-Language": "en-US,en;q=0.9",
+            }
+
+            feed = feedparser.parse(self.rss_url, request_headers=request_headers)
             articles = []
 
             for entry in feed['entries']:
@@ -52,7 +57,7 @@ class OpenAINewsScraper(BaseScraper):
                         published_date=published_date_str,
                     )
 
-                    articles.append(asdict(article))
+                    articles.append(article)
 
                 except Exception as e:
                     print(f"Error processing OpenAI article: {e}")

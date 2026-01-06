@@ -1,30 +1,37 @@
-import os
 import json
 import logging
-import time
-from datetime import datetime
-from datetime import timedelta
-import dotenv
+import os
 import sys
+import time
+from datetime import datetime, timedelta
 from typing import List
+
+import dotenv
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 
 # LangGraph and LangChain dependencies
-from langgraph.graph import StateGraph, END
+from langgraph.graph import END, StateGraph
+
 dotenv.load_dotenv()
-#Loading config
+
 from FCI_NewsAgents.core.config import GuardrailsConfig
-from FCI_NewsAgents.models.workflow_state import WorkflowState
-#Get the data loader 
 from FCI_NewsAgents.models.document import Document
-#Get the prompts
-from FCI_NewsAgents.prompts.get_prompts import get_guardrails_prompt, get_generation_prompt
-#Get the LLM's service
+from FCI_NewsAgents.models.workflow_state import WorkflowState
+from FCI_NewsAgents.prompts.get_prompts import (
+    get_generation_prompt,
+    get_guardrails_prompt,
+)
 from FCI_NewsAgents.services.llm.llm_interface import call_llm
+from FCI_NewsAgents.utils.alignment_checker import get_most_aligned_documents
+from FCI_NewsAgents.utils.duplication_checker import remove_duplicate_documents
+from FCI_NewsAgents.utils.llm_guardrail_checker import filter_documents_by_guardrail_score
+from FCI_NewsAgents.utils.utils import (
+    EMBEDDING_ALIGNMENT_DOMAIN_QUERIES,
+    get_time,
+    save_report,
+)
 
-
-#Get the utils function
-from FCI_NewsAgents.utils.utils import get_time, save_report
 print("No error happen at import stage")
 
 
@@ -33,13 +40,13 @@ class GuardRails_Rerank_Workflow:
 
     def __init__(self, config: GuardrailsConfig, papers: List[Document], articles: List[Document]):
         
-        self.config = config
-        self.guardrails_system_prompt = get_guardrails_prompt()
-        self.report_generation_system_prompt = get_generation_prompt()
+        self.config: GuardrailsConfig = config
+        self.guardrails_system_prompt: str = get_guardrails_prompt()
+        self.report_generation_system_prompt: str = get_generation_prompt()
         
         # Store the documents directly instead of file paths
-        self.papers = papers
-        self.articles = articles
+        self.papers: List[Document] = papers
+        self.articles: List[Document] = articles
         
         # Build workflow graph
         self.workflow = self._build_workflow()
@@ -77,110 +84,51 @@ class GuardRails_Rerank_Workflow:
         return state
     
     def guardrails_node(self, state: WorkflowState) -> WorkflowState:
-        """Node to apply guardrails using LLM to the raw documents. The results are scored and sorted documents"""
-        scored_docs = []
-        
-        # Calculate cutoff date (2 weeks ago from now)
-        cutoff_date = datetime.now() - timedelta(weeks=1)
-        
-        paper_count = 0
-        article_count = 0
-        discarded_old_count = 0
-        discarded_low_score_count = 0
-        
+        paper_count = sum(1 for doc in state.raw_documents if doc.content_type == "paper")
+        article_count = sum(1 for doc in state.raw_documents if doc.content_type == "article")
+
         # Minimum score threshold to include a document
-        MIN_SCORE_THRESHOLD = 0.3
-        
-        for doc in state.raw_documents:
-            # Increment counters first to properly track what we're evaluating
-            is_paper = (doc.content_type == "paper")
-            
-            # Check if we've reached the limits BEFORE processing
-            if is_paper:
-                if paper_count >= self.config.MAX_PAPERS_READ:
-                    continue
-                paper_count += 1
-            else:
-                if article_count >= self.config.MAX_ARTICLES_READ:
-                    continue
-                article_count += 1
-            
-            # Check date
-            try:
-                if isinstance(doc.published_date, str):
-                    doc_date = datetime.fromisoformat(doc.published_date.replace('Z', '+00:00'))
-                else:
-                    doc_date = doc.published_date
-                
-                if doc_date.tzinfo is not None:
-                    doc_date = doc_date.replace(tzinfo=None)
-                
-                if doc_date < cutoff_date:
-                    print(f"Discarding old document (published {doc_date.strftime('%Y-%m-%d')}): {doc.title}")
-                    discarded_old_count += 1
-                    continue
-            except Exception as e:
-                print(f"Warning: Could not parse date for {doc.title}, keeping document. Error: {e}")
-            
-            # Prepare message for LLM
-            doc_type_label = "paper" if is_paper else "article"
-            
-            message = f"""Current time is {get_time()}, read the information about this {doc_type_label} and give out the relevance score:
-            **url**: {doc.url}
-            **title**: {doc.title}
-            **summary**: {doc.summary}
-            **source**: {doc.source}
-            **authors**: {doc.authors}
-            **published_date**: {doc.published_date}
-            """
-            
-            # Get score from LLM
-            response = call_llm(message, self.guardrails_system_prompt, model_used="gpt")
-            
-            try:
-                # Parse the float score
-                score = float(response.strip())
-                
-                # Validate score is in valid range
-                if not (0.0 <= score <= 1.0):
-                    print(f"Warning: Score {score} out of range for '{doc.title}', skipping")
-                    continue
-                
-                # Filter out documents below minimum threshold
-                if score < MIN_SCORE_THRESHOLD:
-                    print(f"Score {score:.2f} (too low, filtered): {doc.title}")
-                    discarded_low_score_count += 1
-                    continue
-                
-                doc.score = score
-                scored_docs.append(doc)
-                
-                print(f"Score {score:.2f}: {doc.title}")
-                
-            except ValueError as e:
-                print(f"Error parsing score for '{doc.title}': {response}. Error: {e}")
-                continue
-            except Exception as e:
-                print(f"Unexpected error for '{doc.title}': {e}")
-                continue
-        
-        # Sort documents by score in descending order (highest scores first)
-        scored_docs.sort(key=lambda x: x.score, reverse=True)
+        MIN_ALIGNMENT_SCORE_THRESHOLD = 0.78
+        MIN_RELEVANCE_SCORE_THRESHOLD = 0.8
+
+        # 1. Remove duplicate URLs
+        dedupped_documents = remove_duplicate_documents(
+            state.raw_documents, 
+            parallel=True, 
+            max_workers=16
+        )
+        print(f"Number of documents after deduplication: {len(dedupped_documents)}")
+
+        # 2. Soft filtering based on embedding alignment
+        aligned_documents_with_domains = get_most_aligned_documents(
+            query_strings=EMBEDDING_ALIGNMENT_DOMAIN_QUERIES,
+            documents=dedupped_documents,
+            threshold=MIN_ALIGNMENT_SCORE_THRESHOLD
+        )
+
+        print(f"Number of documents after alignment filtering: {len(aligned_documents_with_domains)}")
+
+        # 3. Evaluate each document with LLM guardrails
+        scored_documents = filter_documents_by_guardrail_score(
+            documents=aligned_documents_with_domains,
+            min_score=MIN_RELEVANCE_SCORE_THRESHOLD,
+            max_papers=self.config.MAX_PAPERS_READ,
+            max_articles=self.config.MAX_ARTICLES_READ,
+            parallel=True,
+            max_workers=16
+        )
         
         # Print summary
         print(f"\n{'='*50}")
         print(f"Guardrails Summary:")
         print(f"  Total evaluated: {paper_count} papers, {article_count} articles")
-        print(f"  Documents with scores >= {MIN_SCORE_THRESHOLD}: {len(scored_docs)}")
-        print(f"  Discarded (old): {discarded_old_count}")
-        print(f"  Discarded (low score < {MIN_SCORE_THRESHOLD}): {discarded_low_score_count}")
         print(f"\nTop scored documents:")
-        for i, doc in enumerate(scored_docs[:5], 1):
+        for i, doc in enumerate(scored_documents, 1):
             print(f"  {i}. [{doc.score:.2f}] {doc.title[:80]}...")
         print(f"{'='*50}\n")
         
-        state.filtered_documents = scored_docs
-        print(f"Number of documents after guardrails node: {len(scored_docs)}")
+        state.filtered_documents = scored_documents
+        print(f"Number of documents after guardrails node: {len(scored_documents)}")
         return state
 
     def generate_node(self, state: WorkflowState) -> WorkflowState:
@@ -189,6 +137,7 @@ class GuardRails_Rerank_Workflow:
         all_documents = state.filtered_documents
         
         if not all_documents:
+            print("No documents available after guardrails filtering. Skipping report generation.")
             state.final_report = None
             return state
         
@@ -222,7 +171,12 @@ class GuardRails_Rerank_Workflow:
         #generate reports using LLM
         try:
             messages = f"Hãy viết cho tôi một bản tin công nghệ dựa trên các thông tin được cung cấp sau, cho biết thời gian hiện tại là {get_time()} hãy chọn ra top {self.config.MAX_DOCUMENTS_TO_LLM} thú vị nhất: \n\n{context}"
-            response = call_llm(messages, self.report_generation_system_prompt, model_used="gpt")
+            response = call_llm(
+                user_prompt=messages, 
+                system_prompt=self.report_generation_system_prompt, 
+                model_used="gpt",
+                model="gpt-oss-20b",
+            )
             state.final_report = response
             
         except Exception as e:

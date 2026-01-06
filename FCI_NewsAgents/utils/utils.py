@@ -1,51 +1,68 @@
 import json
-from datetime import datetime, timezone
-from typing import List
 import os
-from FCI_NewsAgents.models.document import Document
-from FCI_NewsAgents.core.config import GuardrailsConfig
+from datetime import datetime, timezone
+from enum import IntEnum
+from typing import List
 
+import requests
+from bs4 import BeautifulSoup
+from w3lib.url import canonicalize_url
+
+from FCI_NewsAgents.core.config import GuardrailsConfig
+from FCI_NewsAgents.models.article import Article
+from FCI_NewsAgents.models.document import Document
+from FCI_NewsAgents.models.paper import Paper
+
+EMBEDDING_ALIGNMENT_DOMAIN_QUERIES = [
+    # Cloud & distributed systems (foundations first, products second)
+    "Cloud and distributed systems research including scalability, fault tolerance, virtualization, serverless computing, edge computing, and cloud security.",
+
+    # Systems, hardware, and infrastructure (explicitly research-oriented)
+    "Computer systems and infrastructure research including GPUs, TPUs, AI accelerators, high-performance computing, networking, storage systems, and compute optimization.",
+
+    # Core AI research (avoid product language)
+    "Artificial intelligence research including deep learning, neural networks, representation learning, computer vision, natural language processing, reasoning, and learning algorithms.",
+
+    # Generative models & LLMs (separate anchor)
+    "Large-scale machine learning models including large language models, vision-language models, generative models, multimodal models, and AI agents.",
+
+    # Data systems & data engineering
+    "Data engineering and data systems research including data pipelines, distributed data processing, data storage, analytics systems, and real-time data platforms.",
+
+    # Security applied to systems and AI
+    "Security research related to cloud systems and artificial intelligence including system security, privacy, robustness, secure computation, and trustworthy machine learning.",
+
+    # AI governance, safety, and regulation (explicitly non-technical allowed)
+    "AI safety, governance, and policy topics including responsible AI, AI regulation, risk management, compliance, and societal impacts of AI systems.",
+]
+
+
+class DocumentDomain(IntEnum):
+    CLOUD_COMPUTING = 0
+    SYSTEMS_INFRASTRUCTURE = 1
+    CORE_ARTIFICIAL_INTELLIGENCE = 2
+    GENERATIVE_MODELS_LLMs = 3
+    DATA_ENGINEERING_BIG_DATA = 4
+    CYBERSECURITY = 5
+    AI_SAFETY_GOVERNANCE_REGULATIONS = 6
 
 def get_time():
     current_datetime = datetime.now()
     return current_datetime
 
-
-def convert_paper_to_document(paper_dict: dict) -> Document:
-    """Convert paper dictionary to Document object"""
-    # Parse published_date if it's a string
-    if isinstance(paper_dict.get('published_date'), str):
-        try:
-            published_date = datetime.fromisoformat(paper_dict['published_date'].replace('Z', '+00:00'))
-        except:
-            published_date = datetime.now()
-    else:
-        published_date = datetime.now()
+def convert_paper_to_document(paper: Paper) -> Document:
+    """Convert Paper to Document object"""
     
     return Document(
-        url=paper_dict.get('url', ''),
-        title=paper_dict.get('title', ''),
-        summary=paper_dict.get('summary', ''),
-        source=paper_dict.get('source', 'arXiv'),
-        authors=paper_dict.get('authors', []),
-        published_date=published_date,
+        url=paper.url,
+        title=paper.title,
+        summary=paper.summary,
+        source=paper.source,
+        authors=paper.authors,
+        published_date=datetime.fromisoformat(paper.published_date),
         content_type="paper"
     )
-def mark_used_paper(paper_storage_path, documents: list[Document]):
-    try:
-        with open(paper_storage_path, 'r', encoding= 'utf-8') as file:
-            saved_papers = json.load(file)
-        used_urls = set([doc.url for doc in documents])
-        updated_counts = 0
-        for paper in saved_papers:
-            if paper['url'] in used_urls:
-                paper['used'] = True
-                updated_counts += 1
-        with open(paper_storage_path, 'w', encoding='utf-8') as file:
-            json.dump(saved_papers, file, indent = 4, ensure_ascii=False, default = str)
-        print(f"Marked {updated_counts} papers as used.")
-    except Exception as e:
-        print(f"Error: {e}")
+
 def parse_twitter_date(date_string: str) -> datetime:
     """Parse Twitter date format: 'Sun Aug 17 16:03:02 +0000 2025'"""
     try:
@@ -82,27 +99,16 @@ def convert_tweet_to_document(tweet_data: dict, source: str = "Twitter") -> Docu
         content_type="tweet"
     )
 
-def convert_article_to_document(article_data: dict, source: str = "Article") -> Document:
+def convert_article_to_document(article_data: Article, source: str = "Article") -> Document:
     """Convert article data to RawDocument format"""
-    try:
-        if isinstance(article_data.get('published_date'), str):
-            published_date = datetime.fromisoformat(article_data['published_date'].replace('Z', '+00:00'))
-        else:
-            published_date = datetime.now(timezone.utc)
-    except Exception as e:
-        print(f"Error parsing article date '{article_data.get('published_date')}': {e}")
-        published_date = datetime.now(timezone.utc)
-    
-    # Convert single author string to list format
-    authors = [article_data.get('authors', 'Unknown Author')]
     
     return Document(
-        url=article_data.get('url', ''),
-        title=article_data.get('title', 'Untitled Article'),
-        summary=article_data.get('summary', ''),
+        url=article_data.url,
+        title=article_data.title,
+        summary=article_data.summary,
         source=source,
-        authors=authors,
-        published_date=published_date,
+        authors=[article_data.authors] if isinstance(article_data.authors, str) else article_data.authors,
+        published_date=datetime.fromisoformat(article_data.published_date),
         content_type="article"
     )
 
@@ -209,3 +215,62 @@ def save_report(report: str, output_path: str = "ai_news_report.md"):
     '''Save the final report to a markdown file'''
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write(report)
+
+def clean_url(url: str) -> str:
+    """
+    Clean up the URL by removing unwanted characters.
+    
+    Args:
+        url (str): The original URL.
+        
+    Returns:
+        str: The cleaned URL.
+    """
+    url = url.strip() # Remove leading/trailing whitespace
+    url = url.replace('\n', '') # Remove newlines
+    url = url.replace('\r', '') # Remove carriage returns
+    url = url.replace(' ', '') # Remove spaces
+    url = url.replace('\t', '') # Remove tabs
+    return url
+
+def get_canonical_url(url: str) -> str:
+    """
+    Get the canonical URL.
+    
+    Args:
+        url (str): The original URL.
+        
+    Returns:
+        str: The canonical URL.
+    """
+    # Clean up the URL
+    url = clean_url(url)
+
+    try:
+        print(f"Fetching canonical URL for: {url} ...")
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        }
+
+        # Final URL after redirects
+        response = requests.get(url, headers=headers, timeout=10)
+        response.raise_for_status()
+        final_url = response.url
+
+        # Parse HTML to find canonical link
+        soup = BeautifulSoup(response.text, 'html.parser')
+        canonical_link = soup.find('link', rel='canonical')
+
+        if canonical_link and canonical_link.get('href'):
+            canonical_url = canonical_link['href']
+        else:
+            canonical_url = final_url
+
+        # Normalize the canonical URL
+        print(f"==> Canonical URL found: {canonical_url}")
+        return canonicalize_url(canonical_url)
+
+    except requests.RequestException as e:
+        print(f"==> Error fetching canonical URL for {url}: {e}")
+        return canonicalize_url(url)
+    

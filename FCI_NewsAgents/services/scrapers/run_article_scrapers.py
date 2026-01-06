@@ -11,6 +11,7 @@ sys.path.insert(0, str(current_dir))
 
 from FCI_NewsAgents.services.scrapers.base_scraper import BaseScraper
 from FCI_NewsAgents.services.scrapers.registry import SCRAPERS
+from FCI_NewsAgents.services.scrapers.mit_news_scraper import MITNewsScraper
 
 
 def _run_scraper_safe(scraper: BaseScraper) -> tuple:
@@ -67,7 +68,8 @@ def scrape_articles(parallel: bool = True, max_workers: int = -1) -> List[Dict[s
     print("Starting article scraping...")
     overall_start_time = time.time()
 
-    scrapers = [scraper_cls() for scraper_cls in SCRAPERS.values()]
+    # scrapers = [scraper_cls() for scraper_cls in SCRAPERS.values()]
+    scrapers = [MITNewsScraper()]
 
     if max_workers == -1:
         max_workers = min(len(scrapers), 16)

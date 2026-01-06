@@ -1,8 +1,22 @@
-import requests
 import os
-import dotenv
+from typing import Literal
 
-def call_gpt(user_prompt, system_prompt):
+import dotenv
+import requests
+
+
+def call_gpt(user_prompt, system_prompt, model: Literal["gpt-oss-20b", "gpt-oss-120b"] = "gpt-oss-120b"):
+    """
+    Make a call to FPT's GPT-OSS model.
+
+    Args:
+        user_prompt (str): The prompt provided by the user.
+        system_prompt (str): The system-level instructions for the model.
+        model (str): The model to use, either "gpt-oss-20b" or "gpt-oss-120b".
+
+    Returns:
+        str: The response from the GPT model.
+    """
     dotenv.load_dotenv()
     api_key = os.getenv("FPT_120B")
     url = "https://mkp-api.fptcloud.com/v1/chat/completions"
@@ -11,12 +25,12 @@ def call_gpt(user_prompt, system_prompt):
         "Authorization": f"Bearer {api_key}"
     }
     data = {
-        "model": "gpt-oss-120b",
+        "model": model,
         "messages": [
             {"role": "system", "content": f"{system_prompt}"},
             {"role": "user", "content": f"{user_prompt}"}
         ],
-        "max_tokens": 4096,
+        "max_tokens": 8192,
         "temperature": 0.1,
         "frequency_penalty": 0.5
     }
@@ -25,10 +39,10 @@ def call_gpt(user_prompt, system_prompt):
 
     data = response.json()
 
-    # from pprint import pprint
-    # pprint(data)
-
-    return data['choices'][0]['message']['content']
+    try:
+        return data['choices'][0]['message']['content']
+    except KeyError:
+        raise Exception(f"Error from GPT API: {data}")
 
 
 if __name__ == "__main__":

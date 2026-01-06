@@ -1,13 +1,12 @@
 import datetime as datetime_module
-from dataclasses import asdict
 from typing import Any, Dict, List
 
 import dateparser
 import feedparser
 from bs4 import BeautifulSoup
 
-from FCI_NewsAgents.services.scrapers.base_scraper import BaseScraper
 from FCI_NewsAgents.models.article import Article
+from FCI_NewsAgents.services.scrapers.base_scraper import BaseScraper
 from FCI_NewsAgents.services.scrapers.registry import register
 
 
@@ -27,7 +26,7 @@ class MITNewsScraper(BaseScraper):
             return ''
         return BeautifulSoup(html, "html.parser").get_text(separator=" ", strip=True)
     
-    def scrape(self) -> List[Dict[str, Any]]:
+    def scrape(self) -> List[Article]:
         """Scrape articles from MIT News RSS feed"""
         print(f"Scraping articles from {self.rss_url}...")
         
@@ -59,10 +58,9 @@ class MITNewsScraper(BaseScraper):
                     # Extract authors
                     authors = []
                     if "author" in entry:
-                        authors = [entry.author]
+                        authors: str | List[str] = entry.author
                     elif "authors" in entry:
-                        authors = [a.get("name") or a.get("email") or str(a) for a in entry.authors]
-                    authors_str = ", ".join(authors) if authors else ""
+                        authors: str | List[str] = [a.get("name") or a.get("email") or str(a) for a in entry.authors]
                     
                     # Extract content
                     content_html = ""
@@ -78,10 +76,10 @@ class MITNewsScraper(BaseScraper):
                         url=url,
                         summary=content_text,
                         published_date=published_date,
-                        authors=authors_str,
+                        authors=authors,
                     )
 
-                    articles.append(asdict(article))
+                    articles.append(article)
                     
                 except Exception as e:
                     print(f"Error processing MIT article: {e}")

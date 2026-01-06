@@ -1,13 +1,12 @@
 import datetime as datetime_module
 from typing import Any, Dict, List, Tuple
-import requests
-
-from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-from dataclasses import asdict
 
-from FCI_NewsAgents.services.scrapers.base_scraper import BaseScraper
+import requests
+from bs4 import BeautifulSoup
+
 from FCI_NewsAgents.models.article import Article
+from FCI_NewsAgents.services.scrapers.base_scraper import BaseScraper
 from FCI_NewsAgents.services.scrapers.registry import register
 
 
@@ -71,7 +70,7 @@ class NeuronDailyScraper(BaseScraper):
         print(f"Author: {authors}, Date: {date}, Content length: {len(full_text)} characters")
         return authors, date, full_text
     
-    def scrape(self) -> List[Dict[str, Any]]:
+    def scrape(self) -> List[Article]:
         """Scrape articles from NeuronDaily"""
         print(f"Scraping articles from {self.base_url}...")
         
@@ -125,7 +124,7 @@ class NeuronDailyScraper(BaseScraper):
                         published_date=date,
                         authors=authors,
                     )
-                    news_list.append(asdict(article))
+                    news_list.append(article)
 
                     print(f"Successfully scraped: {title}")
                 except Exception as e:
