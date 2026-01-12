@@ -1,10 +1,13 @@
 import sqlite3
-from pathlib import Path
-from typing import Iterable
 from datetime import date
-from typing import List, Tuple, Dict
+from pathlib import Path
+from queue import Queue
+from threading import Thread
+from typing import Dict, Iterable, List, Tuple
 
-from .schema import init_db, DB_PATH
+from FCI_NewsAgents.utils.logger import file_writer
+
+from .schema import DB_PATH, init_db
 
 
 class ArticleURLStore:
@@ -24,9 +27,10 @@ class ArticleURLStore:
         not happen and the article is deemed a duplicate.
     - If URL A was scraped today, and A is fetched again today, insertion does not
         happen, but the article is _**not**_ deemed a duplicate.
-    - If URL A was scraped for the first time (today), insertion happens and the article 
+    - If URL A was scraped for the first time (today), insertion happens and the article
         is _**not**_ deemed a duplicate.
     """
+
     __slots__ = ("_conn",)
 
     def __init__(self, db_path: str | Path = DB_PATH) -> None:
@@ -56,7 +60,7 @@ class ArticleURLStore:
             (canonical_url, today_str),
         )
         return cursor.fetchone() is not None
-    
+
     def insert_if_new(self, canonical_url: str, scrape_date: str) -> bool:
         """
         Insert the canonical URL into the store if it does not already exist.
@@ -74,10 +78,10 @@ class ArticleURLStore:
             bool: True if the URL was inserted, False if it already existed.
         """
         today_str = date.today().isoformat()
-        
+
         cur = self._conn.execute(
             "SELECT scrape_date FROM articles WHERE canonical_url = ? LIMIT 1;",
-            (canonical_url,)
+            (canonical_url,),
         )
         row = cur.fetchone()
 
@@ -87,19 +91,21 @@ class ArticleURLStore:
         else:
             self._conn.execute(
                 "INSERT INTO articles (canonical_url, scrape_date) VALUES (?, ?);",
-                (canonical_url, scrape_date)
+                (canonical_url, scrape_date),
             )
             return True
-    
+
     def insert_many_if_new(self, entries: Iterable[Tuple[str, str]]) -> List[bool]:
         """
         Insert multiple canonical URLs into the store if they do not already exist. This also handles within-batch deduplication.
-        
+
         Deduplication logic is as follows:
         - **(TL;DR)** Return True if the URL is not a duplicate of any URL fetched BEFORE today.
         - If URL A was scraped before today, and A was fetched again today, insertion does not happen and this returns False (for existence).
         - If URL A was scraped today, and A is fetched again today, insertion does not happen, but this returns True (for non-existence, as if insertion is successful).
         - If URL A was scraped for the first time (today), insertion happens and this returns True (for non-existence).
+        - Within the same batch, if the same URL appears multiple times, only the first occurrence is considered for insertion;
+        subsequent occurrences are treated as duplicates and return False, regardless of their scrape_date.
 
         Args:
             entries (Iterable[tuple[str, str]]): An iterable of tuples containing
@@ -110,59 +116,66 @@ class ArticleURLStore:
         if not entries:
             return []
 
+        info_queue: Queue[str] = Queue()
+        log_thread = Thread(target=file_writer, args=("deduplication.log", info_queue))
+        log_thread.start()
+
         today_str = date.today().isoformat()
         urls = [canonical_url for canonical_url, _ in entries]
-        
+
         placeholder = ",".join("?" for _ in urls)
         cur = self._conn.execute(
             f"SELECT canonical_url, scrape_date FROM articles WHERE canonical_url IN ({placeholder});",
-            urls
+            urls,
         )
         existing_rows = {row[0]: row[1] for row in cur.fetchall()}
 
         results: List[bool] = []
-        to_insert: List[Tuple[str, str, int]] = []
+        to_insert: List[Tuple[str, str]] = []
+        seen_in_batch: Dict[str, bool] = {}  # Track URLs already seen in this batch
+
+        info_queue.put(f"Checking {len(urls)} URLs against existing database entries.")
 
         # De-duplication against the database
-        for idx, (url, scrape_date) in enumerate(entries):
-            if url in existing_rows:
+        for url, scrape_date in entries:
+            if url in seen_in_batch:
+                # Duplicate within batch - always flag as duplicate
+                results.append(False)
+            elif url in existing_rows:
                 existing_scrape_date = existing_rows[url]
                 results.append(existing_scrape_date == today_str)
+                seen_in_batch[url] = True
             else:
-                to_insert.append((url, scrape_date, idx))
+                info_queue.put(
+                    f"New URL passes the DB dedup check: {url} (scrape_date: {scrape_date})"
+                )
+                to_insert.append((url, scrape_date))
                 results.append(True)
+                seen_in_batch[url] = True
 
-        # De-duplication within the batch
-        seen: Dict[str, str] = {}
-        final_to_insert: List[Tuple[str, str]] = []
-        for url, scrape_date, idx in to_insert:
-            if url not in seen:
-                seen[url] = scrape_date
-                final_to_insert.append((url, scrape_date))
-            else:
-                # results[idx] = seen[url] == today_str
-                results[idx] = False  # since this is a duplicate within batch, it cannot be "new"
-                # string comparison of YYYY-MM-DD works for date ordering
-                # choose the earliest scrape_date
-                seen[url] = min(seen[url], scrape_date)
-        
-        to_insert = final_to_insert
-        
+        info_queue.put(
+            f"{len(to_insert)} new URLs to insert after checking against database."
+        )
+
+        info_queue.put("Insertion complete.")
+        info_queue.put(None)
+        log_thread.join()
+
         # insertion
-        if final_to_insert:
+        if to_insert:
             self._conn.executemany(
                 "INSERT INTO articles (canonical_url, scrape_date) VALUES (?, ?);",
-                final_to_insert
+                to_insert,
             )
 
         return results
-    
+
     def remove_all(self) -> None:
         """
         Remove all entries from the store.
         """
         self._conn.execute("DELETE FROM articles;")
-    
+
     def count(self) -> int:
         """
         Get the total number of unique canonical URLs stored.
@@ -173,7 +186,7 @@ class ArticleURLStore:
         cursor = self._conn.execute("SELECT COUNT(*) FROM articles;")
         result = cursor.fetchone()
         return result[0] if result else 0
-    
+
     def close(self) -> None:
         """
         Close the database connection.
@@ -182,6 +195,6 @@ class ArticleURLStore:
 
     def __enter__(self):
         return self
-    
+
     def __exit__(self, exc_type, exc_value, traceback):
         self.close()

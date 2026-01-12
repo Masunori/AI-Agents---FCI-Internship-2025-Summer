@@ -87,6 +87,7 @@ Hãy viết cho tôi một mục báo cáo công nghệ nổi bật dựa trên 
 Bời vì đây là mục thông tin nổi bật, yêu cầu:
 - Tập trung vào các khía cạnh độc đáo, mới mẻ và có ảnh hưởng lớn đến FPT.
 - Giải thích rõ lý do tại sao mục này lại nổi bật và quan trọng đối với FPT.
+- Nếu có những con số cụ thể, hãy nêu chúng ra.
 - Không nêu thêm bất cứ thông tin gì khác, không nhắc đến nguồn.
 
 Không thêm phần kết luận chung nào khác ngoài các phần đã được yêu cầu. Bạn chỉ đang phụ trách **một mục duy nhất trong báo cáo lớn hơn**.
@@ -131,10 +132,11 @@ Hãy viết cho tôi một mục báo cáo công nghệ tương ứng với ph�
 Yêu cầu:
 - Nêu ra cái gì đã thay đổi hoặc mới mẻ trong thông tin được cung cấp.
 - Giải thích rõ lý do tại sao mục này lại quan trọng đối với FPT.
+- Nếu có những con số cụ thể, hãy nêu chúng ra.
 - Không nêu thêm bất cứ thông tin gì khác, không nhắc đến nguồn.
 
 Không thêm phần kết luận chung nào khác ngoài các phần đã được yêu cầu. Bạn chỉ đang phụ trách **một mục duy nhất trong báo cáo lớn hơn**.
-Giới hạn số từ trong mục báo cáo này là 1 hoặc nhiều hơn 1 đoạn văn, nhưng tổng giới hạn từ là 100 đến 150 từ. Không cần format.
+Giới hạn trong mục báo cáo này là 1 hoặc nhiều hơn 1 đoạn văn, nhưng tổng giới hạn từ là 100 đến 150 từ. Không cần format.
 """
 
     def on_exception(e: Exception, attempt: int):
@@ -242,11 +244,20 @@ def generate_markdown(
     parts.append(f"**Ngày xuất bản:** {highlight_document.published_date.strftime("%d %b, %Y")}\n**URL:** {highlight_document.url}\n\n")
 
     # Other sections
-    for idx, (doc, segment) in enumerate(zip(other_documents, other_segments), 1):
+    other_article_segments = [(doc, seg) for doc, seg in zip(other_documents, other_segments) if doc.content_type == "article"]
+    parts.append(f"## Tin nhanh công nghệ ({len(other_article_segments)} bài)\n\n")
+
+    for idx, (doc, segment) in enumerate(other_article_segments, 1):
         parts.append(f"## Mục {idx}: {doc.title}\n\n")
         parts.append(f"{segment}\n\n")
         parts.append(f"**Ngày xuất bản:** {doc.published_date.strftime("%d %b, %Y")}\n**URL:** {doc.url}\n\n")
 
+    other_paper_segments = [(doc, seg) for doc, seg in zip(other_documents, other_segments) if doc.content_type == "paper"]
+    parts.append(f"## Nghiên cứu khoa học nổi bật ({len(other_paper_segments)} bài)\n\n")
+    for idx, (doc, segment) in enumerate(other_paper_segments, 1):
+        parts.append(f"## Mục {idx}: {doc.title}\n\n")
+        parts.append(f"{segment}\n\n")
+        parts.append(f"**Ngày xuất bản:** {doc.published_date.strftime("%d %b, %Y")}\n**URL:** {doc.url}\n\n")
 
     # Conclusion
     parts.append(f"## Kết luận\n\n{conclusion}\n\n")

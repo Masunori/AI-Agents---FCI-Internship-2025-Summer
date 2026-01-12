@@ -50,4 +50,6 @@ def remove_duplicate_documents(
 
     purge_older_than(days=7)
 
+    for idx, doc in enumerate(documents):
+        print(f"[{'KEEP' if insert_results[idx] else 'DUPLICATE'}] {doc.url}")
     return [d for idx, d in enumerate(documents) if insert_results[idx]]
