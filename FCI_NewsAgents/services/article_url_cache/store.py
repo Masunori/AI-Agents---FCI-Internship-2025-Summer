@@ -140,7 +140,8 @@ class ArticleURLStore:
                 seen[url] = scrape_date
                 final_to_insert.append((url, scrape_date))
             else:
-                results[idx] = seen[url] == today_str
+                # results[idx] = seen[url] == today_str
+                results[idx] = False  # since this is a duplicate within batch, it cannot be "new"
                 # string comparison of YYYY-MM-DD works for date ordering
                 # choose the earliest scrape_date
                 seen[url] = min(seen[url], scrape_date)

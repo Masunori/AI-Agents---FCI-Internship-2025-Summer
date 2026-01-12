@@ -223,6 +223,9 @@ def generate_markdown(
         other_documents (List[Document]): List of other documents.
         other_segments (List[str]): List of generated segments for other documents.
         conclusion (str): The conclusion segment of the report.
+
+    Returns:
+        str: The final markdown report.
     """
 
     parts: List[str] = []
