@@ -1,3 +1,5 @@
+# FCI News Agent (Version 2.0.0)
+
 ### Environment Setup
 
 #### 1. Create Virtual Environment
@@ -36,8 +38,12 @@ pip install -r requirements.txt
 Create a `.env` file in the root directory:
 
 ```env
-GEMINI_API_KEY=your_gemini_api_key_here
-OPENAI_API_KEY=your_openai_api_key_here  # Get the key for FPT's GPT-oss-120B
+GEMINI_API_KEY=...
+OPENAI_API_KEY=...
+FPT_120B=...
+FPT_API_KEY=...
+
+DEDUPLICATION_DB_PATH=data/dedup.db
 ```
 
 For clarification, you can check the `services/llm/` folder to see how the `.env` variables are extracted.
@@ -46,14 +52,13 @@ For clarification, you can check the `services/llm/` folder to see how the `.env
 #### Option 1: CLI Version (Original)
 
 ```bash
-cd FCI_NewsAgents
-python main.py
+python .\FCI_NewsAgents\main.py
 ```
 
 The system will:
-1. Scrape articles from NeuronDaily, TechRepublic, Google Research Blog, and MIT News
-2. Scrape papers from arXiv cs.AI (default: 30 papers)
-3. Filter content using LLM-based guardrails
+1. Scrape articles from tech news websites
+2. Scrape papers from arXiv cs.AI
+3. Filter content using URL deduplication, alignment by embedding and cosine similarity, and LLM-based guardrails
 4. Generate a Vietnamese tech report
 5. Save the report to `workflow_output/ai_news_report_YYYYMMDD_HHMMSS.md`
 
@@ -96,26 +101,11 @@ class GuardrailsConfig:
 
 ## 📝 Key Components
 
-### 1. Scrapers (`services/scrapers/`)
+### 1. Scrapers ([`services/scrapers/`](./FCI_NewsAgents/services/scrapers/__init__.py))
 
-#### Article Scrapers
-- **NeuronDailyScraper**: Scrapes AI news from theneurondaily.com
-- **TechRepublicScraper**: Scrapes AI articles from TechRepublic RSS feed (uses Selenium for dynamic content)
-- **GoogleResearchScraper**: Scrapes blog posts from Google Research Blog
-- **MITNewsScraper**: Scrapes AI-related news from MIT News
+Refer to the [Architecture.md](./Architecture.md) file for scraper details.
 
-#### Paper Scraper
-- **csai_scraper**: Fetches papers from arXiv's Computer Science - Artificial Intelligence category
-
-All scrapers extend `BaseScraper` and return `List[Dict[str, Any]]`.
-
-**Parallel Scraping**: The system supports parallel article scraping with configurable max_workers (default: 4) for improved performance.
-
-Why i splitted the scrapers into Articles and Documents:
-1. Because the papers scraped from Arxiv is only contains the `Abstract`, which is quite short while the Articles is much longer, split them up will be easier to manage.
-2. Since the articles are longer in context, it will be easier to control the context window passed to the final LLM by limit the Article or Paper individually.
-
-### 2. LangGraph Workflow (`workflows/workflow_builder.py`)
+### 2. LangGraph Workflow ([`workflows/workflow_builder.py`](./FCI_NewsAgents/workflows/workflow_builder.py))
 
 Three-node workflow:
 
@@ -123,7 +113,7 @@ Three-node workflow:
 2. **Guardrails Node**: Uses LLM to filter documents (output: "0" or "1")
 3. **Generate Node**: Creates Vietnamese report using filtered documents
 
-### 3. LLM Integration (`services/llm/`)
+### 3. LLM Integration ([`services/llm/`](./FCI_NewsAgents/services/llm/llm_interface.py))
 
 Unified interface supporting:
 - **Gemini** (default): `gemini-2.5-flash` for filtering, `gemini-2.5-pro` for generation
@@ -144,31 +134,20 @@ class Document:
 ```
 
 ## 🛠️ Adding New Scrapers
-
-1. Create a new scraper class extending `BaseScraper`:
-
 ```python
+from FCI_NewsAgents.models.article import Article
+from FCI_NewsAgents.services.scrapers.base_scraper import BaseScraper
+from FCI_NewsAgents.services.scrapers.registry import register
+
+
+@register("OpenAINews")
 class MyNewScraper(BaseScraper):
     def get_name(self) -> str:
         return "MySource"
     
-    def scrape(self) -> List[Dict[str, Any]]:
+    def scrape(self) -> List[Article]:
         # Your scraping logic
         return articles
-```
-
-2. Register in `scrape_articles()` function:
-
-```python
-def scrape_articles() -> List[Dict[str, Any]]:
-    scrapers = [
-        NeuronDailyScraper(),
-        TechRepublicScraper(),
-        GoogleResearchScraper(),
-        MITNewsScraper(),
-        MyNewScraper()  # Add here
-    ]
-    # ... rest of the code
 ```
 
 ## 📊 Output Example
@@ -208,17 +187,13 @@ Priority given to recently published content (within 1 week).
 ## 📈 Recent Updates
 
 ### Latest Refactoring (Current Version)
-- ✅ **Streamlit Web UI**: Interactive interface with real-time progress tracking
-- ✅ **Parallel Scraping**: Configurable concurrent execution with ThreadPoolExecutor
-- ✅ **MIT News Integration**: Added fourth article scraper for MIT AI news
-- ✅ **Removed database dependency**: No more JSON file storage
-- ✅ **In-memory data flow**: Direct list passing from scrapers to workflow
-- ✅ **Simplified scrapers**: No duplicate checking against database
-- ✅ **Cleaner architecture**: Better separation of concerns
-- ✅ **Fresh data guarantee**: Always processes most recent content
-
-### Previous System
-The old system used JSON files (`papers.json`, `articles.json`) to store scraped data, with the `DatabaseOperation` class managing persistence. This has been replaced with a streaming architecture for better freshness.
+- ✅ **URL Deduplication**: The first filtering layer. An SQLite database helps to detect already fetched URLs from previous days by checking their canonical URLs.
+- ✅ **Alignment Check**: The second filtering layer before LLM guardrails. Document titles and abstracts are converted into embedding and compared against the embeddings of keywords related to FPT's areas of interests and avoided areas. Saves tokens for the LLM guardrails phase. 
+- ✅ **Segmented report generation**: LLMs only generate sections of the article and sections will be deterministically organised into a report of predictable and consistent format. No more dependency on Markdown-generated content of LLMs.
+- ✅ **Cleaner architecture**: Better separation of concerns. Each scraper has their own file for better discovery of scrapers. New scrapers are "automatically" registered.
+- ✅ **Early old document removal**: Documents older than 14 days are rejected at the scraping phase to reduce the number of documents at the filtering phase.
+- ✅ **Type annotation and documentation**: Most classes and functions now have respective type annotations and Python docstrings for better readability.
+- ✅ **Concurrency**: All parts that can be performed concurrently now support concurrent execution (scraping, canonical URL getter, LLM guardrails, report generation, etc.).
 
 ## 🎓 Use Case
 

@@ -15,6 +15,7 @@
   - [TLDR Tech News](./FCI_NewsAgents/services/scrapers/tldr_news_scraper.py)
 
 - Scrapers can be run in parallel [here](./FCI_NewsAgents/services/scrapers/run_article_scrapers.py).
+- All scrapers except arXiV extend [`BaseScraper`](./FCI_NewsAgents/services/scrapers/base_scraper.py), which has to implement the `scrape()` method that returns a list of [`Article`](./FCI_NewsAgents/models/article.py) objects. The arXiV scraper returns a list of [`Paper`](./FCI_NewsAgents/models/paper.py) objects.
 
 ### 2. Filtering
 #### 2.1. Duplication Check
