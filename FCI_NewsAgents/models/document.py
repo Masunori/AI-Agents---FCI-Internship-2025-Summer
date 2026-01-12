@@ -11,7 +11,12 @@ class ContentType(Enum):
 
 @dataclass(frozen=True, eq=True)
 class Document:
-    """Input document schema"""
+    """
+    Input document schema.
+
+    - The `Document` dataclass is frozen, so you have to create a new instance for copying.
+    - A document is identified by its (canonical) URL, and `__eq__` and `__hash__` have been overridden accordingly.
+    """
     url: str
     title: str
     summary: str

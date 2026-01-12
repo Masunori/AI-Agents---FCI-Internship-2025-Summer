@@ -68,8 +68,8 @@ def scrape_articles(parallel: bool = True, max_workers: int = -1) -> List[Dict[s
     print("Starting article scraping...")
     overall_start_time = time.time()
 
-    # scrapers = [scraper_cls() for scraper_cls in SCRAPERS.values()]
-    scrapers = [MITNewsScraper()]
+    scrapers = [scraper_cls() for scraper_cls in SCRAPERS.values()]
+    # scrapers = [MITNewsScraper()]
 
     if max_workers == -1:
         max_workers = min(len(scrapers), 16)

@@ -1,0 +1,758 @@
+
+=== Document Similarity Scores ===
+Document: Embedding Autonomous Agents in Resource-Constrained Robotic Platforms, Positive Score: 0.810359975873733, Negative Score: 0.8275102633102358
+Document: Agent Drift: Quantifying Behavioral Degradation in Multi-Agent LLM Systems Over Extended Interactions, Positive Score: 0.8172757782344451, Negative Score: 0.8042025705895331
+Document: Clinical Data Goes MEDS? Let's OWL make sense of it, Positive Score: 0.7942700462377368, Negative Score: 0.8243385614899996
+Document: Klear: Unified Multi-Task Audio-Video Joint Generation, Positive Score: 0.8188656370735837, Negative Score: 0.8027864788876071
+Document: Wow, wo, val! A Comprehensive Embodied World Model Evaluation Turing Test, Positive Score: 0.8153637711765327, Negative Score: 0.8110691729347042
+Document: ContextFocus: Activation Steering for Contextual Faithfulness in Large Language Models, Positive Score: 0.844612212666727, Negative Score: 0.7909880651978113
+Document: Pixel-Wise Multimodal Contrastive Learning for Remote Sensing Images, Positive Score: 0.8258433034462183, Negative Score: 0.8046879815064786
+Document: InfiniteWeb: Scalable Web Environment Synthesis for GUI Agent Training, Positive Score: 0.820913971178159, Negative Score: 0.8145095953791475
+Document: Quantifying the Impact of Modules and Their Interactions in the PSO-X Framework, Positive Score: 0.784254948418797, Negative Score: 0.8010080496736833
+Document: Layer-wise Positional Bias in Short-Context Language Modeling, Positive Score: 0.8164687208321192, Negative Score: 0.7995248803599091
+Document: CSSG: Measuring Code Similarity with Semantic Graphs, Positive Score: 0.8138061271969408, Negative Score: 0.7886673875312343
+Document: Analyzing Reasoning Consistency in Large Multimodal Models under Cross-Modal Conflicts, Positive Score: 0.8434623634724135, Negative Score: 0.8042273996269679
+Document: Mind the Generative Details: Direct Localized Detail Preference Optimization for Video Diffusion Models, Positive Score: 0.8237013887334168, Negative Score: 0.8090434296767699
+Document: ComfySearch: Autonomous Exploration and Reasoning for ComfyUI Workflows, Positive Score: 0.8314018071656843, Negative Score: 0.8240058598010137
+Document: MobileDreamer: Generative Sketch World Model for GUI Agent, Positive Score: 0.8368512062764119, Negative Score: 0.8102142303406626
+Document: HoneyTrap: Deceiving Large Language Model Attackers to Honeypot Traps with Resilient Multi-Agent Defense, Positive Score: 0.8073250099658026, Negative Score: 0.7933524494703575
+Document: A Scheduling Framework for Efficient MoE Inference on Edge GPU-NDP Systems, Positive Score: 0.8183474176885117, Negative Score: 0.8008088318969296
+Document: Anti-Length Shift: Dynamic Outlier Truncation for Training Efficient Reasoning Models, Positive Score: 0.8230729037098694, Negative Score: 0.8182290055122193
+Document: Trade-R1: Bridging Verifiable Rewards to Stochastic Environments via Process-Level Reasoning Verification, Positive Score: 0.8539942999707981, Negative Score: 0.8278085755657681
+Document: Large-Scale Aspect-Based Sentiment Analysis with Reasoning-Infused LLMs, Positive Score: 0.8351181640496717, Negative Score: 0.7929654648934988
+Document: FOREVER: Forgetting Curve-Inspired Memory Replay for Language Model Continual Learning, Positive Score: 0.8318928338846711, Negative Score: 0.8063328469026801
+Document: Bayes-PD: Exploring a Sequence to Binding Bayesian Neural Network model trained on Phage Display data, Positive Score: 0.8242017719427939, Negative Score: 0.8224248854976839
+Document: FocusUI: Efficient UI Grounding via Position-Preserving Visual Token Selection, Positive Score: 0.8091473000698906, Negative Score: 0.8004211654222368
+Document: A Gap Between Decision Trees and Neural Networks, Positive Score: 0.8252353353230656, Negative Score: 0.8236433979880239
+Document: An Algebraic Representation Theorem for Linear GENEOs in Geometric Machine Learning, Positive Score: 0.8140373955653805, Negative Score: 0.8174828709820192
+Document: Current Agents Fail to Leverage World Model as Tool for Foresight, Positive Score: 0.8257961663956396, Negative Score: 0.8031299236940534
+Document: Adaptive-Boundary-Clipping GRPO: Ensuring Bounded Ratios for Stable and Generalizable Training, Positive Score: 0.8296086768147616, Negative Score: 0.825494695881761
+Document: Spectral Manifold Regularization for Stable and Modular Routing in Deep MoE Architectures, Positive Score: 0.8207078347151435, Negative Score: 0.8185225870504063
+Document: IndexTTS 2.5 Technical Report, Positive Score: 0.8192038650063521, Negative Score: 0.8081281647905046
+Document: FLNet: Flood-Induced Agriculture Damage Assessment using Super Resolution of Satellite Images, Positive Score: 0.8145325377830199, Negative Score: 0.7880858324199241
+Document: Women Worry, Men Adopt: How Gendered Perceptions Shape the Use of Generative AI, Positive Score: 0.8427476555668278, Negative Score: 0.8163996880650621
+Document: What Matters For Safety Alignment?, Positive Score: 0.8005953738065235, Negative Score: 0.7973680620182101
+Document: Investigating the Grounding Bottleneck for a Large-Scale Configuration Problem: Existing Tools and Constraint-Aware Guessing, Positive Score: 0.8154328756159848, Negative Score: 0.8204340264276798
+Document: Implementing the First-Order Logic of Here and There, Positive Score: 0.7912619836046219, Negative Score: 0.8258032588470379
+Document: xDNN(ASP): Explanation Generation System for Deep Neural Networks powered by Answer Set Programming, Positive Score: 0.8378223414618853, Negative Score: 0.8073292314622446
+Document: When Numbers Start Talking: Implicit Numerical Coordination Among LLM-Based Agents, Positive Score: 0.8023158424106398, Negative Score: 0.7875271384058403
+Document: Formally Explaining Decision Tree Models with Answer Set Programming, Positive Score: 0.8023652422345102, Negative Score: 0.7971509208071794
+Document: XAI-LAW: A Logic Programming Tool for Modeling, Explaining, and Learning Legal Decisions, Positive Score: 0.8111451919051287, Negative Score: 0.8046978228061682
+Document: On the Trap Space Semantics of Normal Logic Programs, Positive Score: 0.8003669724169614, Negative Score: 0.7923876879775174
+Document: Defeasible Conditionals using Answer Set Programming, Positive Score: 0.8041919993997899, Negative Score: 0.7959686844967805
+Document: Logic Tensor Network-Enhanced Generative Adversarial Network, Positive Score: 0.8327539499942568, Negative Score: 0.814917774281373
+Document: IDESplat: Iterative Depth Probability Estimation for Generalizable 3D Gaussian Splatting, Positive Score: 0.8162342158159025, Negative Score: 0.8059984618010718
+Document: ROI-Reasoning: Rational Optimization for Inference via Pre-Computation Meta-Cognition, Positive Score: 0.8329981221402343, Negative Score: 0.8209337398155823
+Document: AI Generated Text Detection, Positive Score: 0.8273178514809627, Negative Score: 0.8192466602473925
+Document: Where meaning lives: Layer-wise accessibility of psycholinguistic features in encoder and decoder language models, Positive Score: 0.8244482311243342, Negative Score: 0.7961235334258747
+Document: An Algorithmic Framework for Systematic Literature Reviews: A Case Study for Financial Narratives, Positive Score: 0.8152651489200599, Negative Score: 0.818450275089221
+Document: Do LLMs Really Memorize Personally Identifiable Information? Revisiting PII Leakage with a Cue-Controlled Memorization Framework, Positive Score: 0.8270716235605882, Negative Score: 0.8012688845911964
+Document: NeoAMT: Neologism-Aware Agentic Machine Translation with Reinforcement Learning, Positive Score: 0.8244545333400239, Negative Score: 0.8066234662250793
+Document: Criminal Liability of Generative Artificial Intelligence Providers for User-Generated Child Sexual Abuse Material, Positive Score: 0.8459422882894934, Negative Score: 0.8169055254198703
+Document: Membox: Weaving Topic Continuity into Long-Range Memory for LLM Agents, Positive Score: 0.8123178893913017, Negative Score: 0.800030924696485
+Document: How Tolan builds voice-first AI with GPT-5.1, Positive Score: 0.8218141972311442, Negative Score: 0.8186125436951882
+Document: Introducing ChatGPT Health, Positive Score: 0.791844541629999, Negative Score: 0.8369386828763566
+Document: Stone Center on Inequality and Shaping the Future of Work Launches at MIT, Positive Score: 0.7895865890960571, Negative Score: 0.7898003205071927
+Document: The Ring Appstore is here! (Sponsor), Positive Score: 0.7826945720091567, Negative Score: 0.7903528960382249
+Document: Dynamic Context Discovery in Coding Agents, Positive Score: 0.8065621155560128, Negative Score: 0.8171342643830647
+Document: xAI Raises $20B, Positive Score: 0.8113316184923263, Negative Score: 0.7903028921994155
+Document: Database Development with AI in 2026, Positive Score: 0.8115014485554796, Negative Score: 0.8078288671214564
+Document: Building Context Graphs for GTM — and Why Salesforce Can't Do It, Positive Score: 0.7864292243317228, Negative Score: 0.8027872947156021
+Document: Falcon-H1R: Reasoning with a 7B Model, Positive Score: 0.8014084373188924, Negative Score: 0.8000229440595737
+Document: Claude Bootstrap (GitHub Repo), Positive Score: 0.8118196954711209, Negative Score: 0.8052739788453076
+Document: AI Gateway support for Claude Code, Positive Score: 0.8198908288454233, Negative Score: 0.8006308433441328
+Document: AI Observer (GitHub Repo), Positive Score: 0.8057906409831922, Negative Score: 0.8028808029590887
+Document: AI Needs Game Designers, Positive Score: 0.8400437726537915, Negative Score: 0.8449989608748677
+Document: AI leaderboard maker LMArena hits $1.7 billion valuation, Positive Score: 0.8055442385089823, Negative Score: 0.793889489311989
+Document: Alien Processes, Domains, and Data Models, Positive Score: 0.8490212790008438, Negative Score: 0.8162774744723442
+Document: Google Big Sleep: Linux Vulnerabilities, Positive Score: 0.7865661521951909, Negative Score: 0.770609611147592
+Document: The Subtle Voicebuds use AI to transcribe your words below a whisper, or in very loud spaces, Positive Score: 0.8040091898485373, Negative Score: 0.7922660752680515
+Document: Wrapping my head around Gas Town, Positive Score: 0.7630169422528152, Negative Score: 0.782059465956756
+Document: 😸 Stop turning Grandpa into a Pixar character, and do THIS instead, Positive Score: 0.8399098845663635, Negative Score: 0.8280889680620647
+Document: Delivering Massive Performance Leaps for Mixture of Experts Inference on NVIDIA Blackwell, Positive Score: 0.8255385378742117, Negative Score: 0.8216489590156829
+Document: Build and Orchestrate End-to-End SDG Workflows with NVIDIA Isaac Sim and NVIDIA OSMO, Positive Score: 0.8114404651592035, Negative Score: 0.820833061742932
+Document: Delivering Massive Performance Leaps for Mixture of Experts Inference on NVIDIA Blackwell, Positive Score: 0.8255385378742117, Negative Score: 0.8216489590156829
+Document: Redefining Secure AI Infrastructure with NVIDIA BlueField Astra for NVIDIA Vera Rubin NVL72, Positive Score: 0.8581419638868513, Negative Score: 0.8188674651648328
+Document: Redefining Secure AI Infrastructure with NVIDIA BlueField Astra for NVIDIA Vera Rubin NVL72, Positive Score: 0.8581419638868513, Negative Score: 0.8188674651648328
+Document: Inside China’s $10B Plan to Accelerate 50+ AI and Tech Initiatives, Positive Score: 0.8108671963236148, Negative Score: 0.8058575511179324
+Document: 900,000 Users Hit as Malicious Chrome Extensions Steal ChatGPT, DeepSeek Chats, Positive Score: 0.7906643633662003, Negative Score: 0.8037629847280234
+Document: Singapore’s DayOne Raises $2B Funding for AI Infrastructure Ambitions, Positive Score: 0.8231152810911531, Negative Score: 0.7966756023551766
+Document: Build Practical Cyber Defense Skills with This 5-Course Bundle, Positive Score: 0.8039143329193247, Negative Score: 0.7920610975388737
+==================================
+
+
+=== Document Similarity Scores ===
+Document: Embedding Autonomous Agents in Resource-Constrained Robotic Platforms, Positive Score: 0.810359975873733, Negative Score: 0.8275102633102358
+Document: Agent Drift: Quantifying Behavioral Degradation in Multi-Agent LLM Systems Over Extended Interactions, Positive Score: 0.8172757782344451, Negative Score: 0.8042025705895331
+Document: Clinical Data Goes MEDS? Let's OWL make sense of it, Positive Score: 0.7942700462377368, Negative Score: 0.8243385614899996
+Document: Klear: Unified Multi-Task Audio-Video Joint Generation, Positive Score: 0.8188656370735837, Negative Score: 0.8027864788876071
+Document: Wow, wo, val! A Comprehensive Embodied World Model Evaluation Turing Test, Positive Score: 0.8153637711765327, Negative Score: 0.8110691729347042
+Document: ContextFocus: Activation Steering for Contextual Faithfulness in Large Language Models, Positive Score: 0.844612212666727, Negative Score: 0.7909880651978113
+Document: Pixel-Wise Multimodal Contrastive Learning for Remote Sensing Images, Positive Score: 0.8258433034462183, Negative Score: 0.8046879815064786
+Document: InfiniteWeb: Scalable Web Environment Synthesis for GUI Agent Training, Positive Score: 0.820913971178159, Negative Score: 0.8145095953791475
+Document: Quantifying the Impact of Modules and Their Interactions in the PSO-X Framework, Positive Score: 0.784254948418797, Negative Score: 0.8010080496736833
+Document: Layer-wise Positional Bias in Short-Context Language Modeling, Positive Score: 0.8164687208321192, Negative Score: 0.7995248803599091
+Document: How Tolan builds voice-first AI with GPT-5.1, Positive Score: 0.8218141972311442, Negative Score: 0.8186125436951882
+Document: Introducing ChatGPT Health, Positive Score: 0.791844541629999, Negative Score: 0.8369386828763566
+Document: Stone Center on Inequality and Shaping the Future of Work Launches at MIT, Positive Score: 0.7895865890960571, Negative Score: 0.7898003205071927
+Document: The Ring Appstore is here! (Sponsor), Positive Score: 0.7826945720091567, Negative Score: 0.7903528960382249
+Document: Dynamic Context Discovery in Coding Agents, Positive Score: 0.8065621155560128, Negative Score: 0.8171342643830647
+Document: xAI Raises $20B, Positive Score: 0.8113316184923263, Negative Score: 0.7903028921994155
+Document: Database Development with AI in 2026, Positive Score: 0.8115014485554796, Negative Score: 0.8078288671214564
+Document: Building Context Graphs for GTM — and Why Salesforce Can't Do It, Positive Score: 0.7864292243317228, Negative Score: 0.8027872947156021
+Document: Falcon-H1R: Reasoning with a 7B Model, Positive Score: 0.8014084373188924, Negative Score: 0.8000229440595737
+Document: Claude Bootstrap (GitHub Repo), Positive Score: 0.8118196954711209, Negative Score: 0.8052739788453076
+Document: AI Gateway support for Claude Code, Positive Score: 0.8198908288454233, Negative Score: 0.8006308433441328
+Document: AI Observer (GitHub Repo), Positive Score: 0.8057906409831922, Negative Score: 0.8028808029590887
+Document: AI Needs Game Designers, Positive Score: 0.8400437726537915, Negative Score: 0.8449989608748677
+Document: AI leaderboard maker LMArena hits $1.7 billion valuation, Positive Score: 0.8055442385089823, Negative Score: 0.793889489311989
+Document: Alien Processes, Domains, and Data Models, Positive Score: 0.8490212790008438, Negative Score: 0.8162774744723442
+Document: Google Big Sleep: Linux Vulnerabilities, Positive Score: 0.7865661521951909, Negative Score: 0.770609611147592
+Document: The Subtle Voicebuds use AI to transcribe your words below a whisper, or in very loud spaces, Positive Score: 0.8040091898485373, Negative Score: 0.7922660752680515
+Document: Wrapping my head around Gas Town, Positive Score: 0.7630169422528152, Negative Score: 0.782059465956756
+Document: Delivering Massive Performance Leaps for Mixture of Experts Inference on NVIDIA Blackwell, Positive Score: 0.8255385378742117, Negative Score: 0.8216489590156829
+Document: Build and Orchestrate End-to-End SDG Workflows with NVIDIA Isaac Sim and NVIDIA OSMO, Positive Score: 0.8114404651592035, Negative Score: 0.820833061742932
+Document: Delivering Massive Performance Leaps for Mixture of Experts Inference on NVIDIA Blackwell, Positive Score: 0.8255385378742117, Negative Score: 0.8216489590156829
+Document: Redefining Secure AI Infrastructure with NVIDIA BlueField Astra for NVIDIA Vera Rubin NVL72, Positive Score: 0.8581419638868513, Negative Score: 0.8188674651648328
+Document: Redefining Secure AI Infrastructure with NVIDIA BlueField Astra for NVIDIA Vera Rubin NVL72, Positive Score: 0.8581419638868513, Negative Score: 0.8188674651648328
+Document: 😸 Stop turning Grandpa into a Pixar character, and do THIS instead, Positive Score: 0.8399098845663635, Negative Score: 0.8280889680620647
+Document: Inside China’s $10B Plan to Accelerate 50+ AI and Tech Initiatives, Positive Score: 0.8108671963236148, Negative Score: 0.8058575511179324
+Document: 900,000 Users Hit as Malicious Chrome Extensions Steal ChatGPT, DeepSeek Chats, Positive Score: 0.7906643633662003, Negative Score: 0.8037629847280234
+Document: Singapore’s DayOne Raises $2B Funding for AI Infrastructure Ambitions, Positive Score: 0.8231152810911531, Negative Score: 0.7966756023551766
+Document: Build Practical Cyber Defense Skills with This 5-Course Bundle, Positive Score: 0.8039143329193247, Negative Score: 0.7920610975388737
+==================================
+
+
+=== Document Similarity Scores ===
+Document: Embedding Autonomous Agents in Resource-Constrained Robotic Platforms, Positive Score: 0.810359975873733, Negative Score: 0.8275102633102358
+Document: Agent Drift: Quantifying Behavioral Degradation in Multi-Agent LLM Systems Over Extended Interactions, Positive Score: 0.8172757782344451, Negative Score: 0.8042025705895331
+Document: Clinical Data Goes MEDS? Let's OWL make sense of it, Positive Score: 0.7942700462377368, Negative Score: 0.8243385614899996
+Document: Klear: Unified Multi-Task Audio-Video Joint Generation, Positive Score: 0.8188656370735837, Negative Score: 0.8027864788876071
+Document: Wow, wo, val! A Comprehensive Embodied World Model Evaluation Turing Test, Positive Score: 0.8153637711765327, Negative Score: 0.8110691729347042
+Document: ContextFocus: Activation Steering for Contextual Faithfulness in Large Language Models, Positive Score: 0.844612212666727, Negative Score: 0.7909880651978113
+Document: Pixel-Wise Multimodal Contrastive Learning for Remote Sensing Images, Positive Score: 0.8258433034462183, Negative Score: 0.8046879815064786
+Document: InfiniteWeb: Scalable Web Environment Synthesis for GUI Agent Training, Positive Score: 0.820913971178159, Negative Score: 0.8145095953791475
+Document: Quantifying the Impact of Modules and Their Interactions in the PSO-X Framework, Positive Score: 0.784254948418797, Negative Score: 0.8010080496736833
+Document: Layer-wise Positional Bias in Short-Context Language Modeling, Positive Score: 0.8164687208321192, Negative Score: 0.7995248803599091
+Document: How Tolan builds voice-first AI with GPT-5.1, Positive Score: 0.8218141972311442, Negative Score: 0.8186125436951882
+Document: Introducing ChatGPT Health, Positive Score: 0.791844541629999, Negative Score: 0.8369386828763566
+Document: Stone Center on Inequality and Shaping the Future of Work Launches at MIT, Positive Score: 0.7895865890960571, Negative Score: 0.7898003205071927
+Document: The Ring Appstore is here! (Sponsor), Positive Score: 0.7826945720091567, Negative Score: 0.7903528960382249
+Document: Dynamic Context Discovery in Coding Agents, Positive Score: 0.8065621155560128, Negative Score: 0.8171342643830647
+Document: xAI Raises $20B, Positive Score: 0.8113316184923263, Negative Score: 0.7903028921994155
+Document: Database Development with AI in 2026, Positive Score: 0.8115014485554796, Negative Score: 0.8078288671214564
+Document: Building Context Graphs for GTM — and Why Salesforce Can't Do It, Positive Score: 0.7864292243317228, Negative Score: 0.8027872947156021
+Document: Falcon-H1R: Reasoning with a 7B Model, Positive Score: 0.8014084373188924, Negative Score: 0.8000229440595737
+Document: Claude Bootstrap (GitHub Repo), Positive Score: 0.8118196954711209, Negative Score: 0.8052739788453076
+Document: AI Gateway support for Claude Code, Positive Score: 0.8198908288454233, Negative Score: 0.8006308433441328
+Document: AI Observer (GitHub Repo), Positive Score: 0.8057906409831922, Negative Score: 0.8028808029590887
+Document: AI Needs Game Designers, Positive Score: 0.8400437726537915, Negative Score: 0.8449989608748677
+Document: AI leaderboard maker LMArena hits $1.7 billion valuation, Positive Score: 0.8055442385089823, Negative Score: 0.793889489311989
+Document: Alien Processes, Domains, and Data Models, Positive Score: 0.8490212790008438, Negative Score: 0.8162774744723442
+Document: Google Big Sleep: Linux Vulnerabilities, Positive Score: 0.7865661521951909, Negative Score: 0.770609611147592
+Document: The Subtle Voicebuds use AI to transcribe your words below a whisper, or in very loud spaces, Positive Score: 0.8040091898485373, Negative Score: 0.7922660752680515
+Document: Wrapping my head around Gas Town, Positive Score: 0.7630169422528152, Negative Score: 0.782059465956756
+Document: Delivering Massive Performance Leaps for Mixture of Experts Inference on NVIDIA Blackwell, Positive Score: 0.8255385378742117, Negative Score: 0.8216489590156829
+Document: Build and Orchestrate End-to-End SDG Workflows with NVIDIA Isaac Sim and NVIDIA OSMO, Positive Score: 0.8114404651592035, Negative Score: 0.820833061742932
+Document: Delivering Massive Performance Leaps for Mixture of Experts Inference on NVIDIA Blackwell, Positive Score: 0.8255385378742117, Negative Score: 0.8216489590156829
+Document: Redefining Secure AI Infrastructure with NVIDIA BlueField Astra for NVIDIA Vera Rubin NVL72, Positive Score: 0.8581419638868513, Negative Score: 0.8188674651648328
+Document: Redefining Secure AI Infrastructure with NVIDIA BlueField Astra for NVIDIA Vera Rubin NVL72, Positive Score: 0.8581419638868513, Negative Score: 0.8188674651648328
+Document: 😸 Stop turning Grandpa into a Pixar character, and do THIS instead, Positive Score: 0.8399098845663635, Negative Score: 0.8280889680620647
+Document: Inside China’s $10B Plan to Accelerate 50+ AI and Tech Initiatives, Positive Score: 0.8108671963236148, Negative Score: 0.8058575511179324
+Document: 900,000 Users Hit as Malicious Chrome Extensions Steal ChatGPT, DeepSeek Chats, Positive Score: 0.7906643633662003, Negative Score: 0.8037629847280234
+Document: Singapore’s DayOne Raises $2B Funding for AI Infrastructure Ambitions, Positive Score: 0.8231152810911531, Negative Score: 0.7966756023551766
+Document: Build Practical Cyber Defense Skills with This 5-Course Bundle, Positive Score: 0.8039143329193247, Negative Score: 0.7920610975388737
+==================================
+
+
+=== Document Similarity Scores ===
+Document: On the Hidden Objective Biases of Group-based Reinforcement Learning, Positive Score: 0.8405693546744823, Negative Score: 0.8294169672172926
+Document: AlgBench: To What Extent Do Large Reasoning Models Understand Algorithms?, Positive Score: 0.826642507867804, Negative Score: 0.8152912890795649
+Document: When to Act: Calibrated Confidence for Reliable Human Intention Prediction in Assistive Robotics, Positive Score: 0.801197130752726, Negative Score: 0.8173071643714577
+Document: On the Definition and Detection of Cherry-Picking in Counterfactual Explanations, Positive Score: 0.788481464715585, Negative Score: 0.7943713110994256
+Document: ConMax: Confidence-Maximizing Compression for Efficient Chain-of-Thought Reasoning, Positive Score: 0.8231359045927458, Negative Score: 0.815870817610236
+Document: Text as a Universal Interface for Transferable Personalization, Positive Score: 0.8363781701323796, Negative Score: 0.8040002564918707
+Document: Precision over Diversity: High-Precision Reward Generalizes to Robust Instruction Following, Positive Score: 0.8359580911112207, Negative Score: 0.812415265979235
+Document: Prototypicality Bias Reveals Blindspots in Multimodal Evaluation Metrics, Positive Score: 0.8238513163969013, Negative Score: 0.8171060949654828
+Document: T-Retriever: Tree-based Hierarchical Retrieval Augmented Generation for Textual Graphs, Positive Score: 0.8697018707760243, Negative Score: 0.8001641458311999
+Document: CurricuLLM: Designing Personalized and Workforce-Aligned Cybersecurity Curricula Using Fine-Tuned LLMs, Positive Score: 0.8267024152535142, Negative Score: 0.803876297733591
+Document: Netomi’s lessons for scaling agentic systems into the enterprise, Positive Score: 0.8477114651302686, Negative Score: 0.8161023194640826
+Document: OpenAI for Healthcare, Positive Score: 0.8277750358225358, Negative Score: 0.8907797923919188
+Document: How Tolan builds voice-first AI with GPT-5.1, Positive Score: 0.8218141972311442, Negative Score: 0.8186125436951882
+Document: Introducing ChatGPT Health, Positive Score: 0.791844541629999, Negative Score: 0.8369386828763566
+Document: Announcing OpenAI Grove Cohort 2, Positive Score: 0.8254691522116097, Negative Score: 0.8135782165781822
+Document: Decoding the Arctic to predict winter weather, Positive Score: 0.790255194879829, Negative Score: 0.7870229633150726
+Document: Stone Center on Inequality and Shaping the Future of Work Launches at MIT, Positive Score: 0.7895865890960571, Negative Score: 0.7898003205071927
+Document: MIT scientists investigate memorization risk in the age of clinical AI, Positive Score: 0.8083263628075877, Negative Score: 0.8324396769546087
+Document: Using design to interpret the past and envision the future, Positive Score: 0.7915130884855256, Negative Score: 0.7930496118879924
+Document: ChatGPT Health, Positive Score: 0.815048856856675, Negative Score: 0.8615031456073319
+Document: OpenAI earmarks $50 billion for employee stock grant pool, Positive Score: 0.8082190576575609, Negative Score: 0.7948607516728323
+Document: Anthropic Raising $10 Billion at $350 Billion Value, Positive Score: 0.8002380981751956, Negative Score: 0.7904282606229662
+Document: Recursive Language Models and Context Folding, Positive Score: 0.8425363169741993, Negative Score: 0.7810328231079123
+Document: Context is the next data platform—and why context graphs are key to understanding processes, Positive Score: 0.8154205834647326, Negative Score: 0.7826537154348092
+Document: 8 plots that explain the state of open models, Positive Score: 0.8182318542738087, Negative Score: 0.8082921549031283
+Document: Are AI tools focusing too much on individual productivity? (Sponsor), Positive Score: 0.8125977119482504, Negative Score: 0.8023151466248145
+Document: Open Gaming Foundation Model (GitHub Repo), Positive Score: 0.8147710316733372, Negative Score: 0.8447527505482937
+Document: FinePDFs: Liberating 3T of the finest tokens from PDFs, Positive Score: 0.8157607850546847, Negative Score: 0.8107105380002368
+Document: Visual Web Agents, Positive Score: 0.808580131829477, Negative Score: 0.8038339181719227
+Document: Consumer AI Predictions, Positive Score: 0.8143893139745368, Negative Score: 0.8117371626834778
+Document: Brendan Foody on Teaching AI and the Future of Knowledge Work, Positive Score: 0.8076392640228371, Negative Score: 0.8182518184487176
+Document: How to build and test your agentic AI experience (Sponsor), Positive Score: 0.8279077350236457, Negative Score: 0.8015255953556988
+Document: Building Threat Models with MCP and AI Agents, Positive Score: 0.8333468327855996, Negative Score: 0.7996689492791494
+Document: Google Supports Gemini-Powered Audio Lessons, Positive Score: 0.784121347552269, Negative Score: 0.7771635999165354
+Document: AI will compromise your cybersecurity posture, Positive Score: 0.8147880322446568, Negative Score: 0.8073644103366048
+Document: Delivering Massive Performance Leaps for Mixture of Experts Inference on NVIDIA Blackwell, Positive Score: 0.8255385378742117, Negative Score: 0.8216489590156829
+Document: Accelerating LLM and VLM Inference for Automotive and Robotics with NVIDIA TensorRT Edge-LLM, Positive Score: 0.8515841114213741, Negative Score: 0.8191932620374819
+Document: Introducing NVIDIA BlueField-4-Powered Inference Context Memory Storage Platform for the Next Frontier of AI, Positive Score: 0.8408803110612384, Negative Score: 0.8102339205363439
+Document: Scaling Power-Efficient AI Factories with NVIDIA Spectrum-X Ethernet Photonics, Positive Score: 0.8232745085803354, Negative Score: 0.8064025972538367
+Document: Open-Source AI Tool Upgrades Speed Up LLM and Diffusion Models on NVIDIA RTX PCs, Positive Score: 0.8261299617078778, Negative Score: 0.8241556547375423
+Document: New Software and Model Optimizations Supercharge NVIDIA DGX Spark, Positive Score: 0.7829593595739601, Negative Score: 0.784582176272718
+Document: Inside the NVIDIA Rubin Platform: Six New Chips, One AI Supercomputer, Positive Score: 0.8399086734675865, Negative Score: 0.8149520328277018
+Document: Accelerate AI Inference for Edge and Robotics with NVIDIA Jetson T4000 and NVIDIA JetPack 7.1, Positive Score: 0.834816283122455, Negative Score: 0.8241775423026336
+Document: How to Build a Voice Agent with RAG and Safety Guardrails, Positive Score: 0.8165804449337436, Negative Score: 0.7904133349776759
+Document: Building Autonomous Vehicles That Reason with NVIDIA Alpamayo, Positive Score: 0.8162593072893428, Negative Score: 0.8506440174444198
+Document: AI Factories, Physical AI, and Advances in Models, Agents, and Infrastructure That Shaped 2025, Positive Score: 0.8335661654078611, Negative Score: 0.8270884984233045
+Document: Accelerating LLM and VLM Inference for Automotive and Robotics with NVIDIA TensorRT Edge-LLM, Positive Score: 0.8515841114213741, Negative Score: 0.8191932620374819
+Document: How to Build a Voice Agent with RAG and Safety Guardrails, Positive Score: 0.8165804449337436, Negative Score: 0.7904133349776759
+Document: Build and Orchestrate End-to-End SDG Workflows with NVIDIA Isaac Sim and NVIDIA OSMO, Positive Score: 0.8114404651592035, Negative Score: 0.820833061742932
+Document: Delivering Massive Performance Leaps for Mixture of Experts Inference on NVIDIA Blackwell, Positive Score: 0.8255385378742117, Negative Score: 0.8216489590156829
+Document: Redefining Secure AI Infrastructure with NVIDIA BlueField Astra for NVIDIA Vera Rubin NVL72, Positive Score: 0.8581419638868513, Negative Score: 0.8188674651648328
+Document: Introducing NVIDIA BlueField-4-Powered Inference Context Memory Storage Platform for the Next Frontier of AI, Positive Score: 0.8408803110612384, Negative Score: 0.8102339205363439
+Document: Scaling Power-Efficient AI Factories with NVIDIA Spectrum-X Ethernet Photonics, Positive Score: 0.8232745085803354, Negative Score: 0.8064025972538367
+Document: Inside the NVIDIA Rubin Platform: Six New Chips, One AI Supercomputer, Positive Score: 0.8399086734675865, Negative Score: 0.8149520328277018
+Document: AI Factories, Physical AI, and Advances in Models, Agents, and Infrastructure That Shaped 2025, Positive Score: 0.8335661654078611, Negative Score: 0.8270884984233045
+Document: Redefining Secure AI Infrastructure with NVIDIA BlueField Astra for NVIDIA Vera Rubin NVL72, Positive Score: 0.8581419638868513, Negative Score: 0.8188674651648328
+Document: Introducing NVIDIA BlueField-4-Powered Inference Context Memory Storage Platform for the Next Frontier of AI, Positive Score: 0.8408803110612384, Negative Score: 0.8102339205363439
+Document: Scaling Power-Efficient AI Factories with NVIDIA Spectrum-X Ethernet Photonics, Positive Score: 0.8232745085803354, Negative Score: 0.8064025972538367
+Document: Inside the NVIDIA Rubin Platform: Six New Chips, One AI Supercomputer, Positive Score: 0.8399086734675865, Negative Score: 0.8149520328277018
+Document: 😸 ChatGPT for Health is a doc in your pocket, Positive Score: 0.8283508481087453, Negative Score: 0.8453267567604485
+Document: 😸 Stop turning Grandpa into a Pixar character, and do THIS instead, Positive Score: 0.8399098845663635, Negative Score: 0.8280889680620647
+Document: 😺 🎙️ Watch: "Transformers will not get us to AGI." Here's what might., Positive Score: 0.8246122078860705, Negative Score: 0.8284083437951032
+Document: 😸 NVIDIA's car AI can explain itself, Positive Score: 0.828859864675102, Negative Score: 0.8357287144120026
+Document: 😸 Pickle 1 AR glasses go viral, then get called fake..., Positive Score: 0.8075085694757559, Negative Score: 0.7994533627388083
+Document: 😸 DeepSeek Just Fixed What Breaks $100M AI Training Runs, Positive Score: 0.8376128037253541, Negative Score: 0.8293373772511344
+Document: 😺 OpenAI and Jony Ive's AI device is a pen?!, Positive Score: 0.828163068217636, Negative Score: 0.8280856871167676
+Document: 😸 FAANG engineer: "The party is over", Positive Score: 0.8339089147696502, Negative Score: 0.8423227176360486
+Document: 😺 Meta paid $2B for an 8-month-old startup, Positive Score: 0.8284815681768805, Negative Score: 0.8158482271417159
+Document: 😺 🎙️ Watch: She's 24. She raised $64M. Her target: superintelligence, Positive Score: 0.8192691216956829, Negative Score: 0.8251431719534991
+Document: 😸 So what's up with OpenAI's new App  Marketplace?, Positive Score: 0.8267802152564661, Negative Score: 0.8362371360419939
+Document: 😸 Your AI terms Cheat Sheet for 2026, Pt 1, Positive Score: 0.8434734551640233, Negative Score: 0.8378596015528191
+Document: AI and the Future of Work: 5 Predictions for 2026, Positive Score: 0.8189396197048765, Negative Score: 0.8037546522015887
+Document: Boltz Bags $28M Funding and Pfizer Partnership for Biomolecular AI Boost, Positive Score: 0.80364034524172, Negative Score: 0.8457187555045556
+Document: Windows 11 26H1 to Debut This Spring, Exclusive to Snapdragon X2 PCs, Positive Score: 0.7854602063782008, Negative Score: 0.7750259219894668
+Document: Gmail Enters the Gemini Era With AI-Powered Inbox Overhaul, Positive Score: 0.8132214319148199, Negative Score: 0.8099079052185819
+Document: Inside China’s $10B Plan to Accelerate 50+ AI and Tech Initiatives, Positive Score: 0.8108671963236148, Negative Score: 0.8058575511179323
+Document: 900,000 Users Hit as Malicious Chrome Extensions Steal ChatGPT, DeepSeek Chats, Positive Score: 0.7906643633662003, Negative Score: 0.8037629847280234
+Document: Meet the Razr Fold: Motorola’s First Foldable Phone Powered by On-Device AI, Positive Score: 0.7809988497929391, Negative Score: 0.783724060949557
+Document: Singapore’s DayOne Raises $2B Funding for AI Infrastructure Ambitions, Positive Score: 0.8231152810911531, Negative Score: 0.7966756023551766
+Document: Build Practical Cyber Defense Skills with This 5-Course Bundle, Positive Score: 0.8039143329193248, Negative Score: 0.7920610975388735
+Document: AMD’s AI Chips Are Coming for Your Laptop, Desktop, and Car, Positive Score: 0.8198508147557928, Negative Score: 0.809973966288767
+Document: Nvidia Introduces Vera Rubin, a New AI Supercomputing Platform Built to Slash Costs, Positive Score: 0.8216840487518601, Negative Score: 0.8137104372142763
+Document: Google Faces Gmail Lawsuit Over Hidden AI Training Settings, Positive Score: 0.807893221532453, Negative Score: 0.8098313713199695
+Document: AI Adoption Trends in the Enterprise 2026, Positive Score: 0.8560395489580952, Negative Score: 0.8039124699150321
+Document: This New AI Can Take Notes Faster Than a Pro, Positive Score: 0.8019343233895871, Negative Score: 0.7967722899267065
+Document: CES 2026: Nvidia Expands From Chips Into Full AI Platforms, Positive Score: 0.8266985000516626, Negative Score: 0.8103440152556369
+Document: Stord Acquires Shipwire for AI-Fueled Ecommerce Push, Positive Score: 0.8016109793035398, Negative Score: 0.7985617976206008
+Document: CES 2026 Live Updates: AI Everywhere, New Devices, and the Tech That Matters, Positive Score: 0.8122445579770906, Negative Score: 0.8295218903693529
+Document: 5 Google Predictions for 2026, From Gemini to Pixel, Positive Score: 0.8042578347278603, Negative Score: 0.7955471145124682
+Document: Generative AI in Financial Services: Innovation, Risk, and Customer Experience, Positive Score: 0.8613230708382579, Negative Score: 0.8239793541945957
+Document: Nvidia Just Made a $5B Bet on Intel. Here’s Why It Matters, Positive Score: 0.7817169723213084, Negative Score: 0.7811237297562462
+==================================
+
+
+=== Document Similarity Scores ===
+Document: HMVI: Unifying Heterogeneous Attributes with Natural Neighbors for Missing Value Inference, Positive Score: 0.8150099115679406, Negative Score: 0.7996087757074251
+Document: From Idea to Co-Creation: A Planner-Actor-Critic Framework for Agent Augmented 3D Modeling, Positive Score: 0.8232651727815301, Negative Score: 0.8098650745385623
+Document: An Empirical Investigation of Robustness in Large Language Models under Tabular Distortions, Positive Score: 0.8584339277098603, Negative Score: 0.8050907924180823
+Document: OpenAI and SoftBank Group partner with SB Energy, Positive Score: 0.8236008621106211, Negative Score: 0.8081119968397809
+Document: Datadog uses Codex for system-level code review, Positive Score: 0.8008119761499053, Negative Score: 0.7975755469649649
+Document: 3 Questions: How AI could optimize the power grid, Positive Score: 0.8238871698650171, Negative Score: 0.8311492761336834
+Document: Building an AI code reviewer grounded in production telemetry (Sponsor), Positive Score: 0.8044668493090339, Negative Score: 0.8106131529907225
+Document: Gmail is entering the Gemini era, Positive Score: 0.8453130801435165, Negative Score: 0.8142402204618617
+Document: OpenAI to acquire the team behind executive coaching AI tool Convogo, Positive Score: 0.8377036828129455, Negative Score: 0.8141895604278905
+Document: Context Personalization, Positive Score: 0.8281971493646092, Negative Score: 0.8131415294469241
+Document: Lord of War, meet Lord of Tokens: Torture-testing image models on design-agency grade work, Positive Score: 0.7961601582493337, Negative Score: 0.7893325625657504
+Document: Eight Software Markets AI That Will Transform Differently, Positive Score: 0.8171285892012556, Negative Score: 0.8055896347511394
+Document: 94% of AI leaders don't believe their data infrastructure is ready for AI (Sponsor), Positive Score: 0.8355452739012854, Negative Score: 0.8068271799262275
+Document: Scale AI's Agentic Rubrics for Software Agent Verification, Positive Score: 0.8229988386820679, Negative Score: 0.8208181370393703
+Document: The Complete Guide to Building Agents with the Claude Agent SDK, Positive Score: 0.7982160277945352, Negative Score: 0.7752607230943055
+Document: Warp Specialization in Triton: Design and Roadmap, Positive Score: 0.7926272912326014, Negative Score: 0.7993040906080896
+Document: AI isn't “just predicting the next word” anymore, Positive Score: 0.8439445016107361, Negative Score: 0.8117452342180105
+Document: Among the Agents, Positive Score: 0.8450150065837919, Negative Score: 0.808450299526646
+Document: Developer output jumped 76% in 2025... and team output rose even more (Sponsor), Positive Score: 0.7849818457689824, Negative Score: 0.7891366525201086
+Document: Universal Permission Request Hook for Claude Code, Positive Score: 0.7692548873043601, Negative Score: 0.7838104748301636
+Document: The Downside to Using AI for All Those Boring Tasks at Work, Positive Score: 0.8049316606697494, Negative Score: 0.797587941840485
+Document: Nvidia Tightens Terms on H200 Sales in China, Positive Score: 0.8047466485608141, Negative Score: 0.7905330297694959
+Document: A Pathway to Privacy from AI—while using it?, Positive Score: 0.8180660348974208, Negative Score: 0.797213964827591
+Document: Migration at Scale: Moving Marketing Cloud Caching from Memcached to Redis at 1.5M RPS Without Downtime, Positive Score: 0.7971549589271316, Negative Score: 0.7999194655986559
+Document: From Local to Global: A Deep Dive into GraphRAG, Positive Score: 0.8174427430961863, Negative Score: 0.7904311383712458
+Document: Autofilling the Boring Semantic Layer: From Sakila to Chat-BI with dltHub, Positive Score: 0.8346064445692106, Negative Score: 0.8055554475372482
+Document: Powering Vector Embedding Capabilities, Positive Score: 0.805305064638467, Negative Score: 0.7813441823166676
+Document: Data Engineering in 2026: What Changes?, Positive Score: 0.823206011053799, Negative Score: 0.8029804641316101
+Document: Context is the next data platform, and why context graphs are key to understanding processes, Positive Score: 0.8061000446531859, Negative Score: 0.7870487371334984
+Document: The Hidden Cost Crisis in Data Engineering, Positive Score: 0.8076517261487974, Negative Score: 0.7832492891004929
+Document: Fivetran keeps data pipelines flowing for teams short on time and bandwidth (Sponsor), Positive Score: 0.7815504811696953, Negative Score: 0.7869019008709314
+Document: How Multimodal Vector Databases Are Transforming Challenges Across Industries, Positive Score: 0.8486946648638608, Negative Score: 0.8029478330270764
+Document: Databases in 2025: A Year in Review, Positive Score: 0.7833390794110444, Negative Score: 0.8015515301513726
+Document: How AI Transformed Database Debugging at Databricks, Positive Score: 0.8226724543187609, Negative Score: 0.8167153133546574
+Document: Mastering LLM Tool Calling: The Complete Framework for Connecting Models to the Real World, Positive Score: 0.7897370847846682, Negative Score: 0.7995767897296719
+Document: The Adaptive Retrieval Advantage: Why Query-Aware RAG Is Replacing One-Size-Fits-All Retrieval, Positive Score: 0.8141961354947795, Negative Score: 0.7847573737864179
+Document: Trending: What Context Graphs Mean For Enterprise, Positive Score: 0.7697731828230795, Negative Score: 0.7743924717820574
+Document: 😸 We're live sharing our predictions for 2026, Positive Score: 0.8415119828556592, Negative Score: 0.8425903344196612
+Document: Reimagining LLM Memory: Using Context as Training Data Unlocks Models That Learn at Test-Time, Positive Score: 0.8118557470969613, Negative Score: 0.7968924374468014
+Document: Multi-Agent Warehouse AI Command Layer Enables Operational Excellence and Supply Chain Intelligence, Positive Score: 0.8305329915751721, Negative Score: 0.8005463799822289
+Document: Build an AI Catalog System That Delivers Localized, Interactive Product Experiences, Positive Score: 0.8006359421050196, Negative Score: 0.7918423649073811
+Document: Want AI Skills Without the Big Price Tag? These 2026 Certifications Deliver Value, Positive Score: 0.8442878409559578, Negative Score: 0.814983064736778
+Document: Daily Tech Insider Explores the New Era of Physical Intelligence, Positive Score: 0.8282186561436068, Negative Score: 0.8443421247141392
+Document: Rumor: Apple’s iOS 27 to Focus on Performance, AI, and Foldable iPhone Support, Positive Score: 0.8049283836481997, Negative Score: 0.7812609149872319
+Document: Mistral AI Wins French Military Deal, Positive Score: 0.8213295267138816, Negative Score: 0.8088741278675017
+Document: Fiserv Taps Microsoft for AI-Fueled Fintech Innovation, Positive Score: 0.8175104720131258, Negative Score: 0.8057981520651494
+Document: Snowflake to Acquire AI-Powered Observability Outfit Observe, Positive Score: 0.8171932604821068, Negative Score: 0.8061307895842409
+Document: Fake UK Council Posts Show the Power of AI Misinformation, Positive Score: 0.8058129519857077, Negative Score: 0.8012915149009767
+==================================
+
+
+=== Document Similarity Scores ===
+Document: HMVI: Unifying Heterogeneous Attributes with Natural Neighbors for Missing Value Inference, Positive Score: 0.8150099115679406, Negative Score: 0.7996087757074251
+Document: From Idea to Co-Creation: A Planner-Actor-Critic Framework for Agent Augmented 3D Modeling, Positive Score: 0.8232651727815301, Negative Score: 0.8098650745385623
+Document: An Empirical Investigation of Robustness in Large Language Models under Tabular Distortions, Positive Score: 0.8584339277098603, Negative Score: 0.8050907924180823
+Document: OpenAI and SoftBank Group partner with SB Energy, Positive Score: 0.8236008621106211, Negative Score: 0.8081119968397809
+Document: Datadog uses Codex for system-level code review, Positive Score: 0.8008119761499053, Negative Score: 0.7975755469649649
+Document: 3 Questions: How AI could optimize the power grid, Positive Score: 0.8238871698650171, Negative Score: 0.8311492761336834
+Document: Building an AI code reviewer grounded in production telemetry (Sponsor), Positive Score: 0.8044668493090339, Negative Score: 0.8106131529907225
+Document: Gmail is entering the Gemini era, Positive Score: 0.8453130801435165, Negative Score: 0.8142402204618617
+Document: OpenAI to acquire the team behind executive coaching AI tool Convogo, Positive Score: 0.8377036828129455, Negative Score: 0.8141895604278905
+Document: Context Personalization, Positive Score: 0.8281971493646092, Negative Score: 0.8131415294469241
+Document: Lord of War, meet Lord of Tokens: Torture-testing image models on design-agency grade work, Positive Score: 0.7961601582493337, Negative Score: 0.7893325625657504
+Document: Eight Software Markets AI That Will Transform Differently, Positive Score: 0.8171285892012556, Negative Score: 0.8055896347511394
+Document: 94% of AI leaders don't believe their data infrastructure is ready for AI (Sponsor), Positive Score: 0.8355452739012854, Negative Score: 0.8068271799262275
+Document: Scale AI's Agentic Rubrics for Software Agent Verification, Positive Score: 0.8229988386820679, Negative Score: 0.8208181370393703
+Document: The Complete Guide to Building Agents with the Claude Agent SDK, Positive Score: 0.7982160277945352, Negative Score: 0.7752607230943055
+Document: Warp Specialization in Triton: Design and Roadmap, Positive Score: 0.7926272912326014, Negative Score: 0.7993040906080896
+Document: AI isn't “just predicting the next word” anymore, Positive Score: 0.8439445016107361, Negative Score: 0.8117452342180105
+Document: Among the Agents, Positive Score: 0.8450150065837919, Negative Score: 0.808450299526646
+Document: Developer output jumped 76% in 2025... and team output rose even more (Sponsor), Positive Score: 0.7849818457689824, Negative Score: 0.7891366525201086
+Document: Universal Permission Request Hook for Claude Code, Positive Score: 0.7692548873043601, Negative Score: 0.7838104748301636
+Document: The Downside to Using AI for All Those Boring Tasks at Work, Positive Score: 0.8049316606697494, Negative Score: 0.797587941840485
+Document: Nvidia Tightens Terms on H200 Sales in China, Positive Score: 0.8047466485608141, Negative Score: 0.7905330297694959
+Document: A Pathway to Privacy from AI—while using it?, Positive Score: 0.8180660348974208, Negative Score: 0.797213964827591
+Document: Migration at Scale: Moving Marketing Cloud Caching from Memcached to Redis at 1.5M RPS Without Downtime, Positive Score: 0.7971549589271316, Negative Score: 0.7999194655986559
+Document: From Local to Global: A Deep Dive into GraphRAG, Positive Score: 0.8174427430961863, Negative Score: 0.7904311383712458
+Document: Autofilling the Boring Semantic Layer: From Sakila to Chat-BI with dltHub, Positive Score: 0.8346064445692106, Negative Score: 0.8055554475372482
+Document: Powering Vector Embedding Capabilities, Positive Score: 0.805305064638467, Negative Score: 0.7813441823166676
+Document: Data Engineering in 2026: What Changes?, Positive Score: 0.823206011053799, Negative Score: 0.8029804641316101
+Document: Context is the next data platform, and why context graphs are key to understanding processes, Positive Score: 0.8061000446531859, Negative Score: 0.7870487371334984
+Document: The Hidden Cost Crisis in Data Engineering, Positive Score: 0.8076517261487974, Negative Score: 0.7832492891004929
+Document: Fivetran keeps data pipelines flowing for teams short on time and bandwidth (Sponsor), Positive Score: 0.7815504811696953, Negative Score: 0.7869019008709314
+Document: How Multimodal Vector Databases Are Transforming Challenges Across Industries, Positive Score: 0.8486946648638608, Negative Score: 0.8029478330270764
+Document: Databases in 2025: A Year in Review, Positive Score: 0.7833390794110444, Negative Score: 0.8015515301513726
+Document: How AI Transformed Database Debugging at Databricks, Positive Score: 0.8226724543187609, Negative Score: 0.8167153133546574
+Document: Mastering LLM Tool Calling: The Complete Framework for Connecting Models to the Real World, Positive Score: 0.7897370847846682, Negative Score: 0.7995767897296719
+Document: The Adaptive Retrieval Advantage: Why Query-Aware RAG Is Replacing One-Size-Fits-All Retrieval, Positive Score: 0.8141961354947795, Negative Score: 0.7847573737864179
+Document: Trending: What Context Graphs Mean For Enterprise, Positive Score: 0.7697731828230795, Negative Score: 0.7743924717820574
+Document: 😸 We're live sharing our predictions for 2026, Positive Score: 0.8415119828556592, Negative Score: 0.8425903344196612
+Document: Reimagining LLM Memory: Using Context as Training Data Unlocks Models That Learn at Test-Time, Positive Score: 0.8118557470969613, Negative Score: 0.7968924374468014
+Document: Multi-Agent Warehouse AI Command Layer Enables Operational Excellence and Supply Chain Intelligence, Positive Score: 0.8305329915751721, Negative Score: 0.8005463799822289
+Document: Build an AI Catalog System That Delivers Localized, Interactive Product Experiences, Positive Score: 0.8006359421050196, Negative Score: 0.7918423649073811
+Document: Want AI Skills Without the Big Price Tag? These 2026 Certifications Deliver Value, Positive Score: 0.8442878409559578, Negative Score: 0.814983064736778
+Document: Daily Tech Insider Explores the New Era of Physical Intelligence, Positive Score: 0.8282186561436068, Negative Score: 0.8443421247141392
+Document: Rumor: Apple’s iOS 27 to Focus on Performance, AI, and Foldable iPhone Support, Positive Score: 0.8049283836481997, Negative Score: 0.7812609149872319
+Document: Mistral AI Wins French Military Deal, Positive Score: 0.8213295267138816, Negative Score: 0.8088741278675017
+Document: Fiserv Taps Microsoft for AI-Fueled Fintech Innovation, Positive Score: 0.8175104720131258, Negative Score: 0.8057981520651494
+Document: Snowflake to Acquire AI-Powered Observability Outfit Observe, Positive Score: 0.8171932604821068, Negative Score: 0.8061307895842409
+Document: Fake UK Council Posts Show the Power of AI Misinformation, Positive Score: 0.8058129519857077, Negative Score: 0.8012915149009767
+==================================
+
+
+=== Document Similarity Scores ===
+Document: HMVI: Unifying Heterogeneous Attributes with Natural Neighbors for Missing Value Inference, Positive Score: 0.8150099115679406, Negative Score: 0.7996087757074251
+Document: From Idea to Co-Creation: A Planner-Actor-Critic Framework for Agent Augmented 3D Modeling, Positive Score: 0.8232651727815301, Negative Score: 0.8098650745385623
+Document: An Empirical Investigation of Robustness in Large Language Models under Tabular Distortions, Positive Score: 0.8584339277098603, Negative Score: 0.8050907924180823
+Document: OpenAI and SoftBank Group partner with SB Energy, Positive Score: 0.8236008621106211, Negative Score: 0.8081119968397809
+Document: Datadog uses Codex for system-level code review, Positive Score: 0.8008119761499053, Negative Score: 0.7975755469649649
+Document: 3 Questions: How AI could optimize the power grid, Positive Score: 0.8238871698650171, Negative Score: 0.8311492761336834
+Document: Building an AI code reviewer grounded in production telemetry (Sponsor), Positive Score: 0.8044668493090339, Negative Score: 0.8106131529907225
+Document: Gmail is entering the Gemini era, Positive Score: 0.8453130801435165, Negative Score: 0.8142402204618617
+Document: OpenAI to acquire the team behind executive coaching AI tool Convogo, Positive Score: 0.8377036828129455, Negative Score: 0.8141895604278905
+Document: Context Personalization, Positive Score: 0.8281971493646092, Negative Score: 0.8131415294469241
+Document: Lord of War, meet Lord of Tokens: Torture-testing image models on design-agency grade work, Positive Score: 0.7961601582493337, Negative Score: 0.7893325625657504
+Document: Eight Software Markets AI That Will Transform Differently, Positive Score: 0.8171285892012556, Negative Score: 0.8055896347511394
+Document: 94% of AI leaders don't believe their data infrastructure is ready for AI (Sponsor), Positive Score: 0.8355452739012854, Negative Score: 0.8068271799262275
+Document: Scale AI's Agentic Rubrics for Software Agent Verification, Positive Score: 0.8229988386820679, Negative Score: 0.8208181370393703
+Document: The Complete Guide to Building Agents with the Claude Agent SDK, Positive Score: 0.7982160277945352, Negative Score: 0.7752607230943055
+Document: Warp Specialization in Triton: Design and Roadmap, Positive Score: 0.7926272912326014, Negative Score: 0.7993040906080896
+Document: AI isn't “just predicting the next word” anymore, Positive Score: 0.8439445016107361, Negative Score: 0.8117452342180105
+Document: Among the Agents, Positive Score: 0.8450150065837919, Negative Score: 0.808450299526646
+Document: Developer output jumped 76% in 2025... and team output rose even more (Sponsor), Positive Score: 0.7849818457689824, Negative Score: 0.7891366525201086
+Document: Universal Permission Request Hook for Claude Code, Positive Score: 0.7692548873043601, Negative Score: 0.7838104748301636
+Document: The Downside to Using AI for All Those Boring Tasks at Work, Positive Score: 0.8049316606697494, Negative Score: 0.797587941840485
+Document: Nvidia Tightens Terms on H200 Sales in China, Positive Score: 0.8047466485608141, Negative Score: 0.7905330297694959
+Document: A Pathway to Privacy from AI—while using it?, Positive Score: 0.8180660348974208, Negative Score: 0.797213964827591
+Document: Migration at Scale: Moving Marketing Cloud Caching from Memcached to Redis at 1.5M RPS Without Downtime, Positive Score: 0.7971549589271316, Negative Score: 0.7999194655986559
+Document: From Local to Global: A Deep Dive into GraphRAG, Positive Score: 0.8174427430961863, Negative Score: 0.7904311383712458
+Document: Autofilling the Boring Semantic Layer: From Sakila to Chat-BI with dltHub, Positive Score: 0.8346064445692106, Negative Score: 0.8055554475372482
+Document: Powering Vector Embedding Capabilities, Positive Score: 0.805305064638467, Negative Score: 0.7813441823166676
+Document: Data Engineering in 2026: What Changes?, Positive Score: 0.823206011053799, Negative Score: 0.8029804641316101
+Document: Context is the next data platform, and why context graphs are key to understanding processes, Positive Score: 0.8061000446531859, Negative Score: 0.7870487371334984
+Document: The Hidden Cost Crisis in Data Engineering, Positive Score: 0.8076517261487974, Negative Score: 0.7832492891004929
+Document: Fivetran keeps data pipelines flowing for teams short on time and bandwidth (Sponsor), Positive Score: 0.7815504811696953, Negative Score: 0.7869019008709314
+Document: How Multimodal Vector Databases Are Transforming Challenges Across Industries, Positive Score: 0.8486946648638608, Negative Score: 0.8029478330270764
+Document: Databases in 2025: A Year in Review, Positive Score: 0.7833390794110444, Negative Score: 0.8015515301513726
+Document: How AI Transformed Database Debugging at Databricks, Positive Score: 0.8226724543187609, Negative Score: 0.8167153133546574
+Document: Mastering LLM Tool Calling: The Complete Framework for Connecting Models to the Real World, Positive Score: 0.7897370847846682, Negative Score: 0.7995767897296719
+Document: The Adaptive Retrieval Advantage: Why Query-Aware RAG Is Replacing One-Size-Fits-All Retrieval, Positive Score: 0.8141961354947795, Negative Score: 0.7847573737864179
+Document: Trending: What Context Graphs Mean For Enterprise, Positive Score: 0.7697731828230795, Negative Score: 0.7743924717820574
+Document: Reimagining LLM Memory: Using Context as Training Data Unlocks Models That Learn at Test-Time, Positive Score: 0.8118557470969613, Negative Score: 0.7968924374468014
+Document: Multi-Agent Warehouse AI Command Layer Enables Operational Excellence and Supply Chain Intelligence, Positive Score: 0.8305329915751721, Negative Score: 0.8005463799822289
+Document: Build an AI Catalog System That Delivers Localized, Interactive Product Experiences, Positive Score: 0.8006359421050196, Negative Score: 0.7918423649073811
+Document: 😸 We're live sharing our predictions for 2026, Positive Score: 0.8415119828556592, Negative Score: 0.8425903344196612
+Document: Want AI Skills Without the Big Price Tag? These 2026 Certifications Deliver Value, Positive Score: 0.8442878409559578, Negative Score: 0.814983064736778
+Document: Daily Tech Insider Explores the New Era of Physical Intelligence, Positive Score: 0.8282186561436068, Negative Score: 0.8443421247141392
+Document: Rumor: Apple’s iOS 27 to Focus on Performance, AI, and Foldable iPhone Support, Positive Score: 0.8049283836481997, Negative Score: 0.7812609149872319
+Document: Mistral AI Wins French Military Deal, Positive Score: 0.8213295267138816, Negative Score: 0.8088741278675017
+Document: Fiserv Taps Microsoft for AI-Fueled Fintech Innovation, Positive Score: 0.8175104720131258, Negative Score: 0.8057981520651494
+Document: Snowflake to Acquire AI-Powered Observability Outfit Observe, Positive Score: 0.8171932604821068, Negative Score: 0.8061307895842409
+Document: Fake UK Council Posts Show the Power of AI Misinformation, Positive Score: 0.8058129519857077, Negative Score: 0.8012915149009767
+==================================
+
+
+=== Document Similarity Scores ===
+Document: HMVI: Unifying Heterogeneous Attributes with Natural Neighbors for Missing Value Inference, Positive Score: 0.8150099115679406, Negative Score: 0.7996087757074251
+Document: From Idea to Co-Creation: A Planner-Actor-Critic Framework for Agent Augmented 3D Modeling, Positive Score: 0.8232651727815301, Negative Score: 0.8098650745385623
+Document: An Empirical Investigation of Robustness in Large Language Models under Tabular Distortions, Positive Score: 0.8584339277098603, Negative Score: 0.8050907924180823
+Document: OpenAI and SoftBank Group partner with SB Energy, Positive Score: 0.8236008621106211, Negative Score: 0.8081119968397809
+Document: Datadog uses Codex for system-level code review, Positive Score: 0.8008119761499053, Negative Score: 0.7975755469649649
+Document: 3 Questions: How AI could optimize the power grid, Positive Score: 0.8238871698650171, Negative Score: 0.8311492761336834
+Document: Building an AI code reviewer grounded in production telemetry (Sponsor), Positive Score: 0.8044668493090339, Negative Score: 0.8106131529907225
+Document: Gmail is entering the Gemini era, Positive Score: 0.8453130801435165, Negative Score: 0.8142402204618617
+Document: OpenAI to acquire the team behind executive coaching AI tool Convogo, Positive Score: 0.8377036828129455, Negative Score: 0.8141895604278905
+Document: Context Personalization, Positive Score: 0.8281971493646092, Negative Score: 0.8131415294469241
+Document: Lord of War, meet Lord of Tokens: Torture-testing image models on design-agency grade work, Positive Score: 0.7961601582493337, Negative Score: 0.7893325625657504
+Document: Eight Software Markets AI That Will Transform Differently, Positive Score: 0.8171285892012556, Negative Score: 0.8055896347511394
+Document: 94% of AI leaders don't believe their data infrastructure is ready for AI (Sponsor), Positive Score: 0.8355452739012854, Negative Score: 0.8068271799262275
+Document: Scale AI's Agentic Rubrics for Software Agent Verification, Positive Score: 0.8229988386820679, Negative Score: 0.8208181370393703
+Document: The Complete Guide to Building Agents with the Claude Agent SDK, Positive Score: 0.7982160277945352, Negative Score: 0.7752607230943055
+Document: Warp Specialization in Triton: Design and Roadmap, Positive Score: 0.7926272912326014, Negative Score: 0.7993040906080896
+Document: AI isn't “just predicting the next word” anymore, Positive Score: 0.8439445016107361, Negative Score: 0.8117452342180105
+Document: Among the Agents, Positive Score: 0.8450150065837919, Negative Score: 0.808450299526646
+Document: Developer output jumped 76% in 2025... and team output rose even more (Sponsor), Positive Score: 0.7849818457689824, Negative Score: 0.7891366525201086
+Document: Universal Permission Request Hook for Claude Code, Positive Score: 0.7692548873043601, Negative Score: 0.7838104748301636
+Document: The Downside to Using AI for All Those Boring Tasks at Work, Positive Score: 0.8049316606697494, Negative Score: 0.797587941840485
+Document: Nvidia Tightens Terms on H200 Sales in China, Positive Score: 0.8047466485608141, Negative Score: 0.7905330297694959
+Document: A Pathway to Privacy from AI—while using it?, Positive Score: 0.8180660348974208, Negative Score: 0.797213964827591
+Document: Migration at Scale: Moving Marketing Cloud Caching from Memcached to Redis at 1.5M RPS Without Downtime, Positive Score: 0.7971549589271316, Negative Score: 0.7999194655986559
+Document: From Local to Global: A Deep Dive into GraphRAG, Positive Score: 0.8174427430961863, Negative Score: 0.7904311383712458
+Document: Autofilling the Boring Semantic Layer: From Sakila to Chat-BI with dltHub, Positive Score: 0.8346064445692106, Negative Score: 0.8055554475372482
+Document: Powering Vector Embedding Capabilities, Positive Score: 0.805305064638467, Negative Score: 0.7813441823166676
+Document: Data Engineering in 2026: What Changes?, Positive Score: 0.823206011053799, Negative Score: 0.8029804641316101
+Document: Context is the next data platform, and why context graphs are key to understanding processes, Positive Score: 0.8061000446531859, Negative Score: 0.7870487371334984
+Document: The Hidden Cost Crisis in Data Engineering, Positive Score: 0.8076517261487974, Negative Score: 0.7832492891004929
+Document: Fivetran keeps data pipelines flowing for teams short on time and bandwidth (Sponsor), Positive Score: 0.7815504811696953, Negative Score: 0.7869019008709314
+Document: How Multimodal Vector Databases Are Transforming Challenges Across Industries, Positive Score: 0.8486946648638608, Negative Score: 0.8029478330270764
+Document: Databases in 2025: A Year in Review, Positive Score: 0.7833390794110444, Negative Score: 0.8015515301513726
+Document: How AI Transformed Database Debugging at Databricks, Positive Score: 0.8226724543187609, Negative Score: 0.8167153133546574
+Document: Mastering LLM Tool Calling: The Complete Framework for Connecting Models to the Real World, Positive Score: 0.7897370847846682, Negative Score: 0.7995767897296719
+Document: The Adaptive Retrieval Advantage: Why Query-Aware RAG Is Replacing One-Size-Fits-All Retrieval, Positive Score: 0.8141961354947795, Negative Score: 0.7847573737864179
+Document: Trending: What Context Graphs Mean For Enterprise, Positive Score: 0.7697731828230795, Negative Score: 0.7743924717820574
+Document: Reimagining LLM Memory: Using Context as Training Data Unlocks Models That Learn at Test-Time, Positive Score: 0.8118557470969613, Negative Score: 0.7968924374468014
+Document: Multi-Agent Warehouse AI Command Layer Enables Operational Excellence and Supply Chain Intelligence, Positive Score: 0.8305329915751721, Negative Score: 0.8005463799822289
+Document: Build an AI Catalog System That Delivers Localized, Interactive Product Experiences, Positive Score: 0.8006359421050196, Negative Score: 0.7918423649073811
+Document: 😸 We're live sharing our predictions for 2026, Positive Score: 0.8415119828556592, Negative Score: 0.8425903344196612
+Document: Want AI Skills Without the Big Price Tag? These 2026 Certifications Deliver Value, Positive Score: 0.8442878409559578, Negative Score: 0.814983064736778
+Document: Daily Tech Insider Explores the New Era of Physical Intelligence, Positive Score: 0.8282186561436068, Negative Score: 0.8443421247141392
+Document: Rumor: Apple’s iOS 27 to Focus on Performance, AI, and Foldable iPhone Support, Positive Score: 0.8049283836481997, Negative Score: 0.7812609149872319
+Document: Mistral AI Wins French Military Deal, Positive Score: 0.8213295267138816, Negative Score: 0.8088741278675017
+Document: Fiserv Taps Microsoft for AI-Fueled Fintech Innovation, Positive Score: 0.8175104720131258, Negative Score: 0.8057981520651494
+Document: Snowflake to Acquire AI-Powered Observability Outfit Observe, Positive Score: 0.8171932604821068, Negative Score: 0.8061307895842409
+Document: Fake UK Council Posts Show the Power of AI Misinformation, Positive Score: 0.8058129519857077, Negative Score: 0.8012915149009767
+==================================
+
+
+=== Document Similarity Scores ===
+Document: HMVI: Unifying Heterogeneous Attributes with Natural Neighbors for Missing Value Inference, Positive Score: 0.8150099115679406, Negative Score: 0.7996087757074251
+Document: From Idea to Co-Creation: A Planner-Actor-Critic Framework for Agent Augmented 3D Modeling, Positive Score: 0.8232651727815301, Negative Score: 0.8098650745385623
+Document: An Empirical Investigation of Robustness in Large Language Models under Tabular Distortions, Positive Score: 0.8584339277098603, Negative Score: 0.8050907924180823
+Document: OpenAI and SoftBank Group partner with SB Energy, Positive Score: 0.8236008621106211, Negative Score: 0.8081119968397809
+Document: Datadog uses Codex for system-level code review, Positive Score: 0.8008119761499053, Negative Score: 0.7975755469649649
+Document: 3 Questions: How AI could optimize the power grid, Positive Score: 0.8238871698650171, Negative Score: 0.8311492761336834
+Document: Building an AI code reviewer grounded in production telemetry (Sponsor), Positive Score: 0.8044668493090339, Negative Score: 0.8106131529907225
+Document: Gmail is entering the Gemini era, Positive Score: 0.8453130801435165, Negative Score: 0.8142402204618617
+Document: OpenAI to acquire the team behind executive coaching AI tool Convogo, Positive Score: 0.8377036828129455, Negative Score: 0.8141895604278905
+Document: Context Personalization, Positive Score: 0.8281971493646092, Negative Score: 0.8131415294469241
+Document: Lord of War, meet Lord of Tokens: Torture-testing image models on design-agency grade work, Positive Score: 0.7961601582493337, Negative Score: 0.7893325625657504
+Document: Eight Software Markets AI That Will Transform Differently, Positive Score: 0.8171285892012556, Negative Score: 0.8055896347511394
+Document: 94% of AI leaders don't believe their data infrastructure is ready for AI (Sponsor), Positive Score: 0.8355452739012854, Negative Score: 0.8068271799262275
+Document: Scale AI's Agentic Rubrics for Software Agent Verification, Positive Score: 0.8229988386820679, Negative Score: 0.8208181370393703
+Document: The Complete Guide to Building Agents with the Claude Agent SDK, Positive Score: 0.7982160277945352, Negative Score: 0.7752607230943055
+Document: Warp Specialization in Triton: Design and Roadmap, Positive Score: 0.7926272912326014, Negative Score: 0.7993040906080896
+Document: AI isn't “just predicting the next word” anymore, Positive Score: 0.8439445016107361, Negative Score: 0.8117452342180105
+Document: Among the Agents, Positive Score: 0.8450150065837919, Negative Score: 0.808450299526646
+Document: Developer output jumped 76% in 2025... and team output rose even more (Sponsor), Positive Score: 0.7849818457689824, Negative Score: 0.7891366525201086
+Document: Universal Permission Request Hook for Claude Code, Positive Score: 0.7692548873043601, Negative Score: 0.7838104748301636
+Document: The Downside to Using AI for All Those Boring Tasks at Work, Positive Score: 0.8049316606697494, Negative Score: 0.797587941840485
+Document: Nvidia Tightens Terms on H200 Sales in China, Positive Score: 0.8047466485608141, Negative Score: 0.7905330297694959
+Document: A Pathway to Privacy from AI—while using it?, Positive Score: 0.8180660348974208, Negative Score: 0.797213964827591
+Document: Migration at Scale: Moving Marketing Cloud Caching from Memcached to Redis at 1.5M RPS Without Downtime, Positive Score: 0.7971549589271316, Negative Score: 0.7999194655986559
+Document: From Local to Global: A Deep Dive into GraphRAG, Positive Score: 0.8174427430961863, Negative Score: 0.7904311383712458
+Document: Autofilling the Boring Semantic Layer: From Sakila to Chat-BI with dltHub, Positive Score: 0.8346064445692106, Negative Score: 0.8055554475372482
+Document: Powering Vector Embedding Capabilities, Positive Score: 0.805305064638467, Negative Score: 0.7813441823166676
+Document: Data Engineering in 2026: What Changes?, Positive Score: 0.823206011053799, Negative Score: 0.8029804641316101
+Document: Context is the next data platform, and why context graphs are key to understanding processes, Positive Score: 0.8061000446531859, Negative Score: 0.7870487371334984
+Document: The Hidden Cost Crisis in Data Engineering, Positive Score: 0.8076517261487974, Negative Score: 0.7832492891004929
+Document: Fivetran keeps data pipelines flowing for teams short on time and bandwidth (Sponsor), Positive Score: 0.7815504811696953, Negative Score: 0.7869019008709314
+Document: How Multimodal Vector Databases Are Transforming Challenges Across Industries, Positive Score: 0.8486946648638608, Negative Score: 0.8029478330270764
+Document: Databases in 2025: A Year in Review, Positive Score: 0.7833390794110444, Negative Score: 0.8015515301513726
+Document: How AI Transformed Database Debugging at Databricks, Positive Score: 0.8226724543187609, Negative Score: 0.8167153133546574
+Document: Mastering LLM Tool Calling: The Complete Framework for Connecting Models to the Real World, Positive Score: 0.7897370847846682, Negative Score: 0.7995767897296719
+Document: The Adaptive Retrieval Advantage: Why Query-Aware RAG Is Replacing One-Size-Fits-All Retrieval, Positive Score: 0.8141961354947795, Negative Score: 0.7847573737864179
+Document: Trending: What Context Graphs Mean For Enterprise, Positive Score: 0.7697731828230795, Negative Score: 0.7743924717820574
+Document: 😸 We're live sharing our predictions for 2026, Positive Score: 0.8415119828556592, Negative Score: 0.8425903344196612
+Document: Reimagining LLM Memory: Using Context as Training Data Unlocks Models That Learn at Test-Time, Positive Score: 0.8118557470969613, Negative Score: 0.7968924374468014
+Document: Multi-Agent Warehouse AI Command Layer Enables Operational Excellence and Supply Chain Intelligence, Positive Score: 0.8305329915751721, Negative Score: 0.8005463799822289
+Document: Build an AI Catalog System That Delivers Localized, Interactive Product Experiences, Positive Score: 0.8006359421050196, Negative Score: 0.7918423649073811
+Document: Want AI Skills Without the Big Price Tag? These 2026 Certifications Deliver Value, Positive Score: 0.8442878409559578, Negative Score: 0.814983064736778
+Document: Daily Tech Insider Explores the New Era of Physical Intelligence, Positive Score: 0.8282186561436068, Negative Score: 0.8443421247141392
+Document: Rumor: Apple’s iOS 27 to Focus on Performance, AI, and Foldable iPhone Support, Positive Score: 0.8049283836481997, Negative Score: 0.7812609149872319
+Document: Mistral AI Wins French Military Deal, Positive Score: 0.8213295267138816, Negative Score: 0.8088741278675017
+Document: Fiserv Taps Microsoft for AI-Fueled Fintech Innovation, Positive Score: 0.8175104720131258, Negative Score: 0.8057981520651494
+Document: Snowflake to Acquire AI-Powered Observability Outfit Observe, Positive Score: 0.8171932604821068, Negative Score: 0.8061307895842409
+Document: Fake UK Council Posts Show the Power of AI Misinformation, Positive Score: 0.8058129519857077, Negative Score: 0.8012915149009767
+==================================
+
+
+=== Document Similarity Scores ===
+Document: HMVI: Unifying Heterogeneous Attributes with Natural Neighbors for Missing Value Inference, Positive Score: 0.8150099115679406, Negative Score: 0.7996087757074251
+Document: From Idea to Co-Creation: A Planner-Actor-Critic Framework for Agent Augmented 3D Modeling, Positive Score: 0.8232651727815301, Negative Score: 0.8098650745385623
+Document: An Empirical Investigation of Robustness in Large Language Models under Tabular Distortions, Positive Score: 0.8584339277098603, Negative Score: 0.8050907924180823
+Document: OpenAI and SoftBank Group partner with SB Energy, Positive Score: 0.8236008621106211, Negative Score: 0.8081119968397809
+Document: Datadog uses Codex for system-level code review, Positive Score: 0.8008119761499053, Negative Score: 0.7975755469649649
+Document: 3 Questions: How AI could optimize the power grid, Positive Score: 0.8238871698650171, Negative Score: 0.8311492761336834
+Document: Building an AI code reviewer grounded in production telemetry (Sponsor), Positive Score: 0.8044668493090339, Negative Score: 0.8106131529907225
+Document: Gmail is entering the Gemini era, Positive Score: 0.8453130801435165, Negative Score: 0.8142402204618617
+Document: OpenAI to acquire the team behind executive coaching AI tool Convogo, Positive Score: 0.8377036828129455, Negative Score: 0.8141895604278905
+Document: Context Personalization, Positive Score: 0.8281971493646092, Negative Score: 0.8131415294469241
+Document: Lord of War, meet Lord of Tokens: Torture-testing image models on design-agency grade work, Positive Score: 0.7961601582493337, Negative Score: 0.7893325625657504
+Document: Eight Software Markets AI That Will Transform Differently, Positive Score: 0.8171285892012556, Negative Score: 0.8055896347511394
+Document: 94% of AI leaders don't believe their data infrastructure is ready for AI (Sponsor), Positive Score: 0.8355452739012854, Negative Score: 0.8068271799262275
+Document: Scale AI's Agentic Rubrics for Software Agent Verification, Positive Score: 0.8229988386820679, Negative Score: 0.8208181370393703
+Document: The Complete Guide to Building Agents with the Claude Agent SDK, Positive Score: 0.7982160277945352, Negative Score: 0.7752607230943055
+Document: Warp Specialization in Triton: Design and Roadmap, Positive Score: 0.7926272912326014, Negative Score: 0.7993040906080896
+Document: AI isn't “just predicting the next word” anymore, Positive Score: 0.8439445016107361, Negative Score: 0.8117452342180105
+Document: Among the Agents, Positive Score: 0.8450150065837919, Negative Score: 0.808450299526646
+Document: Developer output jumped 76% in 2025... and team output rose even more (Sponsor), Positive Score: 0.7849818457689824, Negative Score: 0.7891366525201086
+Document: Universal Permission Request Hook for Claude Code, Positive Score: 0.7692548873043601, Negative Score: 0.7838104748301636
+Document: The Downside to Using AI for All Those Boring Tasks at Work, Positive Score: 0.8049316606697494, Negative Score: 0.797587941840485
+Document: Nvidia Tightens Terms on H200 Sales in China, Positive Score: 0.8047466485608141, Negative Score: 0.7905330297694959
+Document: A Pathway to Privacy from AI—while using it?, Positive Score: 0.8180660348974208, Negative Score: 0.797213964827591
+Document: Migration at Scale: Moving Marketing Cloud Caching from Memcached to Redis at 1.5M RPS Without Downtime, Positive Score: 0.7971549589271316, Negative Score: 0.7999194655986559
+Document: From Local to Global: A Deep Dive into GraphRAG, Positive Score: 0.8174427430961863, Negative Score: 0.7904311383712458
+Document: Autofilling the Boring Semantic Layer: From Sakila to Chat-BI with dltHub, Positive Score: 0.8346064445692106, Negative Score: 0.8055554475372482
+Document: Powering Vector Embedding Capabilities, Positive Score: 0.805305064638467, Negative Score: 0.7813441823166676
+Document: Data Engineering in 2026: What Changes?, Positive Score: 0.823206011053799, Negative Score: 0.8029804641316101
+Document: Context is the next data platform, and why context graphs are key to understanding processes, Positive Score: 0.8061000446531859, Negative Score: 0.7870487371334984
+Document: The Hidden Cost Crisis in Data Engineering, Positive Score: 0.8076517261487974, Negative Score: 0.7832492891004929
+Document: Fivetran keeps data pipelines flowing for teams short on time and bandwidth (Sponsor), Positive Score: 0.7815504811696953, Negative Score: 0.7869019008709314
+Document: How Multimodal Vector Databases Are Transforming Challenges Across Industries, Positive Score: 0.8486946648638608, Negative Score: 0.8029478330270764
+Document: Databases in 2025: A Year in Review, Positive Score: 0.7833390794110444, Negative Score: 0.8015515301513726
+Document: How AI Transformed Database Debugging at Databricks, Positive Score: 0.8226724543187609, Negative Score: 0.8167153133546574
+Document: Mastering LLM Tool Calling: The Complete Framework for Connecting Models to the Real World, Positive Score: 0.7897370847846682, Negative Score: 0.7995767897296719
+Document: The Adaptive Retrieval Advantage: Why Query-Aware RAG Is Replacing One-Size-Fits-All Retrieval, Positive Score: 0.8141961354947795, Negative Score: 0.7847573737864179
+Document: Trending: What Context Graphs Mean For Enterprise, Positive Score: 0.7697731828230795, Negative Score: 0.7743924717820574
+Document: Reimagining LLM Memory: Using Context as Training Data Unlocks Models That Learn at Test-Time, Positive Score: 0.8118557470969613, Negative Score: 0.7968924374468014
+Document: Multi-Agent Warehouse AI Command Layer Enables Operational Excellence and Supply Chain Intelligence, Positive Score: 0.8305329915751721, Negative Score: 0.8005463799822289
+Document: Build an AI Catalog System That Delivers Localized, Interactive Product Experiences, Positive Score: 0.8006359421050196, Negative Score: 0.7918423649073811
+Document: 😸 We're live sharing our predictions for 2026, Positive Score: 0.8415119828556592, Negative Score: 0.8425903344196612
+Document: Want AI Skills Without the Big Price Tag? These 2026 Certifications Deliver Value, Positive Score: 0.8442878409559578, Negative Score: 0.814983064736778
+Document: Daily Tech Insider Explores the New Era of Physical Intelligence, Positive Score: 0.8282186561436068, Negative Score: 0.8443421247141392
+Document: Rumor: Apple’s iOS 27 to Focus on Performance, AI, and Foldable iPhone Support, Positive Score: 0.8049283836481997, Negative Score: 0.7812609149872319
+Document: Mistral AI Wins French Military Deal, Positive Score: 0.8213295267138816, Negative Score: 0.8088741278675017
+Document: Fiserv Taps Microsoft for AI-Fueled Fintech Innovation, Positive Score: 0.8175104720131258, Negative Score: 0.8057981520651494
+Document: Snowflake to Acquire AI-Powered Observability Outfit Observe, Positive Score: 0.8171932604821068, Negative Score: 0.8061307895842409
+Document: Fake UK Council Posts Show the Power of AI Misinformation, Positive Score: 0.8058129519857077, Negative Score: 0.8012915149009767
+==================================
+
+
+=== Document Similarity Scores ===
+Document: Multimodal In-context Learning for ASR of Low-resource Languages, Positive Score: 0.8406970469807694, Negative Score: 0.8061395116265417
+Document: Logic-Parametric Neuro-Symbolic NLI: Controlling Logical Formalisms for Verifiable LLM Reasoning, Positive Score: 0.8252820513832188, Negative Score: 0.8098919059242927
+Document: AIBoMGen: Generating an AI Bill of Materials for Secure, Transparent, and Compliant Model Training, Positive Score: 0.8136109455553984, Negative Score: 0.8163542299383958
+Document: Circular Reasoning: Understanding Self-Reinforcing Loops in Large Reasoning Models, Positive Score: 0.8191046023938604, Negative Score: 0.8123891382229165
+Document: Joint Optimization of Neural Autoregressors via Scoring rules, Positive Score: 0.8092279905364468, Negative Score: 0.814104302857353
+Document: AGDC: Autoregressive Generation of Variable-Length Sequences with Joint Discrete and Continuous Spaces, Positive Score: 0.8211797489285741, Negative Score: 0.8038420725305245
+Document: CHDP: Cooperative Hybrid Diffusion Policies for Reinforcement Learning in Parameterized Action Space, Positive Score: 0.8350985327610208, Negative Score: 0.8031416282698597
+Document: Advancing credit mobility through stakeholder-informed AI design and adoption, Positive Score: 0.8160685447480285, Negative Score: 0.809542573999617
+Document: Stephanie2: Thinking, Waiting, and Making Decisions Like Humans in Step-by-Step AI Social Chat, Positive Score: 0.8212257827794811, Negative Score: 0.8111139893366819
+Document: HAG: Hierarchical Demographic Tree-based Agent Generation for Topic-Adaptive Simulation, Positive Score: 0.8257434840735236, Negative Score: 0.8082674096410453
+Document: 😺 AI Cracks Legendary Erdos Problems, Positive Score: 0.8250537589125115, Negative Score: 0.8346655808445707
+==================================
+
+
+=== Document Similarity Scores ===
+Document: Multimodal In-context Learning for ASR of Low-resource Languages, Positive Score: 0.8406970469807694, Negative Score: 0.8061395116265417
+Document: Logic-Parametric Neuro-Symbolic NLI: Controlling Logical Formalisms for Verifiable LLM Reasoning, Positive Score: 0.8252820513832188, Negative Score: 0.8098919059242927
+Document: AIBoMGen: Generating an AI Bill of Materials for Secure, Transparent, and Compliant Model Training, Positive Score: 0.8136109455553984, Negative Score: 0.8163542299383958
+Document: Circular Reasoning: Understanding Self-Reinforcing Loops in Large Reasoning Models, Positive Score: 0.8191046023938604, Negative Score: 0.8123891382229165
+Document: Joint Optimization of Neural Autoregressors via Scoring rules, Positive Score: 0.8092279905364468, Negative Score: 0.814104302857353
+Document: AGDC: Autoregressive Generation of Variable-Length Sequences with Joint Discrete and Continuous Spaces, Positive Score: 0.8211797489285741, Negative Score: 0.8038420725305245
+Document: CHDP: Cooperative Hybrid Diffusion Policies for Reinforcement Learning in Parameterized Action Space, Positive Score: 0.8350985327610208, Negative Score: 0.8031416282698597
+Document: Advancing credit mobility through stakeholder-informed AI design and adoption, Positive Score: 0.8160685447480285, Negative Score: 0.809542573999617
+Document: Stephanie2: Thinking, Waiting, and Making Decisions Like Humans in Step-by-Step AI Social Chat, Positive Score: 0.8212257827794811, Negative Score: 0.8111139893366819
+Document: HAG: Hierarchical Demographic Tree-based Agent Generation for Topic-Adaptive Simulation, Positive Score: 0.8257434840735236, Negative Score: 0.8082674096410453
+Document: OpenAI and SoftBank Group partner with SB Energy, Positive Score: 0.8236008621106211, Negative Score: 0.8081119968397809
+Document: Datadog uses Codex for system-level code review, Positive Score: 0.8008119761499053, Negative Score: 0.7975755469649649
+Document: Netomi’s lessons for scaling agentic systems into the enterprise, Positive Score: 0.8477114651302686, Negative Score: 0.8161023194640826
+Document: OpenAI for Healthcare, Positive Score: 0.8292019018925549, Negative Score: 0.8907797923919188
+Document: How Tolan builds voice-first AI with GPT-5.1, Positive Score: 0.8218141972311442, Negative Score: 0.8186125436951882
+Document: Introducing ChatGPT Health, Positive Score: 0.8011621861551481, Negative Score: 0.8369386828763566
+Document: Announcing OpenAI Grove Cohort 2, Positive Score: 0.8254691522116097, Negative Score: 0.8135782165781822
+Document: 3 Questions: How AI could optimize the power grid, Positive Score: 0.8238871698650171, Negative Score: 0.8311492761336834
+Document: Decoding the Arctic to predict winter weather, Positive Score: 0.7904985088399498, Negative Score: 0.7870229633150726
+Document: Stone Center on Inequality and Shaping the Future of Work Launches at MIT, Positive Score: 0.7968934686240257, Negative Score: 0.7962342877350229
+Document: MIT scientists investigate memorization risk in the age of clinical AI, Positive Score: 0.8093233901219621, Negative Score: 0.8324396769546087
+Document: Using design to interpret the past and envision the future, Positive Score: 0.7915130884855256, Negative Score: 0.7930496118879924
+Document: Reimagining LLM Memory: Using Context as Training Data Unlocks Models That Learn at Test-Time, Positive Score: 0.8118557470969613, Negative Score: 0.7968924374468014
+Document: Multi-Agent Warehouse AI Command Layer Enables Operational Excellence and Supply Chain Intelligence, Positive Score: 0.8305329915751721, Negative Score: 0.8005463799822289
+Document: Build an AI Catalog System That Delivers Localized, Interactive Product Experiences, Positive Score: 0.8006359421050196, Negative Score: 0.7918423649073811
+Document: Delivering Massive Performance Leaps for Mixture of Experts Inference on NVIDIA Blackwell, Positive Score: 0.8255385378742117, Negative Score: 0.8216489590156829
+Document: Accelerating LLM and VLM Inference for Automotive and Robotics with NVIDIA TensorRT Edge-LLM, Positive Score: 0.8515841114213741, Negative Score: 0.8191932620374819
+Document: Introducing NVIDIA BlueField-4-Powered Inference Context Memory Storage Platform for the Next Frontier of AI, Positive Score: 0.8408803110612384, Negative Score: 0.8102339205363439
+Document: Scaling Power-Efficient AI Factories with NVIDIA Spectrum-X Ethernet Photonics, Positive Score: 0.8232745085803354, Negative Score: 0.8064025972538367
+Document: Open-Source AI Tool Upgrades Speed Up LLM and Diffusion Models on NVIDIA RTX PCs, Positive Score: 0.8261299617078778, Negative Score: 0.8241556547375423
+Document: New Software and Model Optimizations Supercharge NVIDIA DGX Spark, Positive Score: 0.7987272976752547, Negative Score: 0.784582176272718
+Document: Inside the NVIDIA Rubin Platform: Six New Chips, One AI Supercomputer, Positive Score: 0.8445268898758207, Negative Score: 0.8149520328277018
+Document: Accelerate AI Inference for Edge and Robotics with NVIDIA Jetson T4000 and NVIDIA JetPack 7.1, Positive Score: 0.834816283122455, Negative Score: 0.8241775423026336
+Document: How to Build a Voice Agent with RAG and Safety Guardrails, Positive Score: 0.8165804449337436, Negative Score: 0.7904133349776759
+Document: Building Autonomous Vehicles That Reason with NVIDIA Alpamayo, Positive Score: 0.8162593072893428, Negative Score: 0.8506440174444198
+Document: AI Factories, Physical AI, and Advances in Models, Agents, and Infrastructure That Shaped 2025, Positive Score: 0.8410385647302282, Negative Score: 0.8270884984233045
+Document: Accelerating LLM and VLM Inference for Automotive and Robotics with NVIDIA TensorRT Edge-LLM, Positive Score: 0.8515841114213741, Negative Score: 0.8191932620374819
+Document: How to Build a Voice Agent with RAG and Safety Guardrails, Positive Score: 0.8165804449337436, Negative Score: 0.7904133349776759
+Document: Build and Orchestrate End-to-End SDG Workflows with NVIDIA Isaac Sim and NVIDIA OSMO, Positive Score: 0.8114404651592035, Negative Score: 0.820833061742932
+Document: Delivering Massive Performance Leaps for Mixture of Experts Inference on NVIDIA Blackwell, Positive Score: 0.8255385378742117, Negative Score: 0.8216489590156829
+Document: Redefining Secure AI Infrastructure with NVIDIA BlueField Astra for NVIDIA Vera Rubin NVL72, Positive Score: 0.8581419638868513, Negative Score: 0.8188674651648328
+Document: Introducing NVIDIA BlueField-4-Powered Inference Context Memory Storage Platform for the Next Frontier of AI, Positive Score: 0.8408803110612384, Negative Score: 0.8102339205363439
+Document: Scaling Power-Efficient AI Factories with NVIDIA Spectrum-X Ethernet Photonics, Positive Score: 0.8232745085803354, Negative Score: 0.8064025972538367
+Document: Inside the NVIDIA Rubin Platform: Six New Chips, One AI Supercomputer, Positive Score: 0.8445268898758207, Negative Score: 0.8149520328277018
+Document: AI Factories, Physical AI, and Advances in Models, Agents, and Infrastructure That Shaped 2025, Positive Score: 0.8410385647302282, Negative Score: 0.8270884984233045
+Document: Redefining Secure AI Infrastructure with NVIDIA BlueField Astra for NVIDIA Vera Rubin NVL72, Positive Score: 0.8581419638868513, Negative Score: 0.8188674651648328
+Document: Introducing NVIDIA BlueField-4-Powered Inference Context Memory Storage Platform for the Next Frontier of AI, Positive Score: 0.8408803110612384, Negative Score: 0.8102339205363439
+Document: Scaling Power-Efficient AI Factories with NVIDIA Spectrum-X Ethernet Photonics, Positive Score: 0.8232745085803354, Negative Score: 0.8064025972538367
+Document: Inside the NVIDIA Rubin Platform: Six New Chips, One AI Supercomputer, Positive Score: 0.8445268898758207, Negative Score: 0.8149520328277018
+Document: 😺 AI Cracks Legendary Erdos Problems, Positive Score: 0.8250537589125113, Negative Score: 0.8346655808445707
+Document: 😸 We're live sharing our predictions for 2026, Positive Score: 0.8415119828556592, Negative Score: 0.8425903344196612
+Document: 😸 ChatGPT for Health is a doc in your pocket, Positive Score: 0.8349922405767588, Negative Score: 0.8453267567604485
+Document: 😸 Stop turning Grandpa into a Pixar character, and do THIS instead, Positive Score: 0.8399098845663635, Negative Score: 0.8280889680620647
+Document: 😺 🎙️ Watch: "Transformers will not get us to AGI." Here's what might., Positive Score: 0.8263271387885722, Negative Score: 0.8284083437951032
+Document: 😸 NVIDIA's car AI can explain itself, Positive Score: 0.8420817802070093, Negative Score: 0.8357287144120026
+Document: 😸 Pickle 1 AR glasses go viral, then get called fake..., Positive Score: 0.8151927738326051, Negative Score: 0.7994533627388083
+Document: 😸 DeepSeek Just Fixed What Breaks $100M AI Training Runs, Positive Score: 0.8383475932139326, Negative Score: 0.8293373772511344
+Document: 😺 OpenAI and Jony Ive's AI device is a pen?!, Positive Score: 0.833471026546817, Negative Score: 0.8280856871167676
+Document: 😸 FAANG engineer: "The party is over", Positive Score: 0.8391166988723011, Negative Score: 0.8423227176360486
+Document: 😺 Meta paid $2B for an 8-month-old startup, Positive Score: 0.8284815681768805, Negative Score: 0.8158482271417159
+Document: 😺 🎙️ Watch: She's 24. She raised $64M. Her target: superintelligence, Positive Score: 0.8282848770877131, Negative Score: 0.8251431719534991
+Document: Want AI Skills Without the Big Price Tag? These 2026 Certifications Deliver Value, Positive Score: 0.8442878409559578, Negative Score: 0.814983064736778
+Document: Daily Tech Insider Explores the New Era of Physical Intelligence, Positive Score: 0.8282186561436068, Negative Score: 0.8443421247141392
+Document: Rumor: Apple’s iOS 27 to Focus on Performance, AI, and Foldable iPhone Support, Positive Score: 0.8049283836481997, Negative Score: 0.7812609149872319
+Document: Mistral AI Wins French Military Deal, Positive Score: 0.8213295267138816, Negative Score: 0.8088741278675017
+Document: Fiserv Taps Microsoft for AI-Fueled Fintech Innovation, Positive Score: 0.8175104720131258, Negative Score: 0.8057981520651494
+Document: Snowflake to Acquire AI-Powered Observability Outfit Observe, Positive Score: 0.8171932604821068, Negative Score: 0.8061307895842409
+Document: Fake UK Council Posts Show the Power of AI Misinformation, Positive Score: 0.8058129519857077, Negative Score: 0.8012915149009767
+Document: AI and the Future of Work: 5 Predictions for 2026, Positive Score: 0.8189396197048765, Negative Score: 0.8037546522015887
+Document: Boltz Bags $28M Funding and Pfizer Partnership for Biomolecular AI Boost, Positive Score: 0.80607215064878, Negative Score: 0.8457187555045556
+Document: Windows 11 26H1 to Debut This Spring, Exclusive to Snapdragon X2 PCs, Positive Score: 0.7964679967622471, Negative Score: 0.7750259219894668
+Document: Gmail Enters the Gemini Era With AI-Powered Inbox Overhaul, Positive Score: 0.8359049707108118, Negative Score: 0.8099079052185819
+Document: Inside China’s $10B Plan to Accelerate 50+ AI and Tech Initiatives, Positive Score: 0.8108671963236148, Negative Score: 0.8058575511179323
+Document: 900,000 Users Hit as Malicious Chrome Extensions Steal ChatGPT, DeepSeek Chats, Positive Score: 0.818454204388174, Negative Score: 0.8037629847280234
+Document: Meet the Razr Fold: Motorola’s First Foldable Phone Powered by On-Device AI, Positive Score: 0.792406884002673, Negative Score: 0.783724060949557
+Document: Singapore’s DayOne Raises $2B Funding for AI Infrastructure Ambitions, Positive Score: 0.8231152810911531, Negative Score: 0.8089256309060711
+Document: Build Practical Cyber Defense Skills with This 5-Course Bundle, Positive Score: 0.8453828910121457, Negative Score: 0.7920610975388735
+Document: AMD’s AI Chips Are Coming for Your Laptop, Desktop, and Car, Positive Score: 0.8262982583274611, Negative Score: 0.809973966288767
+Document: Nvidia Introduces Vera Rubin, a New AI Supercomputing Platform Built to Slash Costs, Positive Score: 0.823248817099449, Negative Score: 0.8137104372142763
+Document: Google Faces Gmail Lawsuit Over Hidden AI Training Settings, Positive Score: 0.8220232494410111, Negative Score: 0.8098313713199695
+Document: AI Adoption Trends in the Enterprise 2026, Positive Score: 0.8560395489580952, Negative Score: 0.8039124699150321
+==================================
+
+
+=== Document Similarity Scores ===
+Document: Multimodal In-context Learning for ASR of Low-resource Languages, Positive Score: 0.8406970469807694, Negative Score: 0.8061395116265417
+Document: Logic-Parametric Neuro-Symbolic NLI: Controlling Logical Formalisms for Verifiable LLM Reasoning, Positive Score: 0.8252820513832188, Negative Score: 0.8098919059242927
+Document: AIBoMGen: Generating an AI Bill of Materials for Secure, Transparent, and Compliant Model Training, Positive Score: 0.8136109455553984, Negative Score: 0.8163542299383958
+Document: Circular Reasoning: Understanding Self-Reinforcing Loops in Large Reasoning Models, Positive Score: 0.8191046023938604, Negative Score: 0.8123891382229165
+Document: Joint Optimization of Neural Autoregressors via Scoring rules, Positive Score: 0.8092279905364468, Negative Score: 0.814104302857353
+Document: AGDC: Autoregressive Generation of Variable-Length Sequences with Joint Discrete and Continuous Spaces, Positive Score: 0.8211797489285741, Negative Score: 0.8038420725305245
+Document: CHDP: Cooperative Hybrid Diffusion Policies for Reinforcement Learning in Parameterized Action Space, Positive Score: 0.8350985327610208, Negative Score: 0.8031416282698597
+Document: Advancing credit mobility through stakeholder-informed AI design and adoption, Positive Score: 0.8160685447480285, Negative Score: 0.809542573999617
+Document: Stephanie2: Thinking, Waiting, and Making Decisions Like Humans in Step-by-Step AI Social Chat, Positive Score: 0.8212257827794811, Negative Score: 0.8111139893366819
+Document: HAG: Hierarchical Demographic Tree-based Agent Generation for Topic-Adaptive Simulation, Positive Score: 0.8257434840735236, Negative Score: 0.8082674096410453
+Document: OpenAI and SoftBank Group partner with SB Energy, Positive Score: 0.8236008621106211, Negative Score: 0.8081119968397809
+Document: Datadog uses Codex for system-level code review, Positive Score: 0.8008119761499053, Negative Score: 0.7975755469649649
+Document: Netomi’s lessons for scaling agentic systems into the enterprise, Positive Score: 0.8477114651302686, Negative Score: 0.8161023194640826
+Document: OpenAI for Healthcare, Positive Score: 0.8292019018925549, Negative Score: 0.8907797923919188
+Document: How Tolan builds voice-first AI with GPT-5.1, Positive Score: 0.8218141972311442, Negative Score: 0.8186125436951882
+Document: Introducing ChatGPT Health, Positive Score: 0.8011621861551481, Negative Score: 0.8369386828763566
+Document: Announcing OpenAI Grove Cohort 2, Positive Score: 0.8254691522116097, Negative Score: 0.8135782165781822
+Document: 3 Questions: How AI could optimize the power grid, Positive Score: 0.8238871698650171, Negative Score: 0.8311492761336834
+Document: Decoding the Arctic to predict winter weather, Positive Score: 0.7904985088399498, Negative Score: 0.7870229633150726
+Document: Stone Center on Inequality and Shaping the Future of Work Launches at MIT, Positive Score: 0.7968934686240257, Negative Score: 0.7962342877350229
+Document: MIT scientists investigate memorization risk in the age of clinical AI, Positive Score: 0.8093233901219621, Negative Score: 0.8324396769546087
+Document: Using design to interpret the past and envision the future, Positive Score: 0.7915130884855256, Negative Score: 0.7930496118879924
+Document: 😺 AI Cracks Legendary Erdos Problems, Positive Score: 0.8250537589125113, Negative Score: 0.8346655808445707
+Document: 😸 We're live sharing our predictions for 2026, Positive Score: 0.8415119828556592, Negative Score: 0.8425903344196612
+Document: 😸 ChatGPT for Health is a doc in your pocket, Positive Score: 0.8349922405767588, Negative Score: 0.8453267567604485
+Document: 😸 Stop turning Grandpa into a Pixar character, and do THIS instead, Positive Score: 0.8399098845663635, Negative Score: 0.8280889680620647
+Document: 😺 🎙️ Watch: "Transformers will not get us to AGI." Here's what might., Positive Score: 0.8263271387885722, Negative Score: 0.8284083437951032
+Document: 😸 NVIDIA's car AI can explain itself, Positive Score: 0.8420817802070093, Negative Score: 0.8357287144120026
+Document: 😸 Pickle 1 AR glasses go viral, then get called fake..., Positive Score: 0.8151927738326051, Negative Score: 0.7994533627388083
+Document: 😸 DeepSeek Just Fixed What Breaks $100M AI Training Runs, Positive Score: 0.8383475932139326, Negative Score: 0.8293373772511344
+Document: 😺 OpenAI and Jony Ive's AI device is a pen?!, Positive Score: 0.833471026546817, Negative Score: 0.8280856871167676
+Document: 😸 FAANG engineer: "The party is over", Positive Score: 0.8391166988723011, Negative Score: 0.8423227176360486
+Document: 😺 Meta paid $2B for an 8-month-old startup, Positive Score: 0.8284815681768805, Negative Score: 0.8158482271417159
+Document: 😺 🎙️ Watch: She's 24. She raised $64M. Her target: superintelligence, Positive Score: 0.8282848770877131, Negative Score: 0.8251431719534991
+Document: Reimagining LLM Memory: Using Context as Training Data Unlocks Models That Learn at Test-Time, Positive Score: 0.8118557470969613, Negative Score: 0.7968924374468014
+Document: Multi-Agent Warehouse AI Command Layer Enables Operational Excellence and Supply Chain Intelligence, Positive Score: 0.8305329915751721, Negative Score: 0.8005463799822289
+Document: Build an AI Catalog System That Delivers Localized, Interactive Product Experiences, Positive Score: 0.8006359421050196, Negative Score: 0.7918423649073811
+Document: Delivering Massive Performance Leaps for Mixture of Experts Inference on NVIDIA Blackwell, Positive Score: 0.8255385378742117, Negative Score: 0.8216489590156829
+Document: Accelerating LLM and VLM Inference for Automotive and Robotics with NVIDIA TensorRT Edge-LLM, Positive Score: 0.8515841114213741, Negative Score: 0.8191932620374819
+Document: Introducing NVIDIA BlueField-4-Powered Inference Context Memory Storage Platform for the Next Frontier of AI, Positive Score: 0.8408803110612384, Negative Score: 0.8102339205363439
+Document: Scaling Power-Efficient AI Factories with NVIDIA Spectrum-X Ethernet Photonics, Positive Score: 0.8232745085803354, Negative Score: 0.8064025972538367
+Document: Open-Source AI Tool Upgrades Speed Up LLM and Diffusion Models on NVIDIA RTX PCs, Positive Score: 0.8261299617078778, Negative Score: 0.8241556547375423
+Document: New Software and Model Optimizations Supercharge NVIDIA DGX Spark, Positive Score: 0.7987272976752547, Negative Score: 0.784582176272718
+Document: Inside the NVIDIA Rubin Platform: Six New Chips, One AI Supercomputer, Positive Score: 0.8445268898758207, Negative Score: 0.8149520328277018
+Document: Accelerate AI Inference for Edge and Robotics with NVIDIA Jetson T4000 and NVIDIA JetPack 7.1, Positive Score: 0.834816283122455, Negative Score: 0.8241775423026336
+Document: How to Build a Voice Agent with RAG and Safety Guardrails, Positive Score: 0.8165804449337436, Negative Score: 0.7904133349776759
+Document: Building Autonomous Vehicles That Reason with NVIDIA Alpamayo, Positive Score: 0.8162593072893428, Negative Score: 0.8506440174444198
+Document: AI Factories, Physical AI, and Advances in Models, Agents, and Infrastructure That Shaped 2025, Positive Score: 0.8410385647302282, Negative Score: 0.8270884984233045
+Document: Accelerating LLM and VLM Inference for Automotive and Robotics with NVIDIA TensorRT Edge-LLM, Positive Score: 0.8515841114213741, Negative Score: 0.8191932620374819
+Document: How to Build a Voice Agent with RAG and Safety Guardrails, Positive Score: 0.8165804449337436, Negative Score: 0.7904133349776759
+Document: Build and Orchestrate End-to-End SDG Workflows with NVIDIA Isaac Sim and NVIDIA OSMO, Positive Score: 0.8114404651592035, Negative Score: 0.820833061742932
+Document: Delivering Massive Performance Leaps for Mixture of Experts Inference on NVIDIA Blackwell, Positive Score: 0.8255385378742117, Negative Score: 0.8216489590156829
+Document: Redefining Secure AI Infrastructure with NVIDIA BlueField Astra for NVIDIA Vera Rubin NVL72, Positive Score: 0.8581419638868513, Negative Score: 0.8188674651648328
+Document: Introducing NVIDIA BlueField-4-Powered Inference Context Memory Storage Platform for the Next Frontier of AI, Positive Score: 0.8408803110612384, Negative Score: 0.8102339205363439
+Document: Scaling Power-Efficient AI Factories with NVIDIA Spectrum-X Ethernet Photonics, Positive Score: 0.8232745085803354, Negative Score: 0.8064025972538367
+Document: Inside the NVIDIA Rubin Platform: Six New Chips, One AI Supercomputer, Positive Score: 0.8445268898758207, Negative Score: 0.8149520328277018
+Document: AI Factories, Physical AI, and Advances in Models, Agents, and Infrastructure That Shaped 2025, Positive Score: 0.8410385647302282, Negative Score: 0.8270884984233045
+Document: Redefining Secure AI Infrastructure with NVIDIA BlueField Astra for NVIDIA Vera Rubin NVL72, Positive Score: 0.8581419638868513, Negative Score: 0.8188674651648328
+Document: Introducing NVIDIA BlueField-4-Powered Inference Context Memory Storage Platform for the Next Frontier of AI, Positive Score: 0.8408803110612384, Negative Score: 0.8102339205363439
+Document: Scaling Power-Efficient AI Factories with NVIDIA Spectrum-X Ethernet Photonics, Positive Score: 0.8232745085803354, Negative Score: 0.8064025972538367
+Document: Inside the NVIDIA Rubin Platform: Six New Chips, One AI Supercomputer, Positive Score: 0.8445268898758207, Negative Score: 0.8149520328277018
+Document: Want AI Skills Without the Big Price Tag? These 2026 Certifications Deliver Value, Positive Score: 0.8442878409559578, Negative Score: 0.814983064736778
+Document: Daily Tech Insider Explores the New Era of Physical Intelligence, Positive Score: 0.8282186561436068, Negative Score: 0.8443421247141392
+Document: Rumor: Apple’s iOS 27 to Focus on Performance, AI, and Foldable iPhone Support, Positive Score: 0.8049283836481997, Negative Score: 0.7812609149872319
+Document: Mistral AI Wins French Military Deal, Positive Score: 0.8213295267138816, Negative Score: 0.8088741278675017
+Document: Fiserv Taps Microsoft for AI-Fueled Fintech Innovation, Positive Score: 0.8175104720131258, Negative Score: 0.8057981520651494
+Document: Snowflake to Acquire AI-Powered Observability Outfit Observe, Positive Score: 0.8171932604821068, Negative Score: 0.8061307895842409
+Document: Fake UK Council Posts Show the Power of AI Misinformation, Positive Score: 0.8058129519857077, Negative Score: 0.8012915149009767
+Document: AI and the Future of Work: 5 Predictions for 2026, Positive Score: 0.8189396197048765, Negative Score: 0.8037546522015887
+Document: Boltz Bags $28M Funding and Pfizer Partnership for Biomolecular AI Boost, Positive Score: 0.80607215064878, Negative Score: 0.8457187555045556
+Document: Windows 11 26H1 to Debut This Spring, Exclusive to Snapdragon X2 PCs, Positive Score: 0.7964679967622471, Negative Score: 0.7750259219894668
+Document: Gmail Enters the Gemini Era With AI-Powered Inbox Overhaul, Positive Score: 0.8359049707108118, Negative Score: 0.8099079052185819
+Document: Inside China’s $10B Plan to Accelerate 50+ AI and Tech Initiatives, Positive Score: 0.8108671963236148, Negative Score: 0.8058575511179323
+Document: 900,000 Users Hit as Malicious Chrome Extensions Steal ChatGPT, DeepSeek Chats, Positive Score: 0.818454204388174, Negative Score: 0.8037629847280234
+Document: Meet the Razr Fold: Motorola’s First Foldable Phone Powered by On-Device AI, Positive Score: 0.792406884002673, Negative Score: 0.783724060949557
+Document: Singapore’s DayOne Raises $2B Funding for AI Infrastructure Ambitions, Positive Score: 0.8231152810911531, Negative Score: 0.8089256309060711
+Document: Build Practical Cyber Defense Skills with This 5-Course Bundle, Positive Score: 0.8453828910121457, Negative Score: 0.7920610975388735
+Document: AMD’s AI Chips Are Coming for Your Laptop, Desktop, and Car, Positive Score: 0.8262982583274611, Negative Score: 0.809973966288767
+Document: Nvidia Introduces Vera Rubin, a New AI Supercomputing Platform Built to Slash Costs, Positive Score: 0.823248817099449, Negative Score: 0.8137104372142763
+Document: Google Faces Gmail Lawsuit Over Hidden AI Training Settings, Positive Score: 0.8220232494410111, Negative Score: 0.8098313713199695
+Document: AI Adoption Trends in the Enterprise 2026, Positive Score: 0.8560395489580952, Negative Score: 0.8039124699150321
+==================================
+

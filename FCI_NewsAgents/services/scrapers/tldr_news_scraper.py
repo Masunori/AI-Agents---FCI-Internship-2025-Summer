@@ -22,9 +22,9 @@ class TLDRNewsScraper(BaseScraper):
         self.__rss_urls_to_days_ago = {
             "https://tldr.tech/ai/": 1,
             "https://tldr.tech/data/": 2,
-            "https://tldr.tech/devops/": 2,
-            "https://tldr.tech/infosec/": 1,
-            "https://tldr.tech/dev/": 1,
+            # "https://tldr.tech/devops/": 2,
+            # "https://tldr.tech/infosec/": 1,
+            # "https://tldr.tech/dev/": 1,
         }
     
     def get_name(self) -> str:

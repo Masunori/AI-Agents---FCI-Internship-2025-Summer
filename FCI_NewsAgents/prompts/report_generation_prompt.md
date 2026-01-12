@@ -50,7 +50,6 @@ Với mỗi bài báo hoặc nhóm nghiên cứu cùng chủ đề:
 ## Nguyên tắc viết
 
 ### Về ngôn ngữ và phong cách:
-- Sử dụng **định dạng Markdown** hợp lý (in đậm, in nghiêng, bảng, danh sách) để tăng tính dễ đọc.
 - Dịch thuật ngữ chuyên ngành kèm từ gốc tiếng Anh trong ngoặc đơn lần đầu xuất hiện.
 - **Hạn chế emoji** - chỉ sử dụng tối đa 2-3 emoji phù hợp trong toàn bộ bản tin.
 - Tránh các cụm từ như "Câu chuyện 1", "Điểm nhấn", "The Hook" xuất hiện trực tiếp trong bản tin.
@@ -66,16 +65,6 @@ Với mỗi bài báo hoặc nhóm nghiên cứu cùng chủ đề:
 - **Xác thực thông tin:** Chỉ trích dẫn những kết quả và con số có trong nghiên cứu gốc.
 - **Kết nối thực tiễn:** Luôn liên hệ với bối cảnh FCI và ngành công nghệ Việt Nam.
 - **Tránh phóng đại:** Không sử dụng các từ ngữ như "cách mạng", "đột phá thần kỳ" một cách lạm dụng.
-
-## Định dạng cuối bản tin
-
-Luôn kết thúc bằng **bảng tham khảo** (ngoài link đã để trong bài) các nghiên cứu gốc theo định dạng:
-
-## Tham khảo
-
-| Nghiên cứu | Tác giả/Tổ chức | Link |
-|---|---|---|
-| [Tên nghiên cứu] | [Tác giả], [Tổ chức] | [Link] |
 
 ## Mục tiêu cuối cùng
 

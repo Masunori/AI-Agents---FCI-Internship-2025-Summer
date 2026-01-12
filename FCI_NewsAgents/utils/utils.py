@@ -2,7 +2,7 @@ import json
 import os
 from datetime import datetime, timezone
 from enum import IntEnum
-from typing import List
+from typing import List, Callable, TypeVar, ParamSpec
 
 import requests
 from bs4 import BeautifulSoup
@@ -257,7 +257,13 @@ def get_canonical_url(url: str) -> str:
         response.raise_for_status()
         final_url = response.url
 
+        content_type = response.headers.get('Content-Type', '')
+        if 'text/html' not in content_type:
+            print(f"==> Non-HTML content type ({content_type}) for URL: {final_url}. Using final URL as canonical.")
+            return canonicalize_url(final_url)
+
         # Parse HTML to find canonical link
+        response.encoding = response.apparent_encoding
         soup = BeautifulSoup(response.text, 'html.parser')
         canonical_link = soup.find('link', rel='canonical')
 
@@ -270,7 +276,47 @@ def get_canonical_url(url: str) -> str:
         print(f"==> Canonical URL found: {canonical_url}")
         return canonicalize_url(canonical_url)
 
-    except requests.RequestException as e:
-        print(f"==> Error fetching canonical URL for {url}: {e}")
-        return canonicalize_url(url)
-    
+    except Exception as e:
+        if isinstance(e, requests.RequestException):
+            print(f"==> Error fetching canonical URL for {url}: {e}")
+            return canonicalize_url(url)
+        else:
+            print(f"==> Unexpected error processing URL {url}: {e}")
+            raise e
+
+R = TypeVar("R")
+P = ParamSpec("P")
+
+def run_with_retry(
+    fn: Callable[P, R], 
+    max_retries: int = 3, 
+    on_exception: Callable[[Exception, int], None] = lambda e, attempt: None,
+    *args: P.args, 
+    **kwargs: P.kwargs
+) -> R:
+    """
+    Run a function with retries on exception.
+
+    Args:
+        fn (Callable[P, R]): The function to run.
+        max_retries (int): Maximum number of retries. Defaults to 3.
+        on_exception (Callable[[Exception, int], None]): Callback on exception with the exception and attempt number. Can be used for logging.
+        *args: Positional arguments for the function.
+        **kwargs: Keyword arguments for the function.
+
+    Returns:
+        R: The return value of the function if successful.
+
+    Raises:
+        Exception: The last exception raised if all retries fail.
+    """
+    attempt = 0
+    while attempt < max_retries:
+        try:
+            return fn(*args, **kwargs)
+        except Exception as e:
+            attempt += 1
+            on_exception(e, attempt)
+            if attempt == max_retries:
+                print("Max retries reached. Raising exception.")
+                raise e

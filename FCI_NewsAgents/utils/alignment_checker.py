@@ -151,5 +151,107 @@ def get_most_aligned_documents(
     info_queue.put(None)
     log_thread.start()
     
-    threshold = max(0.0, min(1.0, threshold))
     return [doc for doc in documents_with_top_domains if len(doc[1]) > 0]
+
+def get_most_aligned_documents(
+    positive_query_strings: List[str], 
+    negative_query_strings: List[str],
+    documents: List[Document],
+    threshold: float = 0.0,
+) -> List[Document]:
+    """
+    Get the most aligned documents to the query string based on cosine similarity of embeddings.
+
+    The score of a document is defined as the best similarity score among the positive queries, minus the best similarity score among the negative queries.
+
+    Documents are removed if their similarity scores for ALL domains are below the threshold.
+
+    Args:
+        positive_query_strings (List[str]): Relevant keywords to check for the documents' alignment.
+        negative_query_strings (List[str]): Irrelevant keywords to check for the documents' alignment
+        documents (List[Document]): A list of Document objects.
+        threshold (float): Similarity score threshold to filter documents. This will be clamped between -1 and 1 if out of range. Default is 0.0.
+    Returns:
+        List[Document]: The most aligned Document objects based on the criterion.
+    """
+    if len(documents) == 0:
+        print("No documents provided for alignment check.")
+        return []
+    
+    # According to the specifications of multilingual-e5-large, 
+    # queries must be prefixed with 'query: ' and passages with 'passage: '
+    query_strings = ['query: ' + qs for qs in positive_query_strings + negative_query_strings]
+    key_strings = [f'passage: Title: {d.title} Summary: {d.summary}' for d in documents]
+    threshold = max(-1.0, min(1.0, threshold))
+
+    query_embeddings = get_embedding(query_strings)
+    key_embeddings = get_embedding(key_strings)
+    similarities = cosine_similarity(query_embeddings, key_embeddings)
+    positive_similarities = similarities[:, :len(positive_query_strings)]
+    negative_similarities = similarities[:, len(positive_query_strings):]
+
+    best_positive_scores = np.max(positive_similarities, axis=1)
+    best_negative_scores = np.max(negative_similarities, axis=1)
+
+    documents_with_scores: List[Tuple[Document, float, float]] = list(zip(documents, best_positive_scores, best_negative_scores))
+
+    with open("alignment_checker.csv", "w", encoding="utf-8") as f:
+        import csv
+        writer = csv.writer(f)
+
+        header = (
+            ["title"]
+            + positive_query_strings
+            + negative_query_strings
+            + [
+                "max_positive_score",
+                "max_negative_score",
+                "max_positive_keyword",
+                "max_negative_keyword",
+                "final_score"
+            ]
+        )
+        writer.writerow(header)
+
+        for doc, sim_row in zip(documents, similarities):
+            pos_scores = sim_row[:len(positive_query_strings)]
+            neg_scores = sim_row[len(positive_query_strings):]
+
+            max_pos_idx = int(np.argmax(pos_scores))
+            max_neg_idx = int(np.argmax(neg_scores))
+
+            max_pos = pos_scores[max_pos_idx]
+            max_neg = neg_scores[max_neg_idx]
+
+            final_score = max_pos - max_neg
+
+            row = (
+                [doc.title]
+                + pos_scores.tolist()
+                + neg_scores.tolist()
+                + [
+                    max_pos,
+                    max_neg,
+                    positive_query_strings[max_pos_idx],
+                    negative_query_strings[max_neg_idx],
+                    final_score
+                ]
+            )
+            writer.writerow(row)
+
+    info_queue: Queue[str] = Queue()
+    log_thread = Thread(target=file_writer, args=("alignment_checker.log", info_queue))
+
+    info_queue.put("\n=== Document Similarity Scores ===")
+
+    print("\n=== Document Similarity Scores ===")
+    for doc, pos, neg in documents_with_scores:
+        print(f"Document: {doc.title}, Positive Score: {pos}, Negative Score: {neg}")
+        info_queue.put(f"Document: {doc.title}, Positive Score: {pos}, Negative Score: {neg}")
+    print("==================================\n")
+
+    info_queue.put("==================================\n")
+    info_queue.put(None)
+    log_thread.start()
+
+    return [doc for doc, pos, neg in documents_with_scores if (pos - neg) >= threshold]

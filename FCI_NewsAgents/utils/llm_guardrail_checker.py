@@ -11,7 +11,7 @@ from FCI_NewsAgents.models.document import Document
 from FCI_NewsAgents.prompts.get_prompts import get_guardrails_prompt
 from FCI_NewsAgents.services.llm.llm_interface import call_llm
 from FCI_NewsAgents.utils.doc_benchmark import *
-from FCI_NewsAgents.utils.utils import DocumentDomain
+from FCI_NewsAgents.utils.utils import run_with_retry 
 from FCI_NewsAgents.utils.logger import file_writer
 
 
@@ -117,34 +117,30 @@ def _get_llm_score(
         user_prompt=relevance_message,
         system_prompt=guardrails_system_prompt,
         model_used="gpt",
-        model="gpt-oss-20b"
+        model="gpt-oss-120b"
     )
 
-    retries = 0
-
-    while retries < 3:
-        try:
-            score = parse_guardrail_response(response, info_queue=info_queue, doc_title=discovery_doc.title)
-            break
-        except Exception as e:
-            print(f"""
-Error parsing guardrail response.
+    def call_llm_and_parse() -> float:
+        response = call_llm(
+            user_prompt=relevance_message,
+            system_prompt=guardrails_system_prompt,
+            model_used="gpt",
+            model="gpt-oss-120b"
+        )
+        return parse_guardrail_response(response, info_queue=info_queue, doc_title=discovery_doc.title)
+    
+    def on_exception(e: Exception, attempt: int):
+        print(f"""Error parsing guardrail response on attempt {attempt}.
 - Document title: {discovery_doc.title}
-- Response received: {response}
 - Error: {e}
 ==================================================
-""")
-            print(f"Error parsing guardrail response: {e}. Retrying...")
-            retries += 1
-            response = call_llm(
-                user_prompt=relevance_message,
-                system_prompt=guardrails_system_prompt,
-                model_used="gpt",
-                model="gpt-oss-20b",
-            )
+        """)
 
-    if retries >= 3:
-        raise ValueError("Failed to parse guardrail response after multiple retries.")
+    score = run_with_retry(
+        fn=call_llm_and_parse,
+        max_retries=3,
+        on_exception=on_exception
+    )
     
     return score 
 
@@ -167,42 +163,18 @@ def get_relevance_score(discovery_doc: Document, info_queue: Queue[str] | None=N
     print(f"Relevance score for document '{discovery_doc.title}' is {final_score}")
     return final_score
 
-def get_priority_score(discovery_doc: Document, domains: List[DocumentDomain], info_queue: Queue[str] | None=None) -> float:
+def get_priority_score(discovery_doc: Document, info_queue: Queue[str] | None=None) -> float:
     """
     Gets the priority score of a discovery document.
 
     Args:
         discovery_doc (Document): The discovery Document object.
-        domains (List[DocumentDomain]): The domains to evaluate the priority score against.
         log_thread (Queue[str] | None): Optional logging queue to log the response. If None, logging is skipped.
     Returns:
         float: The priority score between 0.0 and 1.0.
     """
-    tag: str = ""
-    anchored_docs: List[Document] = []
-
-    if DocumentDomain.CORE_ARTIFICIAL_INTELLIGENCE in domains or DocumentDomain.GENERATIVE_MODELS_LLMs in domains:
-        anchored_docs += RELEVANT_DOCS_AI
-        tag += "AI, "
-    if DocumentDomain.CLOUD_COMPUTING in domains:
-        anchored_docs += RELEVANT_DOCS_CLOUD
-        tag += "Cloud, "
-    if DocumentDomain.DATA_ENGINEERING_BIG_DATA in domains:
-        anchored_docs += RELEVANT_DOCS_DATA
-        tag += "Data, "
-    if DocumentDomain.CYBERSECURITY in domains:
-        anchored_docs += RELEVANT_DOCS_SECURITY
-        tag += "Security, "
-    if DocumentDomain.SYSTEMS_INFRASTRUCTURE in domains:
-        anchored_docs += RELEVANT_DOCS_SYSTEMS
-        tag += "Systems, "
-    if DocumentDomain.AI_SAFETY_GOVERNANCE_REGULATIONS in domains:
-        anchored_docs += RELEVANT_DOCS_AI_ETHICS
-        tag += "AI Ethics, "
-
-    anchored_docs = list(set(anchored_docs))  # Remove duplicates
-    tag = tag.rstrip(", ")
-
+    anchored_docs = list(set(RELEVANT_DOCS_AI + RELEVANT_DOCS_CLOUD + RELEVANT_DOCS_SECURITY + RELEVANT_DOCS_AI_ETHICS + RELEVANT_DOCS_SYSTEMS))  # Remove duplicates
+    
     win_count = 0
     batch_size = 5
     for i in range(0, len(anchored_docs), batch_size):
@@ -212,30 +184,30 @@ def get_priority_score(discovery_doc: Document, domains: List[DocumentDomain], i
 
     score = win_count / len(anchored_docs)
 
-    print(f"Priority score for document '{discovery_doc.title}' in domain '{tag}' is {score}")
+    print(f"Priority score for document '{discovery_doc.title}' is {score}")
     return score
 
-def _score_doc(args: Tuple[int, Document, List[int], float, Queue[str] | None]) -> Tuple[float, int] | None:
+def _score_doc(args: Tuple[int, Document, float, Queue[str] | None]) -> Tuple[float, int] | None:
     """
     Helper function to score a document for use in a priority queue.
 
     Args:
-        args (Tuple[int, Document, List[int], float, Queue[str] | None]): A tuple containing the index of the document,
-            the Document object, the domain indices, and the minimum score threshold.
+        args (Tuple[int, Document, float, Queue[str] | None]): A tuple containing the index of the document,
+            the Document object, the minimum score threshold.
     Returns:
-        Tuple[float, int] | None: A tuple of negative combined score and index if
+        Tuple[float, int] | None: A tuple of negative combined score and index if above threshold, else None.
     """
-    index, doc, domain_indices, min_score, info_queue = args
+    index, doc, min_score, info_queue = args
     relevance_score = get_relevance_score(doc, info_queue=info_queue)
 
     if relevance_score < min_score:
         return None
 
-    priority_score = get_priority_score(doc, domain_indices, info_queue=info_queue)
+    priority_score = get_priority_score(doc, info_queue=info_queue)
     return (-relevance_score*priority_score, index)
 
 def filter_documents_by_guardrail_score(
-    documents: List[Tuple[Document, List[int]]],
+    documents: List[Document],
     min_score: float,
     max_papers: int = -1,
     max_articles: int = -1,
@@ -272,8 +244,8 @@ def filter_documents_by_guardrail_score(
     if parallel:
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
             future_to_index = {
-                executor.submit(_score_doc, (idx, doc, domain_index, min_score, info_queue)): idx
-                for idx, (doc, domain_index) in enumerate(documents)
+                executor.submit(_score_doc, (idx, doc, min_score, info_queue)): idx
+                for idx, doc in enumerate(documents)
             }
 
             for future in as_completed(future_to_index):
@@ -282,7 +254,7 @@ def filter_documents_by_guardrail_score(
                     pq.put(result)
     else:
         for idx, doc in enumerate(documents):
-            result = _score_doc((idx, doc[0], doc[1], min_score, info_queue))
+            result = _score_doc((idx, doc, min_score, info_queue))
             if result is not None:
                 pq.put(result)
 
@@ -294,7 +266,8 @@ def filter_documents_by_guardrail_score(
 
     while not pq.empty():
         negative_score, doc_index = pq.get()
-        doc = documents[doc_index][0]
+        doc = documents[doc_index]
+
         scored_doc = Document(
             url=doc.url,
             title=doc.title,
@@ -314,6 +287,7 @@ def filter_documents_by_guardrail_score(
             if max_articles != -1 and len(filtered_articles) >= max_articles:
                 continue
             filtered_articles.append(scored_doc)
+            
     filtered_documents = filtered_papers + filtered_articles
 
     return filtered_documents

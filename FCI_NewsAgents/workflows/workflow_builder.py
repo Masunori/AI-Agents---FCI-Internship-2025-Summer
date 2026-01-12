@@ -5,6 +5,7 @@ import sys
 import time
 from datetime import datetime, timedelta
 from typing import List
+from concurrent.futures import ThreadPoolExecutor
 
 import dotenv
 
@@ -21,16 +22,28 @@ from FCI_NewsAgents.models.workflow_state import WorkflowState
 from FCI_NewsAgents.prompts.get_prompts import (
     get_generation_prompt,
     get_guardrails_prompt,
+    get_pointwise_guardrails_prompt
 )
 from FCI_NewsAgents.services.llm.llm_interface import call_llm
-from FCI_NewsAgents.utils.alignment_checker import get_most_aligned_documents
-from FCI_NewsAgents.utils.duplication_checker import remove_duplicate_documents
-from FCI_NewsAgents.utils.llm_guardrail_checker import filter_documents_by_guardrail_score
-from FCI_NewsAgents.utils.utils import (
-    EMBEDDING_ALIGNMENT_DOMAIN_QUERIES,
-    get_time,
-    save_report,
+from FCI_NewsAgents.services.parsers.cs_ai_parser import extract_text_from_paper
+from FCI_NewsAgents.services.parsers.web_article_parser import (
+    extract_text_from_web_article,
 )
+from FCI_NewsAgents.utils.alignment_checker import get_most_aligned_documents
+from FCI_NewsAgents.utils.alignment_keywords import NEGATIVE_KEYWORDS, POSITIVE_KEYWORDS
+from FCI_NewsAgents.utils.duplication_checker import remove_duplicate_documents
+from FCI_NewsAgents.utils.llm_guardrail_checker import (
+    filter_documents_by_guardrail_score,
+)
+from FCI_NewsAgents.utils.pointwise_llm_guardrail_checker import filter_documents_by_score
+from FCI_NewsAgents.utils.report_generator_utils import (
+    generate_highlight_segment,
+    generate_markdown,
+    generate_opening_and_conclusion,
+    generate_report_segment,
+    select_highlight,
+)
+from FCI_NewsAgents.utils.utils import save_report
 
 print("No error happen at import stage")
 
@@ -56,17 +69,18 @@ class GuardRails_Rerank_Workflow:
 
         workflow = StateGraph(WorkflowState)
 
-        #Add nodes (agent component)
+        # Add nodes (agent component)
         workflow.add_node("data_loader", self.load_data_node)
         workflow.add_node("guardrails", self.guardrails_node)
         workflow.add_node("generate_article", self.generate_node)
 
-        #Add edges (data flow) 
+        # Add edges (data flow) 
         workflow.add_edge("data_loader", "guardrails")
+        # workflow.add_edge("guardrails", END)
         workflow.add_edge("guardrails", "generate_article")
         workflow.add_edge("generate_article", END)
 
-        #entry point
+        # entry point
         workflow.set_entry_point("data_loader")
         return workflow.compile()
     
@@ -88,7 +102,7 @@ class GuardRails_Rerank_Workflow:
         article_count = sum(1 for doc in state.raw_documents if doc.content_type == "article")
 
         # Minimum score threshold to include a document
-        MIN_ALIGNMENT_SCORE_THRESHOLD = 0.78
+        MIN_ALIGNMENT_SCORE_THRESHOLD = 0.0
         MIN_RELEVANCE_SCORE_THRESHOLD = 0.8
 
         # 1. Remove duplicate URLs
@@ -100,18 +114,29 @@ class GuardRails_Rerank_Workflow:
         print(f"Number of documents after deduplication: {len(dedupped_documents)}")
 
         # 2. Soft filtering based on embedding alignment
-        aligned_documents_with_domains = get_most_aligned_documents(
-            query_strings=EMBEDDING_ALIGNMENT_DOMAIN_QUERIES,
+        aligned_documents = get_most_aligned_documents(
+            positive_query_strings=POSITIVE_KEYWORDS,
+            negative_query_strings=NEGATIVE_KEYWORDS,
             documents=dedupped_documents,
             threshold=MIN_ALIGNMENT_SCORE_THRESHOLD
         )
 
-        print(f"Number of documents after alignment filtering: {len(aligned_documents_with_domains)}")
+        print(f"Number of documents after alignment filtering: {len(aligned_documents)}")
 
         # 3. Evaluate each document with LLM guardrails
-        scored_documents = filter_documents_by_guardrail_score(
-            documents=aligned_documents_with_domains,
-            min_score=MIN_RELEVANCE_SCORE_THRESHOLD,
+        # scored_documents = filter_documents_by_guardrail_score(
+        #     documents=aligned_documents_with_domains,
+        #     min_score=MIN_RELEVANCE_SCORE_THRESHOLD,
+        #     max_papers=self.config.MAX_PAPERS_READ,
+        #     max_articles=self.config.MAX_ARTICLES_READ,
+        #     parallel=True,
+        #     max_workers=16
+        # )
+
+        scored_documents = filter_documents_by_score(
+            docs=aligned_documents,
+            threshold=4,
+            system_prompt=get_pointwise_guardrails_prompt(),
             max_papers=self.config.MAX_PAPERS_READ,
             max_articles=self.config.MAX_ARTICLES_READ,
             parallel=True,
@@ -141,47 +166,110 @@ class GuardRails_Rerank_Workflow:
             state.final_report = None
             return state
         
-        #wrap the document's content for LLM
-        doc_contents = []
-        for i, doc in enumerate(all_documents, 1):
-            if doc.content_type == "paper":  # paper
-                doc_content = f"""
-                            ## Document {i}: {doc.title}
-                            **Source:** {doc.source}
-                            **Published:** {doc.published_date.strftime('%Y-%m-%d')}
-                            **URL:** {doc.url}
-                            **Abstract:** {doc.summary}
-                            """
-            else: #article
-                doc_content = f"""
-                            ## Document {i}: {doc.title}
-                            **Source:** {doc.source}
-                            **Published:** {doc.published_date.strftime('%Y-%m-%d')}
-                            **URL:** {doc.url}
-                            **Abstract:** {doc.summary}
-                            """
-            doc_contents.append(doc_content)
-        
-        #prepare context
-        context = f"""
-        ## Dưới đây là thông tin về các bài báo khoa học và các bài viết tự do
-        {"\n".join(doc_contents)}
-        """
+        # Select the highlight document
+        highlight_index = select_highlight(
+            docs=all_documents, 
+            system_prompt=self.report_generation_system_prompt
+        )
 
-        #generate reports using LLM
-        try:
-            messages = f"Hãy viết cho tôi một bản tin công nghệ dựa trên các thông tin được cung cấp sau, cho biết thời gian hiện tại là {get_time()} hãy chọn ra top {self.config.MAX_DOCUMENTS_TO_LLM} thú vị nhất: \n\n{context}"
-            response = call_llm(
-                user_prompt=messages, 
-                system_prompt=self.report_generation_system_prompt, 
-                model_used="gpt",
-                model="gpt-oss-20b",
-            )
-            state.final_report = response
-            
-        except Exception as e:
-            print(f"LLM generation failed: {e}")
+        highlight_document = all_documents[highlight_index]
+        other_documents = [doc for i, doc in enumerate(all_documents) if i != highlight_index]
+
+        # Generate highlight segment
+        highlight_content = extract_text_from_paper(highlight_document) if highlight_document.content_type == "paper" else extract_text_from_web_article(highlight_document)
+        highlight_segment = generate_highlight_segment(
+            segment=highlight_content,
+            system_prompt=self.report_generation_system_prompt
+        )
+
+        if not highlight_segment:
+            print("Failed to generate highlight segment. Skipping report generation.")
             state.final_report = "Error: Failed to generate report with LLM"
+            return state
+
+        # Generate segments for other documents (in parallel)
+        def get_other_segment(doc: Document) -> str:
+            content = extract_text_from_paper(doc) if doc.content_type == "paper" else extract_text_from_web_article(doc)
+            return generate_report_segment(
+                segment=content,
+                system_prompt=self.report_generation_system_prompt
+            )
+        
+        # with ThreadPoolExecutor(max_workers=min(16, len(other_documents))) as executor:
+        #     other_segments = list(executor.map(get_other_segment, other_documents))
+
+        other_segments = [get_other_segment(doc) for doc in other_documents]
+
+        if not all(other_segments):
+            print("Failed to generate one or more segments for other documents. Skipping report generation.")
+            state.final_report = "Error: Failed to generate report with LLM"
+            return state
+
+        # Generate opening and conclusion
+        opening, conclusion = generate_opening_and_conclusion(
+            system_prompt=self.report_generation_system_prompt,
+            segments=[highlight_segment] + other_segments
+        )
+
+        if not opening and not conclusion:
+            print("Failed to generate opening and conclusion. Skipping report generation.")
+            state.final_report = "Error: Failed to generate report with LLM"
+            return state
+
+        # Generate final markdown report
+        final_report = generate_markdown(
+            opening=opening,
+            highlight_document=highlight_document,
+            highlight_segment=highlight_segment,
+            other_documents=other_documents,
+            other_segments=other_segments,
+            conclusion=conclusion
+        )
+
+        state.final_report = final_report
+        
+        # #wrap the document's content for LLM
+        # doc_contents = []
+        # for i, doc in enumerate(all_documents, 1):
+        #     if doc.content_type == "paper":  # paper
+        #         doc_content = f"""
+        #                     ## Document {i}: {doc.title}
+        #                     **Source:** {doc.source}
+        #                     **Published:** {doc.published_date.strftime('%Y-%m-%d')}
+        #                     **URL:** {doc.url}
+        #                     **Abstract:** {doc.summary}
+        #                     """
+        #     else: #article
+        #         doc_content = f"""
+        #                     ## Document {i}: {doc.title}
+        #                     **Source:** {doc.source}
+        #                     **Published:** {doc.published_date.strftime('%Y-%m-%d')}
+        #                     **URL:** {doc.url}
+        #                     **Abstract:** {doc.summary}
+        #                     """
+        #     doc_contents.append(doc_content)
+        
+        # #prepare context
+        # context = f"""
+        # ## Dưới đây là thông tin về các bài báo khoa học và các bài viết tự do
+        # {"\n".join(doc_contents)}
+        # """
+
+        # #generate reports using LLM
+        # try:
+        #     messages = f"Hãy viết cho tôi một bản tin công nghệ dựa trên các thông tin được cung cấp sau, cho biết thời gian hiện tại là {get_time()} hãy chọn ra top {self.config.MAX_DOCUMENTS_TO_LLM} thú vị nhất: \n\n{context}"
+        #     response = call_llm(
+        #         user_prompt=messages, 
+        #         system_prompt=self.report_generation_system_prompt, 
+        #         model_used="gpt",
+        #         model="gpt-oss-120b",
+        #         max_tokens=32768,
+        #     )
+        #     state.final_report = response
+            
+        # except Exception as e:
+        #     print(f"LLM generation failed: {e}")
+        #     state.final_report = "Error: Failed to generate report with LLM"
 
         return state
 

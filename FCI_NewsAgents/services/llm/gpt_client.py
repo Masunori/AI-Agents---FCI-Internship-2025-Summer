@@ -5,7 +5,12 @@ import dotenv
 import requests
 
 
-def call_gpt(user_prompt, system_prompt, model: Literal["gpt-oss-20b", "gpt-oss-120b"] = "gpt-oss-120b"):
+def call_gpt(
+    user_prompt: str, 
+    system_prompt: str, 
+    model: Literal["gpt-oss-20b", "gpt-oss-120b"] = "gpt-oss-120b",
+    max_tokens: int = 8192,
+):
     """
     Make a call to FPT's GPT-OSS model.
 
@@ -13,6 +18,7 @@ def call_gpt(user_prompt, system_prompt, model: Literal["gpt-oss-20b", "gpt-oss-
         user_prompt (str): The prompt provided by the user.
         system_prompt (str): The system-level instructions for the model.
         model (str): The model to use, either "gpt-oss-20b" or "gpt-oss-120b".
+        max_tokens (int): The maximum number of tokens to generate. Defaults to 8192.
 
     Returns:
         str: The response from the GPT model.
@@ -30,7 +36,7 @@ def call_gpt(user_prompt, system_prompt, model: Literal["gpt-oss-20b", "gpt-oss-
             {"role": "system", "content": f"{system_prompt}"},
             {"role": "user", "content": f"{user_prompt}"}
         ],
-        "max_tokens": 8192,
+        "max_tokens": max_tokens,
         "temperature": 0.1,
         "frequency_penalty": 0.5
     }
