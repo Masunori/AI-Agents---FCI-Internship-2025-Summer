@@ -1,4 +1,5 @@
 import sqlite3
+from typing import ParamSpec, Callable
 from pathlib import Path
 
 DDL = """
@@ -39,3 +40,28 @@ def init_db(db_path: str | Path | None = None) -> None:
         conn.commit()
     finally:
         conn.close()
+
+P = ParamSpec("P")
+_connect: Callable[P, sqlite3.Connection] = sqlite3.connect
+
+def connect_db(db_path: str | Path | None = None, *args: P.args, **kwargs: P.kwargs) -> sqlite3.Connection:
+    """
+    Connect to the SQLite database. Position and keyword arguments are passed to sqlite3.connect().
+    If set to None, uses the default DEDUPLICATION_DB_PATH from environment (look at `schema.py`).
+
+    Args:
+        db_path (str | Path | None): Path to the SQLite database file.
+
+    Returns:
+        sqlite3.Connection: SQLite database connection.
+    """
+    if db_path is None:
+        import os
+        from dotenv import load_dotenv
+
+        load_dotenv()
+
+        BASE_DIR = Path(__file__).resolve().parent
+        db_path = BASE_DIR / os.environ["DEDUPLICATION_DB_PATH"]
+
+    return _connect(db_path, *args, **kwargs)

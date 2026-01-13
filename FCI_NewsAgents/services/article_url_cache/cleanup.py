@@ -2,7 +2,7 @@ import sqlite3
 from pathlib import Path
 from datetime import date, datetime, timedelta
 
-from .schema import init_db
+from .schema import init_db, connect_db
 
 
 def purge_older_than(
@@ -22,7 +22,7 @@ def purge_older_than(
     init_db(db_path)
 
     cutoff_date = date.today() - timedelta(days=days)
-    conn = sqlite3.connect(db_path)
+    conn = connect_db(db_path)
     try:
         cursor = conn.cursor()
         cursor.execute(

@@ -7,7 +7,7 @@ from typing import Dict, Iterable, List, Tuple
 
 from FCI_NewsAgents.utils.logger import file_writer
 
-from .schema import init_db
+from .schema import init_db, connect_db
 
 
 class ArticleURLStore:
@@ -37,11 +37,7 @@ class ArticleURLStore:
 
     def __init__(self, db_path: str | Path | None = None) -> None:
         init_db(db_path)
-        self._conn = sqlite3.connect(
-            db_path,
-            isolation_level=None,  # autocommit mode
-            check_same_thread=False,
-        )
+        self._conn = connect_db(db_path, isolation_level=None, check_same_thread=False)
         self._conn.execute("PRAGMA foreign_keys=ON;")
         self._conn.execute("PRAGMA journal_mode=WAL;")
 

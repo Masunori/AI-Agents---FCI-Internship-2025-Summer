@@ -248,14 +248,14 @@ def generate_markdown(
     parts.append(f"## Tin nhanh công nghệ ({len(other_article_segments)} bài)\n\n")
 
     for idx, (doc, segment) in enumerate(other_article_segments, 1):
-        parts.append(f"## Mục {idx}: {doc.title}\n\n")
+        parts.append(f"## Mục {idx}: {fr'{doc.title}'}\n\n")
         parts.append(f"{segment}\n\n")
         parts.append(f"**Ngày xuất bản:** {doc.published_date.strftime("%d %b, %Y")}\n**URL:** {doc.url}\n\n")
 
     other_paper_segments = [(doc, seg) for doc, seg in zip(other_documents, other_segments) if doc.content_type == "paper"]
     parts.append(f"## Nghiên cứu khoa học nổi bật ({len(other_paper_segments)} bài)\n\n")
     for idx, (doc, segment) in enumerate(other_paper_segments, 1):
-        parts.append(f"## Mục {idx}: {doc.title}\n\n")
+        parts.append(f"## Mục {idx}: {fr'{doc.title}'}\n\n")
         parts.append(f"{segment}\n\n")
         parts.append(f"**Ngày xuất bản:** {doc.published_date.strftime("%d %b, %Y")}\n**URL:** {doc.url}\n\n")
 
@@ -267,7 +267,7 @@ def generate_markdown(
     parts.append("|---|---|---|\n")
     all_documents = [highlight_document] + other_documents
     for doc in all_documents:
-        parts.append(f"| {doc.title} | {doc.published_date.strftime("%d %b, %Y")} | [Link]({doc.url}) |\n")
+        parts.append(f"| {fr'{doc.title}'} | {doc.published_date.strftime("%d %b, %Y")} | [Link]({doc.url}) |\n")
     parts.append("---\n")
     parts.append("Bản tin được tạo tự động bởi hệ thống FCI News Agents.\n")
 
