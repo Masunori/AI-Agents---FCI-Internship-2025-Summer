@@ -1,13 +1,5 @@
-import os
 import sqlite3
 from pathlib import Path
-
-from dotenv import load_dotenv
-
-load_dotenv()
-
-BASE_DIR = Path(__file__).resolve().parent
-DB_PATH = BASE_DIR / os.environ["DEDUPLICATION_DB_PATH"]
 
 DDL = """
 CREATE TABLE IF NOT EXISTS articles (
@@ -23,13 +15,23 @@ CREATE INDEX IF NOT EXISTS idx_articles_scrape_date
     ON articles (scrape_date);
 """
 
-def init_db(db_path: str | Path = DB_PATH) -> None:
+def init_db(db_path: str | Path | None = None) -> None:
     """
     Initialize the SQLite database with the required schema.
+    If set to None, uses the default DEDUPLICATION_DB_PATH from environment.
 
     Args:
-        db_path (str | Path): Path to the SQLite database file.
+        db_path (str | Path | None): Path to the SQLite database file.
     """
+    if db_path is None:
+        import os
+        from dotenv import load_dotenv
+
+        load_dotenv()
+
+        BASE_DIR = Path(__file__).resolve().parent
+        db_path = BASE_DIR / os.environ["DEDUPLICATION_DB_PATH"]
+
     print(f"Initializing database at: {db_path}")
     conn = sqlite3.connect(db_path)
     try:

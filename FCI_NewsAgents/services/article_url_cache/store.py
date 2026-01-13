@@ -7,12 +7,14 @@ from typing import Dict, Iterable, List, Tuple
 
 from FCI_NewsAgents.utils.logger import file_writer
 
-from .schema import DB_PATH, init_db
+from .schema import init_db
 
 
 class ArticleURLStore:
     """
     SQLite-based store for deduplicating article URLs.
+
+    If this is initialised with no db_path, it uses the default DEDUPLICATION_DB_PATH from environment (look at `schema.py`).
 
     Intended usage:
 
@@ -33,7 +35,7 @@ class ArticleURLStore:
 
     __slots__ = ("_conn",)
 
-    def __init__(self, db_path: str | Path = DB_PATH) -> None:
+    def __init__(self, db_path: str | Path | None = None) -> None:
         init_db(db_path)
         self._conn = sqlite3.connect(
             db_path,
