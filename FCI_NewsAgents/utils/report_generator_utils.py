@@ -3,10 +3,26 @@ import re
 from datetime import datetime
 from typing import List, Tuple
 
+from markdown_pdf import MarkdownPdf, Section
+from reportlab.lib import colors
+from reportlab.lib.enums import TA_LEFT
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
+
 from FCI_NewsAgents.models.document import Document
 from FCI_NewsAgents.services.llm.llm_interface import call_llm
 from FCI_NewsAgents.utils.utils import run_with_retry
 
+
+def is_newsletter(source: str) -> bool:
+    """Check if the source is a newsletter"""
+    newsletter_sources = [
+        "TLDR News",
+    ]
+    return source in newsletter_sources
 
 def select_highlight(docs: List[Document], system_prompt: str) -> int:
     """
@@ -111,7 +127,6 @@ Giới hạn số từ trong mục báo cáo này là 1 hoặc nhiều hơn 1 đ
 
     return run_with_retry(call_llm_and_parse_json, max_retries=3, on_exception=on_exception)
 
-
 def generate_report_segment(segment: str, system_prompt: str) -> str:
     """
     Generate a report segment using the specified LLM model.
@@ -207,6 +222,10 @@ Không trả về bất cứ phần nào khác ngoài JSON phần mở đầu v�
         print(f"Error parsing LLM response for opening and conclusion: {e}")
         return "", ""  # Return empty strings if parsing fails
     
+def to_md_raw_string(s: str) -> str:
+    """Convert string to raw markdown string by escaping special characters"""
+    return re.sub(r'([\\`*_{}\[\]()#+\-.!|$<>:^@&~])', r'\\\1', s)
+
 def generate_markdown(
     opening: str,
     highlight_document: Document,
@@ -239,25 +258,31 @@ def generate_markdown(
     parts.append(f"## Mở đầu\n\n{opening}\n\n")
 
     # Highlight section
-    parts.append(f"## Điểm nhấn: {highlight_document.title}\n\n")
+    parts.append(f"## Điểm nhấn: {to_md_raw_string(highlight_document.title)}\n\n")
     parts.append(f"{highlight_segment}\n\n")
-    parts.append(f"**Ngày xuất bản:** {highlight_document.published_date.strftime("%d %b, %Y")}\n**URL:** {highlight_document.url}\n\n")
+    parts.append(f"**{"Ngày xuất bản" if not is_newsletter(highlight_document.source) else "Ngày tổng hợp"}:** {highlight_document.published_date.strftime("%d %b, %Y")}\n")
+    parts.append(f"**Nguồn:** {highlight_document.source}\n")
+    parts.append(f"**URL:** {highlight_document.url}\n\n")
 
     # Other sections
     other_article_segments = [(doc, seg) for doc, seg in zip(other_documents, other_segments) if doc.content_type == "article"]
     parts.append(f"## Tin nhanh công nghệ ({len(other_article_segments)} bài)\n\n")
 
     for idx, (doc, segment) in enumerate(other_article_segments, 1):
-        parts.append(f"## Mục {idx}: {fr'{doc.title}'}\n\n")
+        parts.append(f"## News #{idx}: {to_md_raw_string(doc.title)}\n\n")
         parts.append(f"{segment}\n\n")
-        parts.append(f"**Ngày xuất bản:** {doc.published_date.strftime("%d %b, %Y")}\n**URL:** {doc.url}\n\n")
+        parts.append(f"**{"Ngày xuất bản" if not is_newsletter(doc.source) else "Ngày tổng hợp"}:** {doc.published_date.strftime("%d %b, %Y")}\n")
+        parts.append(f"**Nguồn:** {doc.source}\n")
+        parts.append(f"**URL:** {doc.url}\n\n")
 
     other_paper_segments = [(doc, seg) for doc, seg in zip(other_documents, other_segments) if doc.content_type == "paper"]
     parts.append(f"## Nghiên cứu khoa học nổi bật ({len(other_paper_segments)} bài)\n\n")
     for idx, (doc, segment) in enumerate(other_paper_segments, 1):
-        parts.append(f"## Mục {idx}: {fr'{doc.title}'}\n\n")
+        parts.append(f"## Article #{idx}: {to_md_raw_string(doc.title)}\n\n")
         parts.append(f"{segment}\n\n")
-        parts.append(f"**Ngày xuất bản:** {doc.published_date.strftime("%d %b, %Y")}\n**URL:** {doc.url}\n\n")
+        parts.append(f"**{"Ngày xuất bản" if not is_newsletter(doc.source) else "Ngày tổng hợp"}:** {doc.published_date.strftime("%d %b, %Y")}\n")
+        parts.append(f"**Nguồn:** {doc.source}\n")
+        parts.append(f"**URL:** {doc.url}\n\n")
 
     # Conclusion
     parts.append(f"## Kết luận\n\n{conclusion}\n\n")
@@ -272,3 +297,236 @@ def generate_markdown(
     parts.append("Bản tin được tạo tự động bởi hệ thống FCI News Agents.\n")
 
     return "".join(parts)
+
+def markdown_string_to_pdf(markdown_string: str, output_path: str) -> None:
+    """
+    Convert a markdown string to a PDF file.
+
+    Args:
+        markdown_string (str): The markdown content to be converted.
+        output_path (str): The file path to save the generated PDF.
+    """
+    pdf = MarkdownPdf()
+    pdf.add_section(Section(markdown_string))
+    pdf.save(output_path)
+    pass
+
+def generate_pdf(
+    output_path: str,
+    opening: str,
+    highlight_document: Document,
+    highlight_segment: str,
+    other_documents: List[Document],
+    other_segments: List[str],
+    conclusion: str,
+):
+    """
+    Generate a PDF report and save it to the specified path.
+
+    Args:
+        output_path (str): The file path to save the generated PDF.
+        opening (str): The opening segment of the report.
+        highlight_document (Document): The highlight document.
+        highlight_segment (str): The generated highlight segment.
+        other_documents (List[Document]): List of other documents.
+        other_segments (List[str]): List of generated segments for other documents.
+        conclusion (str): The conclusion segment of the report.
+    """
+    # --------------------------------------------------
+    # Font registration (Vietnamese Unicode safe)
+    # --------------------------------------------------
+    pdfmetrics.registerFont(TTFont(
+        "NotoSans",
+        "./FCI_NewsAgents/assets/fonts/NotoSans-Regular.ttf"
+    ))
+    pdfmetrics.registerFont(TTFont(
+        "NotoSans-Bold",
+        "./FCI_NewsAgents/assets/fonts/NotoSans-Bold.ttf"
+    ))
+
+    # --------------------------------------------------
+    # Styles
+    # --------------------------------------------------
+    styles = getSampleStyleSheet()
+
+    styles.add(ParagraphStyle(
+        name="TitleStyle",
+        fontName="NotoSans-Bold",
+        fontSize=20,
+        spaceAfter=16,
+        alignment=TA_LEFT
+    ))
+
+    styles.add(ParagraphStyle(
+        name="SectionStyle",
+        fontName="NotoSans-Bold",
+        fontSize=14,
+        spaceBefore=16,
+        spaceAfter=8
+    ))
+
+    styles.add(ParagraphStyle(
+        name="BodyStyle",
+        fontName="NotoSans",
+        fontSize=11,
+        spaceAfter=8
+    ))
+
+    # --------------------------------------------------
+    # Document
+    # --------------------------------------------------
+    doc = SimpleDocTemplate(
+        output_path,
+        pagesize=A4,
+        rightMargin=36,
+        leftMargin=36,
+        topMargin=36,
+        bottomMargin=36,
+    )
+
+    elements = []
+
+    # Title
+    elements.append(Paragraph(
+        f"Bản tin công nghệ - {datetime.now().strftime('%d/%m/%Y')}",
+        styles["TitleStyle"]
+    ))
+
+    # Opening
+    elements.append(Paragraph("Mở đầu", styles["SectionStyle"]))
+    elements.append(Paragraph(opening, styles["BodyStyle"]))
+
+    # Highlight
+    elements.append(Paragraph(
+        f"Điểm nhấn: {highlight_document.title}",
+        styles["SectionStyle"]
+    ))
+    elements.append(Paragraph(highlight_segment, styles["BodyStyle"]))
+
+    date_label = "Ngày tổng hợp" if is_newsletter(highlight_document.source) else "Ngày xuất bản"
+
+    elements.extend([
+        Paragraph(
+            f"<b>{date_label}:</b> {highlight_document.published_date.strftime('%d %b, %Y')}",
+            styles["BodyStyle"]
+        ),
+        Paragraph(
+            f"<b>Nguồn:</b> {highlight_document.source}",
+            styles["BodyStyle"]
+        ),
+        Paragraph(
+            f"<b>URL:</b> <link href='{highlight_document.url}'>{highlight_document.url}</link>",
+            styles["BodyStyle"]
+        )
+    ])
+
+    # Articles
+    article_items = [
+        (d, s)
+        for d, s in zip(other_documents, other_segments)
+        if d.content_type == "article"
+    ]
+
+    elements.append(Paragraph(
+        f"Tin nhanh công nghệ ({len(article_items)} bài)",
+        styles["SectionStyle"]
+    ))
+
+    for idx, (doc_item, seg) in enumerate(article_items, 1):
+        elements.append(Paragraph(
+            f"News #{idx}: {doc_item.title}",
+            styles["SectionStyle"]
+        ))
+        elements.append(Paragraph(seg, styles["BodyStyle"]))
+
+        date_label = "Ngày tổng hợp" if is_newsletter(doc_item.source) else "Ngày xuất bản"
+
+        elements.extend([
+            Paragraph(
+                f"<b>{date_label}:</b> {doc_item.published_date.strftime('%d %b, %Y')}",
+                styles["BodyStyle"]
+            ),
+            Paragraph(
+                f"<b>Nguồn:</b> {doc_item.source}",
+                styles["BodyStyle"]
+            ),
+            Paragraph(
+                f"<b>URL:</b> <link href='{doc_item.url}'>{doc_item.url}</link>",
+                styles["BodyStyle"]
+            )
+        ])
+
+    # Papers
+    paper_items = [
+        (d, s)
+        for d, s in zip(other_documents, other_segments)
+        if d.content_type == "paper"
+    ]
+
+    elements.append(Paragraph(
+        f"Nghiên cứu khoa học nổi bật ({len(paper_items)} bài)",
+        styles["SectionStyle"]
+    ))
+
+    for idx, (doc_item, seg) in enumerate(paper_items, 1):
+        elements.append(Paragraph(
+            f"Article #{idx}: {doc_item.title}",
+            styles["SectionStyle"]
+        ))
+        elements.append(Paragraph(seg, styles["BodyStyle"]))
+
+        date_label = "Ngày tổng hợp" if is_newsletter(doc_item.source) else "Ngày xuất bản"
+
+        elements.extend([
+            Paragraph(
+                f"<b>{date_label}:</b> {doc_item.published_date.strftime('%d %b, %Y')}",
+                styles["BodyStyle"]
+            ),
+            Paragraph(
+                f"<b>Nguồn:</b> {doc_item.source}",
+                styles["BodyStyle"]
+            ),
+            Paragraph(
+                f"<b>URL:</b> <link href='{doc_item.url}'>{doc_item.url}</link>",
+                styles["BodyStyle"]
+            )
+        ])
+
+    # Conclusion
+    elements.append(Paragraph("Kết luận", styles["SectionStyle"]))
+    elements.append(Paragraph(conclusion, styles["BodyStyle"]))
+
+    # Reference table
+    elements.append(Spacer(1, 12))
+    elements.append(Paragraph("Tổng hợp bài viết", styles["SectionStyle"]))
+
+    table_data = [["Tiêu đề", "Ngày xuất bản", "URL"]]
+    all_docs = [highlight_document] + other_documents
+
+    for d in all_docs:
+        table_data.append([
+            d.title,
+            d.published_date.strftime("%d %b, %Y"),
+            d.url
+        ])
+
+    table = Table(table_data, colWidths=[250, 100, 150])
+    table.setStyle(TableStyle([
+        ("GRID", (0, 0), (-1, -1), 0.5, colors.grey),
+        ("BACKGROUND", (0, 0), (-1, 0), colors.lightgrey),
+        ("FONT", (0, 0), (-1, 0), "NotoSans-Bold"),
+        ("VALIGN", (0, 0), (-1, -1), "TOP"),
+    ]))
+
+    elements.append(table)
+
+    elements.append(Spacer(1, 16))
+    elements.append(Paragraph(
+        "Bản tin được tạo tự động bởi hệ thống FCI News Agents.",
+        styles["BodyStyle"]
+    ))
+
+    # --------------------------------------------------
+    # Build PDF
+    # --------------------------------------------------
+    doc.build(elements)

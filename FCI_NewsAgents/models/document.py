@@ -1,8 +1,9 @@
 # models/document.py
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime
-from typing import List, Optional
 from enum import Enum
+from typing import List, Literal
+
 
 class ContentType(Enum):
     PAPER = "paper"
@@ -18,13 +19,21 @@ class Document:
     - A document is identified by its (canonical) URL, and `__eq__` and `__hash__` have been overridden accordingly.
     """
     url: str
+    """The URL of the document."""
     title: str
+    """The title of the document."""
     summary: str
+    """A brief summary of the document (abstract if the document is a paper)."""
     source: str
+    """The source (website name) that the document is from."""
     authors: List[str]
+    """List of authors of the document."""
     published_date: datetime
-    content_type: str = "paper"  
-    score: Optional[float] = None  # Relevance score from guardrails (0.0 to 1.0)
+    """The published date of the document."""
+    content_type: Literal["paper", "tweet", "article"] = "paper"  
+    """The type of the document: 'paper', 'tweet', or 'article'."""
+    score: float | None = None
+    """Relevance score from guardrails"""
 
     def __eq__(self, other):
         if not isinstance(other, Document):

@@ -66,7 +66,7 @@ def scrape_arxiv_cs_ai(max_results=10, sort_by: Literal["relevance", "lastUpdate
                 url=next((link.href for link in entry.links if link.type == "application/pdf"), ""),
                 title=entry.title,
                 summary=entry.summary,
-                source=entry.id, # arxiv_url
+                source="arXiv cs.AI",
                 authors=[author.name for author in entry.authors],
                 published_date=entry.published,
             )

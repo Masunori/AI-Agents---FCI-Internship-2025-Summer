@@ -56,7 +56,8 @@ class NVIDIADevBlogScraper(BaseScraper):
                             url=entry["link"],
                             summary=soup.get_text(separator=" ", strip=True),
                             published_date=published_date,
-                            authors=entry.get("author", "")
+                            authors=entry.get("author", ""),
+                            source="NVIDIA Developer Blog",
                         )
 
                         articles.append(article)

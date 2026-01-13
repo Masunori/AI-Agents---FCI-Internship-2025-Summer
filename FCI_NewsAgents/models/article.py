@@ -10,19 +10,19 @@ class Article:
 
     - When creating an Article instance, at least one of `title` or `summary` must be provided.
     - When scraping articles, it is the most ideal to include published_date and authors if available.
-
-    Attributes:
-        title (str): The title of the article
-        url (str): The URL of the article
-        summary (str): A brief summary of the article
-        published_date (str): The published date of the article in ISO format
-        authors (str | List[str]): The author(s) of the article
     """
     url: str
+    """The URL of the article."""
     title: str = ""
+    """The title of the article."""
     summary: str = ""
+    """A brief summary of the article."""
     published_date: str = ""
+    """The published date of the article in ISO format."""
     authors: str | List[str] = ""
+    """The author(s) of the article."""
+    source: str = ""
+    """The source (website name) that the article is fetched from."""
 
     def __post_init__(self):
         # Validate that at least title or summary is provided

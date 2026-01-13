@@ -71,6 +71,7 @@ class TLDRNewsScraper(BaseScraper):
                             summary=summary,
                             published_date="",
                             authors="",
+                            source="TLDR News"
                         )
 
                         article_list.append(article)

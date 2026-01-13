@@ -93,6 +93,7 @@ class TechRepublicScraper(BaseScraper):
                 authors=authors,
                 published_date=published_date,
                 summary=content_text,
+                source="TechRepublic"
             )
 
             return asdict(article_data)

@@ -8,43 +8,10 @@ import requests
 from bs4 import BeautifulSoup
 from w3lib.url import canonicalize_url
 
-from FCI_NewsAgents.core.config import GuardrailsConfig
 from FCI_NewsAgents.models.article import Article
 from FCI_NewsAgents.models.document import Document
 from FCI_NewsAgents.models.paper import Paper
 
-EMBEDDING_ALIGNMENT_DOMAIN_QUERIES = [
-    # Cloud & distributed systems (foundations first, products second)
-    "Cloud and distributed systems research including scalability, fault tolerance, virtualization, serverless computing, edge computing, and cloud security.",
-
-    # Systems, hardware, and infrastructure (explicitly research-oriented)
-    "Computer systems and infrastructure research including GPUs, TPUs, AI accelerators, high-performance computing, networking, storage systems, and compute optimization.",
-
-    # Core AI research (avoid product language)
-    "Artificial intelligence research including deep learning, neural networks, representation learning, computer vision, natural language processing, reasoning, and learning algorithms.",
-
-    # Generative models & LLMs (separate anchor)
-    "Large-scale machine learning models including large language models, vision-language models, generative models, multimodal models, and AI agents.",
-
-    # Data systems & data engineering
-    "Data engineering and data systems research including data pipelines, distributed data processing, data storage, analytics systems, and real-time data platforms.",
-
-    # Security applied to systems and AI
-    "Security research related to cloud systems and artificial intelligence including system security, privacy, robustness, secure computation, and trustworthy machine learning.",
-
-    # AI governance, safety, and regulation (explicitly non-technical allowed)
-    "AI safety, governance, and policy topics including responsible AI, AI regulation, risk management, compliance, and societal impacts of AI systems.",
-]
-
-
-class DocumentDomain(IntEnum):
-    CLOUD_COMPUTING = 0
-    SYSTEMS_INFRASTRUCTURE = 1
-    CORE_ARTIFICIAL_INTELLIGENCE = 2
-    GENERATIVE_MODELS_LLMs = 3
-    DATA_ENGINEERING_BIG_DATA = 4
-    CYBERSECURITY = 5
-    AI_SAFETY_GOVERNANCE_REGULATIONS = 6
 
 def get_time():
     current_datetime = datetime.now()
@@ -99,14 +66,22 @@ def convert_tweet_to_document(tweet_data: dict, source: str = "Twitter") -> Docu
         content_type="tweet"
     )
 
-def convert_article_to_document(article_data: Article, source: str = "Article") -> Document:
-    """Convert article data to RawDocument format"""
+def convert_article_to_document(article_data: Article) -> Document:
+    """
+    Convert article data to RawDocument format.
+
+    Args:
+        article_data (Article): The article data to convert.
+
+    Returns:
+        Document: The converted Document object.
+    """
     
     return Document(
         url=article_data.url,
         title=article_data.title,
         summary=article_data.summary,
-        source=source,
+        source=article_data.source,
         authors=[article_data.authors] if isinstance(article_data.authors, str) else article_data.authors,
         published_date=datetime.fromisoformat(article_data.published_date),
         content_type="article"

@@ -42,6 +42,7 @@ from FCI_NewsAgents.utils.report_generator_utils import (
     generate_opening_and_conclusion,
     generate_report_segment,
     select_highlight,
+    markdown_string_to_pdf,
 )
 from FCI_NewsAgents.utils.utils import save_report
 
@@ -160,6 +161,10 @@ class GuardRails_Rerank_Workflow:
         """Node to generate final markdown report using LLM"""
 
         all_documents = state.filtered_documents
+
+        for doc in all_documents:
+            print(f"Document to be included in report: {doc.title} (Type: {doc.content_type}, Score: {doc.score})")
+            print(f"Summary: {doc.summary[:200]}...\n")
         
         if not all_documents:
             print("No documents available after guardrails filtering. Skipping report generation.")
@@ -226,51 +231,16 @@ class GuardRails_Rerank_Workflow:
             conclusion=conclusion
         )
 
-        state.final_report = final_report
-        
-        # #wrap the document's content for LLM
-        # doc_contents = []
-        # for i, doc in enumerate(all_documents, 1):
-        #     if doc.content_type == "paper":  # paper
-        #         doc_content = f"""
-        #                     ## Document {i}: {doc.title}
-        #                     **Source:** {doc.source}
-        #                     **Published:** {doc.published_date.strftime('%Y-%m-%d')}
-        #                     **URL:** {doc.url}
-        #                     **Abstract:** {doc.summary}
-        #                     """
-        #     else: #article
-        #         doc_content = f"""
-        #                     ## Document {i}: {doc.title}
-        #                     **Source:** {doc.source}
-        #                     **Published:** {doc.published_date.strftime('%Y-%m-%d')}
-        #                     **URL:** {doc.url}
-        #                     **Abstract:** {doc.summary}
-        #                     """
-        #     doc_contents.append(doc_content)
-        
-        # #prepare context
-        # context = f"""
-        # ## Dưới đây là thông tin về các bài báo khoa học và các bài viết tự do
-        # {"\n".join(doc_contents)}
-        # """
-
-        # #generate reports using LLM
-        # try:
-        #     messages = f"Hãy viết cho tôi một bản tin công nghệ dựa trên các thông tin được cung cấp sau, cho biết thời gian hiện tại là {get_time()} hãy chọn ra top {self.config.MAX_DOCUMENTS_TO_LLM} thú vị nhất: \n\n{context}"
-        #     response = call_llm(
-        #         user_prompt=messages, 
-        #         system_prompt=self.report_generation_system_prompt, 
-        #         model_used="gpt",
-        #         model="gpt-oss-120b",
-        #         max_tokens=32768,
-        #     )
-        #     state.final_report = response
+        try:
+            markdown_string_to_pdf(
+                markdown_string=final_report,
+                output_path=f"ai_news_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf"
+            )
+        except Exception as e:
+            print(f"Error generating PDF: {e}")
             
-        # except Exception as e:
-        #     print(f"LLM generation failed: {e}")
-        #     state.final_report = "Error: Failed to generate report with LLM"
 
+        state.final_report = final_report
         return state
 
 

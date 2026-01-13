@@ -55,6 +55,7 @@ class OpenAINewsScraper(BaseScraper):
                         summary=entry.get('summary', ''),
                         authors="OpenAI",
                         published_date=published_date_str,
+                        source="OpenAI News"
                     )
 
                     articles.append(article)

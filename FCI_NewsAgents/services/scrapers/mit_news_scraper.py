@@ -77,6 +77,7 @@ class MITNewsScraper(BaseScraper):
                         summary=content_text,
                         published_date=published_date,
                         authors=authors,
+                        source="MIT News"
                     )
 
                     articles.append(article)

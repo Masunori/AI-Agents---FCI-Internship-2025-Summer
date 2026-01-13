@@ -108,6 +108,7 @@ class GoogleResearchScraper(BaseScraper):
                     summary=content['summary'],
                     published_date=published_date,
                     authors=content['authors'],
+                    source="Google Research Blog"
                 )
                 
                 blog_posts.append(article)

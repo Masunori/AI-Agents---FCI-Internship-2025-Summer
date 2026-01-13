@@ -14,6 +14,14 @@ def extract_text_from_web_article(doc: Document):
         str: The extracted text content of the web article.
     """
     try:
+        auth_guarded_domains = [
+            "x.com",
+            "twitter.com",
+        ]
+
+        if any(domain in doc.url for domain in auth_guarded_domains):
+            raise ValueError("Authentication required to access this domain.")
+
         request_headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36",
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
@@ -31,7 +39,7 @@ def extract_text_from_web_article(doc: Document):
         # Extract text from relevant tags
         text = "\n".join(
             p.get_text(strip=True)
-            for p in soup.find_all(["p", "h1", "h2", "h3", "li"])
+            for p in soup.find_all(["p", "h1", "h2", "h3", "li", "span"])
         )
 
         return text

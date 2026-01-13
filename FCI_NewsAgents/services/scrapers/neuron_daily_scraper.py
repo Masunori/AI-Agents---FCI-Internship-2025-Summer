@@ -123,6 +123,7 @@ class NeuronDailyScraper(BaseScraper):
                         summary=content,
                         published_date=date,
                         authors=authors,
+                        source="NeuronDaily"
                     )
                     news_list.append(article)
 

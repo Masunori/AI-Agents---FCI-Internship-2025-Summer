@@ -1,7 +1,6 @@
 import os
 import sys
 import time
-from concurrent.futures import ThreadPoolExecutor
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
@@ -11,22 +10,9 @@ from FCI_NewsAgents.utils.utils import (
     convert_article_to_document,
     convert_paper_to_document,
 )
-from FCI_NewsAgents.services.parsers.cs_ai_parser import extract_text_from_paper
-from FCI_NewsAgents.services.parsers.web_article_parser import (
-    extract_text_from_web_article,
-)
 from FCI_NewsAgents.workflows.workflow_builder import workflow_execution
-# from FCI_NewsAgents.services.llm.llm_interface import call_llm
-from FCI_NewsAgents.services.article_url_cache.store import ArticleURLStore
-from FCI_NewsAgents.utils.report_generator_utils import *
-from FCI_NewsAgents.utils.doc_benchmark import RELEVANT_DOCS_AI 
-from FCI_NewsAgents.prompts.get_prompts import (
-    get_generation_prompt,
-)
 
 if __name__ == "__main__":
-    # print(fn())
-
     output_folder = r"FCI_NewsAgents\workflow_output"
     
     overall_start = time.time()
