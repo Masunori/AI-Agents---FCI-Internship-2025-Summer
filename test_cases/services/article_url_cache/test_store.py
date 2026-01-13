@@ -106,7 +106,7 @@ def test_dedup_store_insert_many_dupe_against_db(tmp_path: Path):
 
     store.close()
 
-def test_dedup_store_insert_many_dupe_within_batch(tmp_path: Path):
+def test_dedup_store_insert_many_dupe_within_first_batch(tmp_path: Path):
     db_path = tmp_path / "test_article_cache__002.db"
 
     if db_path.exists():
@@ -137,6 +137,43 @@ def test_dedup_store_insert_many_dupe_within_batch(tmp_path: Path):
 
     # Insert second batch
     assert store.insert_many_if_new(second_batch) == [True, True], "Second batch insert results do not match expected."
+    assert store.count() == 3, "There should be exactly 3 unique URLs in the store."
+
+    store.close()
+
+def test_dedup_store_insert_many_dupe_within_second_batch(tmp_path: Path):
+    db_path = tmp_path / "test_article_cache__002.db"
+
+    if db_path.exists():
+        db_path.unlink()
+
+    store = ArticleURLStore(db_path)
+    today = date.today().isoformat()
+    yesterday = (date.today() - timedelta(days=1)).isoformat()
+
+    first_batch = [
+        ("https://example.com/article4", today),
+        ("https://example.com/article1", yesterday),
+    ]
+
+    second_batch = [
+        ("https://example.com/article2", today),
+        ("https://example.com/article2", today), # Duplicate within batch
+    ]
+
+
+
+    # Initially, none of the URLs should exist
+    for url, _ in first_batch:
+        assert not store.exists(url), f"URL {url} should not exist initially."
+
+    # Insert first batch and check existence
+    results = store.insert_many_if_new(first_batch)
+    assert results == [True, True], "Insert many results do not match expected."
+    assert store.count() == 2, "There should be exactly 2 unique URLs in the store."
+
+    # Insert second batch
+    assert store.insert_many_if_new(second_batch) == [True, False], "Second batch insert results do not match expected."
     assert store.count() == 3, "There should be exactly 3 unique URLs in the store."
 
     store.close()
