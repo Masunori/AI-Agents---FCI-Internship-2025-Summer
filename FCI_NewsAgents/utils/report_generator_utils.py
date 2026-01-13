@@ -107,7 +107,7 @@ Bời vì đây là mục thông tin nổi bật, yêu cầu:
 - Không nêu thêm bất cứ thông tin gì khác, không nhắc đến nguồn.
 
 Không thêm phần kết luận chung nào khác ngoài các phần đã được yêu cầu. Bạn chỉ đang phụ trách **một mục duy nhất trong báo cáo lớn hơn**.
-Giới hạn số từ trong mục báo cáo này là 1 hoặc nhiều hơn 1 đoạn văn, nhưng tổng giới hạn từ là 150 đến 200 từ. Không cần format.
+Giới hạn số từ trong mục báo cáo này là 1 hoặc nhiều hơn 1 đoạn văn, nhưng tổng giới hạn từ là 125 từ. Không cần format.
 """
     def call_llm_and_parse_json() -> str:
         response = call_llm(
@@ -151,7 +151,7 @@ Yêu cầu:
 - Không nêu thêm bất cứ thông tin gì khác, không nhắc đến nguồn.
 
 Không thêm phần kết luận chung nào khác ngoài các phần đã được yêu cầu. Bạn chỉ đang phụ trách **một mục duy nhất trong báo cáo lớn hơn**.
-Giới hạn trong mục báo cáo này là 1 hoặc nhiều hơn 1 đoạn văn, nhưng tổng giới hạn từ là 100 đến 150 từ. Không cần format.
+Giới hạn trong mục báo cáo này là 1 hoặc nhiều hơn 1 đoạn văn, nhưng tổng giới hạn từ là 80 từ trở xuống. Không cần format.
 """
 
     def on_exception(e: Exception, attempt: int):
