@@ -17,6 +17,9 @@ def extract_text_from_web_article(doc: Document):
         auth_guarded_domains = [
             "x.com",
             "twitter.com",
+            "threads.com",
+            "facebook.com",
+            "instagram.com",
         ]
 
         if any(domain in doc.url for domain in auth_guarded_domains):
