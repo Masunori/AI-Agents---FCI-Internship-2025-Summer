@@ -298,18 +298,20 @@ def generate_markdown(
 
     return "".join(parts)
 
-def markdown_string_to_pdf(markdown_string: str, output_path: str) -> None:
+def markdown_string_to_pdf(markdown_string: str) -> MarkdownPdf:
     """
-    Convert a markdown string to a PDF file.
+    Convert a markdown string to a PDF object.
 
     Args:
         markdown_string (str): The markdown content to be converted.
-        output_path (str): The file path to save the generated PDF.
+
+    Returns:
+        MarkdownPdf: The generated PDF object.
     """
     pdf = MarkdownPdf()
     pdf.add_section(Section(markdown_string))
-    pdf.save(output_path)
-    pass
+    
+    return pdf
 
 def generate_pdf(
     output_path: str,
