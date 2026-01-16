@@ -1,0 +1,23 @@
+name: Teams Heartbeat (Every 5 Minutes)
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"   # every 5 minutes (UTC)
+  workflow_dispatch:
+
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send current time to Teams
+        env:
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+        run: |
+          NOW_UTC=$(date -u "+%Y-%m-%d %H:%M:%S UTC")
+
+          curl -X POST "$TEAMS_WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"text\": \"🫀 Heartbeat\nCurrent time: $NOW_UTC\"
+            }"
