@@ -34,18 +34,22 @@ jobs:
             - name: Upload generated PDF to GitHub Release
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              shell: pwsh
               run: |
-                  gh release delete "daily-report" --yes || true
-                  gh release create "daily-report" ./output/ai_news_report_$(date +'%Y-%m-%d').pdf --title "Daily Report $(date +'%Y-%m-%d')" --notes "Automated daily report generated on $(date +'%Y-%m-%d')"
+                  $DATE = (Get-Date).ToString('yyyy-MM-dd')
+                  gh release delete "daily-report" --yes || $true
+                  gh release create "daily-report" "./output/ai_news_report_$DATE.pdf" --title "Daily Report $DATE" --notes "Automated daily report generated on $DATE"
 
             - name: Notify Microsoft Teams
               env:
                   TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+              shell: pwsh
               run: |
-                  PDF_URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/daily-report/ai_news_report_$(date +'%Y-%m-%d').pdf"
+                  $DATE = (Get-Date).ToString('yyyy-MM-dd')
+                  $PDF_URL = "https://github.com/${{ github.repository }}/releases/download/daily-report/ai_news_report_$DATE.pdf"
 
-                  curl -X POST $TEAMS_WEBHOOK_URL \
-                    -H 'Content-Type: application/json' \
+                  curl -X POST $env:TEAMS_WEBHOOK_URL `
+                    -H 'Content-Type: application/json' `
                     -d '{
                         "type": "message",
                         "attachments": [
