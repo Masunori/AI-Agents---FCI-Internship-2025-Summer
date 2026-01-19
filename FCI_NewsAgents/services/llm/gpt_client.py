@@ -29,6 +29,8 @@ def call_gpt(
     if not api_key:
         print("API key not found. Please set the FPT_120B environment variable.")
         return None
+    
+    print("API key found, proceeding with the request...")
 
     url = "https://mkp-api.fptcloud.com/v1/chat/completions"
     headers = {
