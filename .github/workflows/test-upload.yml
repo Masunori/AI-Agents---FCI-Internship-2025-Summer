@@ -1,0 +1,58 @@
+name: Test PDF Upload and Teams Notification
+
+on:
+    workflow_dispatch:
+        
+jobs:
+    test_upload:
+        runs-on: windows-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Upload sample PDF to GitHub Release
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              shell: pwsh
+              run: |
+                  $DATE = (Get-Date).ToString('yyyy-MM-dd')
+                  gh release delete "test-daily-report" --yes || $true
+                  gh release create "test-daily-report" "./output/ai_news_report_sample.pdf" --title "Test Report $DATE" --notes "Test report upload generated on $DATE"
+
+            - name: Notify Microsoft Teams
+              env:
+                  TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+              shell: pwsh
+              run: |
+                  $DATE = (Get-Date).ToString('yyyy-MM-dd')
+                  $PDF_URL = "https://github.com/${{ github.repository }}/releases/download/test-daily-report/ai_news_report_sample.pdf"
+
+                  curl -X POST $env:TEAMS_WEBHOOK_URL `
+                    -H 'Content-Type: application/json' `
+                    -d '{
+                        "type": "message",
+                        "attachments": [
+                            {
+                                "contentType": "application/vnd.microsoft.card.adaptive",
+                                "content": {
+                                    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                                    "type": "AdaptiveCard",
+                                    "version": "1.4",
+                                    "body": [
+                                        {
+                                            "type": "TextBlock",
+                                            "size": "Medium",
+                                            "weight": "Bolder",
+                                            "text": "Test AI News Report"
+                                        },
+                                        {
+                                            "type": "TextBlock",
+                                            "text": "Test report has been uploaded. [Click here to view the PDF report.]('"$PDF_URL"')",
+                                            "wrap": true
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }'
