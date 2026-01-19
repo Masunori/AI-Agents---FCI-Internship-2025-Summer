@@ -11,6 +11,71 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
 
+            - name: Create docs directory and copy PDF
+              shell: pwsh
+              run: |
+                  if (-not (Test-Path "docs")) {
+                      New-Item -ItemType Directory -Path "docs" | Out-Null
+                  }
+                  Copy-Item "./output/ai_news_report_sample.pdf" "docs/ai_news_report_sample.pdf"
+                  
+                  # Create a simple HTML index page to display the PDF
+                  $htmlContent = @"
+                  <!DOCTYPE html>
+                  <html lang="en">
+                  <head>
+                      <meta charset="UTF-8">
+                      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                      <title>AI News Report</title>
+                      <style>
+                          body {
+                              font-family: Arial, sans-serif;
+                              margin: 20px;
+                              background-color: #f5f5f5;
+                          }
+                          .container {
+                              max-width: 900px;
+                              margin: 0 auto;
+                              background-color: white;
+                              padding: 20px;
+                              border-radius: 8px;
+                              box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                          }
+                          h1 {
+                              color: #333;
+                          }
+                          iframe {
+                              width: 100%;
+                              height: 600px;
+                              border: 1px solid #ddd;
+                              border-radius: 4px;
+                          }
+                          .download-link {
+                              display: inline-block;
+                              margin-top: 15px;
+                              padding: 10px 20px;
+                              background-color: #0366d6;
+                              color: white;
+                              text-decoration: none;
+                              border-radius: 4px;
+                          }
+                          .download-link:hover {
+                              background-color: #0256c7;
+                          }
+                      </style>
+                  </head>
+                  <body>
+                      <div class="container">
+                          <h1>Daily AI News Report</h1>
+                          <p>View the PDF report below or <a href="ai_news_report_sample.pdf" class="download-link">download it here</a>.</p>
+                          <iframe src="ai_news_report_sample.pdf"></iframe>
+                      </div>
+                  </body>
+                  </html>
+                  "@
+                  
+                  $htmlContent | Out-File -FilePath "docs/index.html" -Encoding UTF8
+
             - name: Upload sample PDF to GitHub Release
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -20,13 +85,22 @@ jobs:
                   gh release delete "test-daily-report" --yes || $true
                   gh release create "test-daily-report" "./output/ai_news_report_sample.pdf" --title "Test Report $DATE" --notes "Test report upload generated on $DATE"
 
+            - name: Push docs folder to GitHub Pages
+              shell: pwsh
+              run: |
+                  git config --local user.email "action@github.com"
+                  git config --local user.name "GitHub Action"
+                  git add docs/
+                  git commit -m "Update docs with generated PDF report" || $true
+                  git push
+
             - name: Notify Microsoft Teams
               env:
                   TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
               shell: pwsh
               run: |
                   $DATE = (Get-Date).ToString('yyyy-MM-dd')
-                  $PDF_URL = "https://github.com/${{ github.repository }}/releases/download/test-daily-report/ai_news_report_sample.pdf"
+                  $PAGES_URL = "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
 
                   curl -X POST $env:TEAMS_WEBHOOK_URL `
                     -H 'Content-Type: application/json' `
@@ -48,7 +122,7 @@ jobs:
                                         },
                                         {
                                             "type": "TextBlock",
-                                            "text": "Test report has been uploaded. [Click here to view the PDF report.]('"$PDF_URL"')",
+                                            "text": "Test report has been generated. [View online]('"$PAGES_URL"') or [download from release](https://github.com/${{ github.repository }}/releases/download/test-daily-report/ai_news_report_sample.pdf)",
                                             "wrap": true
                                         }
                                     ]
