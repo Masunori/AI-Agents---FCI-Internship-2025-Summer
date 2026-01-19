@@ -76,31 +76,35 @@ jobs:
                   $DATE = (Get-Date).ToString('yyyy-MM-dd')
                   $PAGES_URL = "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
 
+                  $payload = @{
+                      type = "message"
+                      attachments = @(
+                          @{
+                              contentType = "application/vnd.microsoft.card.adaptive"
+                              content = @{
+                                  "$schema" = "http://adaptivecards.io/schemas/adaptive-card.json"
+                                  type = "AdaptiveCard"
+                                  version = "1.4"
+                                  body = @(
+                                      @{
+                                          type = "TextBlock"
+                                          size = "Medium"
+                                          weight = "Bolder"
+                                          text = "Test AI News Report"
+                                      },
+                                      @{
+                                          type = "TextBlock"
+                                          text = "Test report has been published to GitHub Pages. [View the report]($PAGES_URL)"
+                                          wrap = $true
+                                      }
+                                  )
+                              }
+                          }
+                      )
+                  }
+
+                  $jsonPayload = $payload | ConvertTo-Json -Depth 10
+
                   curl -X POST $env:TEAMS_WEBHOOK_URL `
                     -H 'Content-Type: application/json' `
-                    -d '{
-                        "type": "message",
-                        "attachments": [
-                            {
-                                "contentType": "application/vnd.microsoft.card.adaptive",
-                                "content": {
-                                    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-                                    "type": "AdaptiveCard",
-                                    "version": "1.4",
-                                    "body": [
-                                        {
-                                            "type": "TextBlock",
-                                            "size": "Medium",
-                                            "weight": "Bolder",
-                                            "text": "Test AI News Report"
-                                        },
-                                        {
-                                            "type": "TextBlock",
-                                            "text": "Test report has been published to GitHub Pages. [View the report]('"$PAGES_URL"')",
-                                            "wrap": true
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-                    }'
+                    -d $jsonPayload
