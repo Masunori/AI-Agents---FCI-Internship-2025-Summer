@@ -4,46 +4,32 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 from typing import Literal
 
-from FCI_NewsAgents.services.llm.gemini_client import call_gemini
 from FCI_NewsAgents.services.llm.gpt_client import call_gpt
 
 
 def call_llm(
     user_prompt: str, 
-    system_prompt: str, 
-    model_used: Literal["gemini", "gpt"] = "gemini", 
-    model: str = "gemini-2.5-flash",
+    system_prompt: str,
+    model: Literal["gpt-oss-20b", "gpt-oss-120b"] = "gpt-oss-120b",
     max_tokens: int = 8192,
 ) -> str:
     """
-    A unified interface to call different LLM models.
-
-    The user has to make sure that the `model` parameter corresponds to the `model_used` parameter.
-    - If `model_used` is `gpt`, then `model` should be either "gpt-oss-20b" or "gpt-oss-120b".
-    - If `model_used` is `gemini`, then `model` should be a valid Gemini model name like "gemini-2.5-flash".
+    A unified interface to call different LLM models. Currently supporting 2 models: "gpt-oss-20b" and "gpt-oss-120b".
 
     Currently, the `max_tokens` parameter for each model is as follows (you can set anywhere below it):
     - GPT-OSS-120B models: up to 128K tokens
     - GPT-OSS-20B models: up to 128K tokens
-    - Gemini models: N/A
 
     Args:
         user_prompt (str): The prompt provided by the user.
         system_prompt (str): The system-level instructions for the model.
-        model_used (str): The model provider to use, either "gemini" or "gpt".
-        model (str): The specific model to use within the chosen provider.
+        model (Literal["gpt-oss-20b", "gpt-oss-120b"]): The specific model to use within the chosen provider.
         max_tokens (int): The maximum number of tokens to generate. Defaults to 8192.
 
     Returns:
         str: The response from the selected LLM model.
     """
-    if model_used == "gemini":
-        return call_gemini(user_prompt, system_prompt, model)
-    elif model_used == "gpt":
-        return call_gpt(user_prompt, system_prompt, model, max_tokens)
-    else:
-        print("The model_used parameter should be gemini or gpt. Currently using gemini by default")
-        return call_gemini(user_prompt, system_prompt, model)
+    return call_gpt(user_prompt, system_prompt, model, max_tokens)
     
 if __name__ == "__main__":
     user_prompt = "Print a question mark"

@@ -6,9 +6,9 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta
 from typing import List
-from markdown_pdf import MarkdownPdf
 
 import dotenv
+from markdown_pdf import MarkdownPdf
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
 
@@ -25,7 +25,6 @@ from FCI_NewsAgents.prompts.get_prompts import (
     get_guardrails_prompt,
     get_pointwise_guardrails_prompt,
 )
-from FCI_NewsAgents.services.llm.llm_interface import call_llm
 from FCI_NewsAgents.services.parsers.cs_ai_parser import extract_text_from_paper
 from FCI_NewsAgents.services.parsers.web_article_parser import (
     extract_text_from_web_article,
@@ -47,7 +46,6 @@ from FCI_NewsAgents.utils.report_generator_utils import (
     markdown_string_to_pdf,
     select_highlight,
 )
-from FCI_NewsAgents.utils.utils import save_report
 
 print("No error happen at import stage")
 

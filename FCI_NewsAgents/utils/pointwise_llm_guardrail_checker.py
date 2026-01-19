@@ -30,7 +30,6 @@ Assign an integer score from 0 to 10 for this document.
         response = call_llm(
             user_prompt=user_prompt,
             system_prompt=system_prompt,
-            model_used="gpt",
             model="gpt-oss-120b",
             max_tokens=2048,
         )

@@ -113,18 +113,10 @@ def _get_llm_score(
     relevance_message = construct_guardrail_message(discovery_doc, anchored_docs)
     guardrails_system_prompt = get_guardrails_prompt()
 
-    response = call_llm(
-        user_prompt=relevance_message,
-        system_prompt=guardrails_system_prompt,
-        model_used="gpt",
-        model="gpt-oss-120b"
-    )
-
     def call_llm_and_parse() -> float:
         response = call_llm(
             user_prompt=relevance_message,
             system_prompt=guardrails_system_prompt,
-            model_used="gpt",
             model="gpt-oss-120b"
         )
         return parse_guardrail_response(response, info_queue=info_queue, doc_title=discovery_doc.title)

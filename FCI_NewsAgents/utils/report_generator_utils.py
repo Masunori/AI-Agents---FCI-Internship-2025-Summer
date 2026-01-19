@@ -57,7 +57,6 @@ Trả lời theo format sau:
         response = call_llm(
             user_prompt=user_prompt,
             system_prompt=system_prompt,
-            model_used="gpt",
             model="gpt-oss-120b",
             max_tokens=16384,
         )
@@ -113,7 +112,6 @@ Giới hạn số từ trong mục báo cáo này là 1 hoặc nhiều hơn 1 đ
         response = call_llm(
             user_prompt=user_prompt,
             system_prompt=system_prompt,
-            model_used="gpt",
             model="gpt-oss-120b",
             max_tokens=65536,
         )
@@ -160,7 +158,6 @@ Giới hạn trong mục báo cáo này là 1 hoặc nhiều hơn 1 đoạn văn
     return run_with_retry(call_llm, max_retries=3, on_exception=on_exception, 
         user_prompt=user_prompt,
         system_prompt=system_prompt,
-        model_used="gpt",
         model="gpt-oss-120b",
         max_tokens=65536,
     )
@@ -200,7 +197,6 @@ Không trả về bất cứ phần nào khác ngoài JSON phần mở đầu v�
         response = call_llm(
             user_prompt=user_prompt,
             system_prompt=system_prompt,
-            model_used="gpt",
             model="gpt-oss-120b",
             max_tokens=16384,
         )
