@@ -127,6 +127,4 @@ jobs:
 
                   curl -X POST $env:TEAMS_WEBHOOK_URL `
                     -H 'Content-Type: application/json' `
-                    -d $jsonPayload
-                        ]
-                    }'
+                                        -d $jsonPayload
