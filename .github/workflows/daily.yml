@@ -26,6 +26,7 @@ jobs:
             - name: Run framework to generate reports
               env:
                   FPT_120B: ${{ secrets.FPT_120B }}
+                  FPT_API_KEY: ${{ secrets.FPT_API_KEY }}
                   DEDUPLICATION_DB_PATH: ${{ secrets.DEDUPLICATION_DB_PATH }}
               run: |
                   python FCI_NewsAgents/main.py --pdf-path ./output
