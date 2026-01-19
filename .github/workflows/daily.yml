@@ -94,7 +94,7 @@ jobs:
               shell: pwsh
               run: |
                   $DATE = (Get-Date).ToString('yyyy-MM-dd')
-                  $PDF_URL = "https://github.com/${{ github.repository }}/releases/download/daily-report/ai_news_report_$DATE.pdf"
+                  $PAGES_URL = "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
 
                   $payload = @{
                       type = "message"
@@ -114,7 +114,7 @@ jobs:
                                       },
                                       @{
                                           type = "TextBlock"
-                                          text = "The daily AI news report has been generated. [Click here to view the PDF report.]($PDF_URL)"
+                                          text = "The daily AI news report has been generated. [Click here to view the PDF report.]($PAGES_URL)"
                                           wrap = $true
                                       }
                                   )
