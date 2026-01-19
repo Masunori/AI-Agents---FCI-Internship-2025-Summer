@@ -301,7 +301,7 @@ def workflow_execution(
         # save_report(final_report, os.path.join(output_folder_md, output_path))
         pdf_object: MarkdownPdf = final_state_dict.get("pdf_object", None)
         if pdf_object:
-            pdf_output_path = f"ai_news_report.pdf"
+            pdf_output_path = f"ai_news_report_{datetime.now().strftime('%Y-%m-%d')}.pdf"
             pdf_object.save(os.path.join(output_folder_pdf, pdf_output_path))
 
         processing_time = time.time() - start_time
