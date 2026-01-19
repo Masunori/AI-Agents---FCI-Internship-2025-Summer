@@ -4,6 +4,8 @@ import time
 import argparse
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+sys.stdout.reconfigure(encoding="utf-8")
+sys.stderr.reconfigure(encoding="utf-8")
 
 from FCI_NewsAgents.services.scrapers.csai_scraper import scrape_papers
 from FCI_NewsAgents.services.scrapers.run_article_scrapers import scrape_articles
