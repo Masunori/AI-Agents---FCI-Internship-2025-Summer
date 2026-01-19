@@ -24,6 +24,9 @@ jobs:
                   pip install -r requirements.txt
 
             - name: Run framework to generate reports
+              env:
+                  FPT_120B: ${{ secrets.FPT_120B }}
+                  DEDUPLICATION_DB_PATH: ${{ secrets.DEDUPLICATION_DB_PATH }}
               run: |
                   python FCI_NewsAgents/main.py --pdf-path ./output
 
@@ -32,17 +35,39 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
                   gh release delete "daily-report" --yes || true
-                  gh release create "daily-report" ./output/ai_news_report.pdf --title "Daily Report $(date +'%Y-%m-%d')" --notes "Automated daily report generated on $(date +'%Y-%m-%d')"
+                  gh release create "daily-report" ./output/ai_news_report_$(date +'%Y-%m-%d').pdf --title "Daily Report $(date +'%Y-%m-%d')" --notes "Automated daily report generated on $(date +'%Y-%m-%d')"
 
             - name: Notify Microsoft Teams
               env:
                   TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
               run: |
-                  PDF_URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/daily-report/ai_news_report.pdf"
+                  PDF_URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/daily-report/ai_news_report_$(date +'%Y-%m-%d').pdf"
 
                   curl -X POST $TEAMS_WEBHOOK_URL \
                     -H 'Content-Type: application/json' \
                     -d '{
-                        "title": "Daily AI News Report",
-                        "text": "The daily AI news report has been generated. [Click here to view the PDF report.]('"$PDF_URL"')"
+                        "type": "message",
+                        "attachments": [
+                            {
+                                "contentType": "application/vnd.microsoft.card.adaptive",
+                                "content": {
+                                    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                                    "type": "AdaptiveCard",
+                                    "version": "1.4",
+                                    "body": [
+                                        {
+                                            "type": "TextBlock",
+                                            "size": "Medium",
+                                            "weight": "Bolder",
+                                            "text": "Daily AI News Report"
+                                        },
+                                        {
+                                            "type": "TextBlock",
+                                            "text": "The daily AI news report has been generated. [Click here to view the PDF report.]('"$PDF_URL"')",
+                                            "wrap": true
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
                     }'

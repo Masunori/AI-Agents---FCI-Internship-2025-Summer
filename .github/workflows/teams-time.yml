@@ -27,4 +27,29 @@ jobs:
           curl -X POST "$TEAMS_WEBHOOK_URL" \
             -H "Content-Type: application/json" \
             --fail-with-body \
-            -d "{\"text\": \"🫀 Heartbeat\\nCurrent time: $NOW_UTC\"}"
+            -d '{
+              "type": "message",
+              "attachments": [
+                {
+                  "contentType": "application/vnd.microsoft.card.adaptive",
+                  "content": {
+                    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                    "type": "AdaptiveCard",
+                    "version": "1.4",
+                    "body": [
+                      {
+                        "type": "TextBlock",
+                        "size": "Medium",
+                        "weight": "Bolder",
+                        "text": "Heartbeat Notification"
+                      },
+                      {
+                        "type": "TextBlock",
+                        "text": "Current UTC Time: '"$NOW_UTC"'",
+                        "wrap": true
+                      }
+                    ]
+                  }
+                }
+              ]
+            }'
