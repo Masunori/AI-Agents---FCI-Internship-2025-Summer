@@ -10,7 +10,7 @@ def call_gpt(
     system_prompt: str, 
     model: Literal["gpt-oss-20b", "gpt-oss-120b"] = "gpt-oss-120b",
     max_tokens: int = 8192,
-):
+) -> str:
     """
     Make a call to FPT's GPT-OSS model.
 
@@ -25,6 +25,11 @@ def call_gpt(
     """
     dotenv.load_dotenv()
     api_key = os.getenv("FPT_120B")
+
+    if not api_key:
+        print("API key not found. Please set the FPT_120B environment variable.")
+        return None
+
     url = "https://mkp-api.fptcloud.com/v1/chat/completions"
     headers = {
         "Content-Type": "application/json",
