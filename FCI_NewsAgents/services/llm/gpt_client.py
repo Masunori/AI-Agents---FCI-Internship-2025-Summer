@@ -35,7 +35,7 @@ def call_gpt(
     url = "https://mkp-api.fptcloud.com/v1/chat/completions"
     headers = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {api_key}"
+        "Authorization": f"Bearer {api_key.strip()}"
     }
     data = {
         "model": model,

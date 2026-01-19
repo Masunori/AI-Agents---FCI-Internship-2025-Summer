@@ -61,13 +61,13 @@ def get_embedding(texts: List[str]) -> np.ndarray:
         print("API key not found. Please set the FPT_API_KEY environment variable.")
         return None
     
-    print("API key found, proceeding with the request...")
+    print(f"API key found, proceeding with the request...")
 
     url: str = "https://mkp-api.fptcloud.com/v1/embeddings"
 
     headers: Dict[str, str] = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {api_key}"
+        "Authorization": f"Bearer {api_key.strip()}"
     }
 
     payload = EmbeddingRequest(
