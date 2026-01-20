@@ -33,7 +33,7 @@ def select_highlight(docs: List[Document], system_prompt: str) -> int:
         system_prompt (str): The system prompt to guide the LLM.
 
     Returns:
-        int: The index of the selected highlight document.
+        int: The index of the selected highlight document. 
     """
     user_prompt = f"""
 Đọc qua các đoạn văn trích xuất từ các bài báo sau:
@@ -106,7 +106,7 @@ Bời vì đây là mục thông tin nổi bật, yêu cầu:
 - Không nêu thêm bất cứ thông tin gì khác, không nhắc đến nguồn.
 
 Không thêm phần kết luận chung nào khác ngoài các phần đã được yêu cầu. Bạn chỉ đang phụ trách **một mục duy nhất trong báo cáo lớn hơn**.
-Giới hạn số từ trong mục báo cáo này là 1 hoặc nhiều hơn 1 đoạn văn, nhưng tổng giới hạn từ là 125 từ. Không cần format.
+Giới hạn số từ trong mục báo cáo này là 1 hoặc nhiều hơn 1 đoạn văn, nhưng tổng giới hạn từ là 125 từ. Không cần format. Viết bằng tiếng Việt.
 """
     def call_llm_and_parse_json() -> str:
         response = call_llm(
@@ -149,7 +149,9 @@ Yêu cầu:
 - Không nêu thêm bất cứ thông tin gì khác, không nhắc đến nguồn.
 
 Không thêm phần kết luận chung nào khác ngoài các phần đã được yêu cầu. Bạn chỉ đang phụ trách **một mục duy nhất trong báo cáo lớn hơn**.
-Giới hạn trong mục báo cáo này là 1 hoặc nhiều hơn 1 đoạn văn, nhưng tổng giới hạn từ là 80 từ trở xuống. Không cần format.
+Giới hạn trong mục báo cáo này là 1 hoặc nhiều hơn 1 đoạn văn, nhưng tổng giới hạn từ là 80 từ trở xuống. Không cần format. Viết bằng tiếng Việt.
+
+Nếu đoạn thông tin được cung cấp không đủ để tạo thành một mục báo cáo có ý nghĩa, hoặc không liên quan đến công nghệ, hãy trả về một chuỗi rỗng ('').
 """
 
     def on_exception(e: Exception, attempt: int):
@@ -260,25 +262,48 @@ def generate_markdown(
     parts.append(f"**Nguồn:** {highlight_document.source}\n")
     parts.append(f"**URL:** {highlight_document.url}\n\n")
 
+    referenced_documents: List[Document] = [highlight_document]
+
     # Other sections
     other_article_segments = [(doc, seg) for doc, seg in zip(other_documents, other_segments) if doc.content_type == "article"]
-    parts.append(f"## Tin nhanh công nghệ ({len(other_article_segments)} bài)\n\n")
+    
+    if len(other_article_segments) > 0:
+        parts.append(f"## Tin nhanh công nghệ\n\n")
+        idx = 1
 
-    for idx, (doc, segment) in enumerate(other_article_segments, 1):
-        parts.append(f"## News #{idx}: {to_md_raw_string(doc.title)}\n\n")
-        parts.append(f"{segment}\n\n")
-        parts.append(f"**{"Ngày xuất bản" if not is_newsletter(doc.source) else "Ngày tổng hợp"}:** {doc.published_date.strftime("%d %b, %Y")}\n")
-        parts.append(f"**Nguồn:** {doc.source}\n")
-        parts.append(f"**URL:** {doc.url}\n\n")
+        for (doc, segment) in other_article_segments:
+            if not segment:
+                continue
+
+            referenced_documents.append(doc)
+
+            parts.append(f"### News #{idx}: {to_md_raw_string(doc.title)}\n\n")
+            parts.append(f"{segment}\n\n")
+            parts.append(f"**{"Ngày xuất bản" if not is_newsletter(doc.source) else "Ngày tổng hợp"}:** {doc.published_date.strftime("%d %b, %Y")}\n")
+            parts.append(f"**Nguồn:** {doc.source}\n")
+            parts.append(f"**URL:** {doc.url}\n\n")
+
+            idx += 1
 
     other_paper_segments = [(doc, seg) for doc, seg in zip(other_documents, other_segments) if doc.content_type == "paper"]
-    parts.append(f"## Nghiên cứu khoa học nổi bật ({len(other_paper_segments)} bài)\n\n")
-    for idx, (doc, segment) in enumerate(other_paper_segments, 1):
-        parts.append(f"## Article #{idx}: {to_md_raw_string(doc.title)}\n\n")
-        parts.append(f"{segment}\n\n")
-        parts.append(f"**{"Ngày xuất bản" if not is_newsletter(doc.source) else "Ngày tổng hợp"}:** {doc.published_date.strftime("%d %b, %Y")}\n")
-        parts.append(f"**Nguồn:** {doc.source}\n")
-        parts.append(f"**URL:** {doc.url}\n\n")
+
+    if len(other_paper_segments) > 0:
+        parts.append(f"## Nghiên cứu khoa học nổi bật\n\n")
+        idx = 1
+
+        for (doc, segment) in other_paper_segments:
+            if not segment:
+                continue
+            
+            referenced_documents.append(doc)
+
+            parts.append(f"### Article #{idx}: {to_md_raw_string(doc.title)}\n\n")
+            parts.append(f"{segment}\n\n")
+            parts.append(f"**{"Ngày xuất bản" if not is_newsletter(doc.source) else "Ngày tổng hợp"}:** {doc.published_date.strftime("%d %b, %Y")}\n")
+            parts.append(f"**Nguồn:** {doc.source}\n")
+            parts.append(f"**URL:** {doc.url}\n\n")
+
+            idx += 1
 
     # Conclusion
     parts.append(f"## Kết luận\n\n{conclusion}\n\n")
@@ -286,8 +311,8 @@ def generate_markdown(
     # Markdown table reference
     parts.append("| Tiêu đề | Ngày xuất bản | URL |\n")
     parts.append("|---|---|---|\n")
-    all_documents = [highlight_document] + other_documents
-    for doc in all_documents:
+
+    for doc in referenced_documents:
         parts.append(f"| {fr'{doc.title}'} | {doc.published_date.strftime("%d %b, %Y")} | [Link]({doc.url}) |\n")
     parts.append("---\n")
     parts.append("Bản tin được tạo tự động bởi hệ thống FCI News Agents.\n")
