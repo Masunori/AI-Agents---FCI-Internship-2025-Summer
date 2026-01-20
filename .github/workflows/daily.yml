@@ -2,7 +2,7 @@ name: Daily PDF and MD Report Generation
 
 on:
     schedule:
-        - cron: '30 9 * * *'  # Runs daily at 16:40 UTC+8
+        - cron: '0 23 * * *'  # Runs daily at 06:00 UTC+7
     workflow_dispatch:
         
 jobs:
