@@ -151,7 +151,7 @@ Yêu cầu:
 Không thêm phần kết luận chung nào khác ngoài các phần đã được yêu cầu. Bạn chỉ đang phụ trách **một mục duy nhất trong báo cáo lớn hơn**.
 Giới hạn trong mục báo cáo này là 1 hoặc nhiều hơn 1 đoạn văn, nhưng tổng giới hạn từ là 80 từ trở xuống. Không cần format. Viết bằng tiếng Việt.
 
-Nếu đoạn thông tin được cung cấp không đủ để tạo thành một mục báo cáo có ý nghĩa, hoặc không liên quan đến công nghệ, hãy trả về một chuỗi rỗng ('').
+Nếu đoạn thông tin được cung cấp không đủ để tạo thành một mục báo cáo có ý nghĩa, hoặc không liên quan đến công nghệ, hãy trả về một chuỗi rỗng (không cần sinh bất kì token nào).
 """
 
     def on_exception(e: Exception, attempt: int):
@@ -272,7 +272,7 @@ def generate_markdown(
         idx = 1
 
         for (doc, segment) in other_article_segments:
-            if not segment:
+            if len(segment) < 5: # buffer
                 continue
 
             referenced_documents.append(doc)
@@ -292,7 +292,7 @@ def generate_markdown(
         idx = 1
 
         for (doc, segment) in other_paper_segments:
-            if not segment:
+            if len(segment) < 5: # buffer
                 continue
             
             referenced_documents.append(doc)
@@ -318,6 +318,21 @@ def generate_markdown(
     parts.append("Bản tin được tạo tự động bởi hệ thống FCI News Agents.\n")
 
     return "".join(parts)
+
+def webhook_message_generator(
+    opening: str,
+    highlight_document: Document,
+    other_documents: List[Document],
+) -> str:
+    parts = [
+        opening,
+        "Danh sách bản tin:",
+        "\n".join([f"- {d.title}" for d in [highlight_document] + other_documents]),
+        "\n---\n",
+        "Bản tin được tạo tự động bởi hệ thống FCI News Agents.\n"
+    ]
+
+    return "\n".join(parts)
 
 def markdown_string_to_pdf(markdown_string: str) -> MarkdownPdf:
     """

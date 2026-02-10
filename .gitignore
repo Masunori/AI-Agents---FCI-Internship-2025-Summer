@@ -8,3 +8,4 @@ dummy.py
 *.log
 *.ipynb
 *.csv
+FCI_NewsAgents/services/json_article_url_cache

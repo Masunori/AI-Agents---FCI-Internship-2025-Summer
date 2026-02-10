@@ -25,6 +25,7 @@ if __name__ == "__main__":
     output_folder_md = args.md_path
     output_folder_pdf = args.pdf_path
 
+
     overall_start = time.time()
 
     # Scrape articles (now parallel internally)

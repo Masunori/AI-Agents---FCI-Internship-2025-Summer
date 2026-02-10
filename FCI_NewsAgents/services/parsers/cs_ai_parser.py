@@ -3,7 +3,6 @@ import tempfile
 from pathlib import Path
 from typing import List
 
-import pymupdf
 import pymupdf4llm
 import requests
 
